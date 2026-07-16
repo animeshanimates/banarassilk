@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banaras Silk Mfg. Co. — Handwoven Since 1924</title>
+<title>Banaras Silk Mfg. Co. | Handwoven Since 1924</title>
 <meta name="description" content="A Star Export House weaving natural textiles from Varanasi since 1924. OEM, ODM and private-label manufacturing for the world's finest interior and fashion houses.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,6 +17,7 @@
     --gold:#4A54A0;
     --gold-soft:#8792D6;
     --stone:#7A80A0;
+    --card-blue:#202742;
     --line: rgba(28,32,54,0.12);
     --max: 1360px;
     --pad: clamp(20px, 5vw, 72px);
@@ -114,6 +115,84 @@
   .nav-cta:hover{background:var(--gold); border-color:var(--gold); color:var(--charcoal);}
   .burger{display:none;}
 
+  /* ---------- Mobile menu ---------- */
+  .burger{
+    position:relative; z-index:210;
+    width:38px; height:38px;
+    align-items:center; justify-content:center;
+    background:none; border:none; cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .burger span{
+    display:block; position:absolute; left:8px; right:8px; height:2px;
+    background:var(--ivory); border-radius:2px;
+    transition:transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
+  }
+  header.site.scrolled .burger span, body.menu-open .burger span{background:var(--charcoal);}
+  .burger span:nth-child(1){top:13px;}
+  .burger span:nth-child(2){top:19px;}
+  .burger span:nth-child(3){top:25px;}
+  body.menu-open .burger span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  body.menu-open .burger span:nth-child(2){opacity:0;}
+  body.menu-open .burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+  body.menu-open .burger span{background:var(--ivory);}
+
+  .mobile-menu{
+    position:fixed; inset:0; z-index:200;
+    background:var(--card-blue);
+    display:flex; flex-direction:column;
+    justify-content:center;
+    padding:32px var(--pad);
+    transform:translateY(-100%);
+    transition:transform 0.5s cubic-bezier(.4,0,.2,1);
+    visibility:hidden;
+  }
+  body.menu-open .mobile-menu{transform:translateY(0); visibility:visible;}
+  .mm-close{
+    position:absolute; top:18px; right:var(--pad); z-index:5;
+    width:44px; height:44px;
+    background:none; border:none; cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mm-close span{
+    position:absolute; top:50%; left:50%; width:22px; height:2px;
+    background:var(--ivory); border-radius:2px;
+    transform-origin:center;
+  }
+  .mm-close span:nth-child(1){transform:translate(-50%,-50%) rotate(45deg);}
+  .mm-close span:nth-child(2){transform:translate(-50%,-50%) rotate(-45deg);}
+  .mobile-menu nav{display:flex; flex-direction:column; gap:6px;}
+  .mobile-menu nav a{
+    font-family:var(--serif); font-weight:500;
+    font-size:clamp(28px,8vw,42px); color:var(--ivory);
+    padding:12px 0; border-bottom:1px solid rgba(244,239,228,0.14);
+    opacity:0; transform:translateY(14px);
+    transition:opacity 0.45s ease, transform 0.45s ease;
+  }
+  body.menu-open .mobile-menu nav a{opacity:1; transform:translateY(0);}
+  body.menu-open .mobile-menu nav a:nth-child(1){transition-delay:0.08s;}
+  body.menu-open .mobile-menu nav a:nth-child(2){transition-delay:0.13s;}
+  body.menu-open .mobile-menu nav a:nth-child(3){transition-delay:0.18s;}
+  body.menu-open .mobile-menu nav a:nth-child(4){transition-delay:0.23s;}
+  body.menu-open .mobile-menu nav a:nth-child(5){transition-delay:0.28s;}
+  body.menu-open .mobile-menu nav a:nth-child(6){transition-delay:0.33s;}
+  body.menu-open .mobile-menu nav a:nth-child(7){transition-delay:0.38s;}
+  .mobile-menu .mm-cta{
+    margin-top:32px; align-self:flex-start;
+    border:1px solid var(--gold-soft); color:var(--ivory);
+    padding:14px 28px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    border-radius:12px;
+    opacity:0; transform:translateY(14px);
+    transition:opacity 0.45s ease 0.42s, transform 0.45s ease 0.42s, background 0.3s ease;
+  }
+  body.menu-open .mobile-menu .mm-cta{opacity:1; transform:translateY(0);}
+  .mobile-menu .mm-cta:active{background:var(--gold);}
+  .mobile-menu .mm-foot{
+    margin-top:auto; padding-top:40px;
+    font-size:12px; color:rgba(244,239,228,0.5); letter-spacing:0.05em;
+  }
+  body.menu-open{overflow:hidden;}
+
   /* ---------- Hero ---------- */
   .hero{
     position:relative; height:100vh; min-height:640px;
@@ -165,17 +244,6 @@
   .btn-dark{border-color:var(--charcoal); color:var(--charcoal);}
   .btn-dark:hover{background:var(--charcoal); color:var(--ivory);}
 
-  .scroll-cue{
-    position:absolute; right:var(--pad); bottom:34px; z-index:2;
-    display:flex; align-items:center; gap:10px; color:rgba(244,239,228,0.6);
-    font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase;
-  }
-  .scroll-cue .line{width:1px; height:38px; background:rgba(244,239,228,0.4); position:relative; overflow:hidden;}
-  .scroll-cue .line::after{
-    content:""; position:absolute; top:-100%; left:0; width:100%; height:100%; background:var(--gold-soft);
-    animation:threadDrop 2.2s ease-in-out infinite;
-  }
-  @keyframes threadDrop{0%{top:-100%;} 60%{top:100%;} 100%{top:100%;}}
   @keyframes fadeUp{from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);}}
 
   /* ---------- Signature thread rule ---------- */
@@ -254,7 +322,7 @@
   .cats-head h2{font-size:clamp(30px,3.6vw,50px); font-weight:400;}
   .cats-head p{font-size:15px; line-height:1.75; color:#454B72; margin-top:20px;}
   .cats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
-  .cat-card{position:relative; aspect-ratio:3/4; overflow:hidden; background:#DDE1F2; cursor:pointer;}
+  .cat-card{position:relative; aspect-ratio:3/4.4; overflow:hidden; background:#DDE1F2; cursor:pointer;}
   .cat-card .ph{
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
     font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(34,30,27,0.35);
@@ -263,12 +331,15 @@
   }
   .cat-card:hover .ph{transform:scale(1.08);}
   .cat-card .overlay{
-    position:absolute; inset:0; background:linear-gradient(0deg, rgba(20,17,14,0.86) 0%, rgba(20,17,14,0.05) 55%);
+    position:absolute; inset:0; background:linear-gradient(0deg, rgba(20,17,14,0.92) 0%, rgba(20,17,14,0.78) 42%, rgba(20,17,14,0.05) 72%);
     display:flex; align-items:flex-end; padding:26px; z-index:1;
   }
   .cat-card .overlay-inner{color:var(--ivory);}
   .cat-card .cat-tag{font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:8px; display:block;}
   .cat-card h3{font-family:var(--serif); font-size:22px; font-weight:500;}
+  .cat-list{margin:12px 0 0; padding:0; list-style:none; font-size:12px; line-height:1.7; color:rgba(244,239,228,0.78);}
+  .cat-list li{position:relative; padding-left:13px;}
+  .cat-list li::before{content:"-"; position:absolute; left:0; color:var(--gold-soft);}
   .cat-card .arrow{
     position:absolute; top:22px; right:22px; width:34px; height:34px; border-radius:50%;
     border:1px solid rgba(244,239,228,0.5); display:flex; align-items:center; justify-content:center;
@@ -349,8 +420,10 @@
 
   @media (max-width:860px){
     nav.links, .nav-cta{display:none;}
-    .burger{display:block; color:var(--ivory); font-size:22px; cursor:pointer; background:none; border:none;}
-    header.site.scrolled .burger{color:var(--charcoal);}
+    .burger{display:flex;}
+    header.site{padding:16px var(--pad);}
+    .logo{font-size:16px;}
+    .logo small{font-size:8.5px;}
   }
 
   /* ---------- Quality ---------- */
@@ -402,6 +475,13 @@
   .contact-col a:hover{color:var(--gold-soft);}
   .map-strip{aspect-ratio:16/6; margin-top:14px; border:1px dashed rgba(244,239,228,0.25); display:flex; align-items:center; justify-content:center; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(244,239,228,0.35); grid-column:1/-1;}
   @media (max-width:900px){ .contact-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){
+    .contact-grid{grid-template-columns:1fr; gap:32px;}
+    .footer-grid{grid-template-columns:1fr; row-gap:32px;}
+    .gal-grid{grid-template-columns:1fr;}
+    .gal-item:nth-child(2), .gal-item:nth-child(5){margin-top:0;}
+    .cats-head{margin-bottom:36px;}
+  }
 </style>
 </head>
 <body>
@@ -418,26 +498,44 @@
     <a href="#contact">Contact</a>
   </nav>
   <a href="#contact" class="nav-cta">Enquire Now</a>
-  <button class="burger" aria-label="Menu">☰</button>
+  <button class="burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mm-close" id="mmCloseBtn" aria-label="Close menu">
+    <span></span><span></span>
+  </button>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#process">Manufacturing</a>
+    <a href="#categories">Categories</a>
+    <a href="#quality">Quality</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#export">Export</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a href="#contact" class="mm-cta">Enquire Now</a>
+  <div class="mm-foot">Est. 1924 · Varanasi, India</div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
   <!-- Placeholder: Desktop Hero Video (loom / handweaving footage), mobile variant swapped via media query in production -->
   <div class="hero-fallback" aria-hidden="true"></div>
   <video autoplay muted loop playsinline class="hero-video">
-    <source src="assets/hero-video.mp4" type="video/mp4">
+    <source src="assets/13049211_1080_1920_30fps.mp4" type="video/mp4">
   </video>
   <div class="hero-content">
     <div class="hero-label">Star Export House · Varanasi, India</div>
     <h1>A century at the loom.<br><em>Woven for the world.</em></h1>
-    <p class="sub">Since 1924, Banaras Silk Mfg. Co. has manufactured natural textiles for the world's most discerning interior and fashion houses — from handloom silk to export-ready private label collections.</p>
+    <p class="sub">Since 1924, Banaras Silk Mfg. Co. has manufactured natural textiles for the world's most discerning interior and fashion houses, from handloom silk to export-ready private label collections.</p>
     <div class="hero-ctas">
       <a href="#contact" class="btn btn-gold">Enquire Now</a>
       <a href="#about" class="btn btn-ghost">Our Story</a>
     </div>
   </div>
-  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
 </section>
 
 <div class="thread" data-thread><div class="fill"></div></div>
@@ -451,7 +549,7 @@
     </div>
     <div class="intro-copy reveal">
       <p>Banaras Silk Mfg. Co. was founded in 1924 on the banks of the Ganges, in a city whose weavers have shaped the world's understanding of fine silk for over a thousand years. What began as a single family workshop has grown, across four generations, into a Star Export House trusted by importers, buying houses and luxury brands across Europe, North America and East Asia.</p>
-      <p>We remain, deliberately, a manufacturer — not a marketplace. Every metre we produce is developed, woven, finished and inspected under one roof in Varanasi, combining traditional handloom knowledge with modern production discipline, so that our partners can build collections with confidence.</p>
+      <p>We remain, deliberately, a manufacturer, not a marketplace. Every metre we produce is developed, woven, finished and inspected under one roof in Varanasi, combining traditional handloom knowledge with modern production discipline, so that our partners can build collections with confidence.</p>
       <a href="#process" class="btn btn-dark" style="margin-top:8px;">Explore Our Manufacturing</a>
     </div>
   </div>
@@ -481,7 +579,7 @@
     </div>
     <div class="why-grid">
       <div class="why-card reveal"><span class="why-num">01</span><h3>Handloom Heritage</h3><p>Our artisans carry weaving knowledge passed down through generations of Banaras karigars, applied to both handloom and modern powerloom production.</p></div>
-      <div class="why-card reveal"><span class="why-num">02</span><h3>Vertical Manufacturing</h3><p>Yarn selection, weaving, dyeing, printing, embroidery and finishing all take place within our own facilities — full control, no subcontracted guesswork.</p></div>
+      <div class="why-card reveal"><span class="why-num">02</span><h3>Vertical Manufacturing</h3><p>Yarn selection, weaving, dyeing, printing, embroidery and finishing all take place within our own facilities: full control, no subcontracted guesswork.</p></div>
       <div class="why-card reveal"><span class="why-num">03</span><h3>Flexible & Custom</h3><p>From small sampling runs to full private-label production, we adapt width, weave, finish and packaging to each partner's specification.</p></div>
       <div class="why-card reveal"><span class="why-num">04</span><h3>Natural Fibres First</h3><p>Silk, cotton, linen and natural blends form the core of our capability, reflecting a longstanding, sustainability-minded approach to material sourcing.</p></div>
       <div class="why-card reveal"><span class="why-num">05</span><h3>Export Discipline</h3><p>Recognised as a Star Export House, with the documentation, quality systems and logistics experience international buyers require.</p></div>
@@ -501,7 +599,7 @@
       <p style="max-width:380px; font-size:14.5px; line-height:1.75; color:rgba(244,239,228,0.62);">Twelve stages, refined over a century, carried out entirely within our own facilities in Varanasi.</p>
     </div>
     <div class="process-scroll reveal">
-      <div class="process-step"><span class="pnum">01</span><h4>Raw Material</h4><p>Natural fibres — mulberry silk, cotton, linen — sourced and graded for consistency before entering production.</p></div>
+      <div class="process-step"><span class="pnum">01</span><h4>Raw Material</h4><p>Natural fibres (mulberry silk, cotton, linen) sourced and graded for consistency before entering production.</p></div>
       <div class="process-step"><span class="pnum">02</span><h4>Yarn Selection</h4><p>Yarns are selected and tested for count, twist and strength to match the intended weave and end use.</p></div>
       <div class="process-step"><span class="pnum">03</span><h4>Warping</h4><p>Thousands of warp threads are aligned with precision, setting the foundation for every metre woven.</p></div>
       <div class="process-step"><span class="pnum">04</span><h4>Handloom</h4><p>Skilled karigars weave fine and complex constructions by hand, preserving techniques unique to Banaras.</p></div>
@@ -523,28 +621,59 @@
     <div class="cats-head reveal">
       <div class="eyebrow">Manufacturing Capabilities</div>
       <h2>What we manufacture</h2>
-      <p>Four capability groups, each developed to export standard — available for private label, OEM and ODM production.</p>
+      <p>Four capability groups, each developed to export standard and available for private label, OEM and ODM production.</p>
     </div>
     <div class="cats-grid">
       <a href="#contact" class="cat-card reveal">
         <div class="ph">Running Fabrics</div>
         <div class="arrow">↗</div>
-        <div class="overlay"><div class="overlay-inner"><span class="cat-tag">01</span><h3>Running Fabrics</h3></div></div>
+        <div class="overlay"><div class="overlay-inner">
+          <span class="cat-tag">01 · Fabrics</span><h3>Running Fabrics</h3>
+          <ul class="cat-list">
+            <li>Hand-woven Silk</li>
+            <li>Cotton &amp; Linen</li>
+            <li>Velvet &amp; Viscose</li>
+            <li>Man-made Fibre Blends</li>
+          </ul>
+        </div></div>
       </a>
       <a href="#contact" class="cat-card reveal">
         <div class="ph">Home Furnishings</div>
         <div class="arrow">↗</div>
-        <div class="overlay"><div class="overlay-inner"><span class="cat-tag">02</span><h3>Home Furnishings</h3></div></div>
+        <div class="overlay"><div class="overlay-inner">
+          <span class="cat-tag">02 · Made-Ups</span><h3>Home Furnishings</h3>
+          <ul class="cat-list">
+            <li>Curtains &amp; Throws</li>
+            <li>Cushion Covers &amp; Floor Cushions</li>
+            <li>Table Runners &amp; Table Covers</li>
+            <li>Napkins, Pouf &amp; more</li>
+          </ul>
+        </div></div>
       </a>
       <a href="#contact" class="cat-card reveal">
         <div class="ph">Apparel</div>
         <div class="arrow">↗</div>
-        <div class="overlay"><div class="overlay-inner"><span class="cat-tag">03</span><h3>Apparel</h3></div></div>
+        <div class="overlay"><div class="overlay-inner">
+          <span class="cat-tag">03 · Readymade</span><h3>Apparel</h3>
+          <ul class="cat-list">
+            <li>Custom Shirts &amp; Pyjamas</li>
+            <li>Sarees</li>
+            <li>Stoles &amp; Scarves</li>
+          </ul>
+        </div></div>
       </a>
       <a href="#contact" class="cat-card reveal">
         <div class="ph">Accessories</div>
         <div class="arrow">↗</div>
-        <div class="overlay"><div class="overlay-inner"><span class="cat-tag">04</span><h3>Accessories</h3></div></div>
+        <div class="overlay"><div class="overlay-inner">
+          <span class="cat-tag">04 · Accessories</span><h3>Accessories</h3>
+          <ul class="cat-list">
+            <li>Fancy Yarn</li>
+            <li>Wooden &amp; Glass Beads</li>
+            <li>Fancy Laces</li>
+            <li>Sequins &amp; Embellishments</li>
+          </ul>
+        </div></div>
       </a>
     </div>
   </div>
@@ -553,11 +682,11 @@
 <!-- CRAFTSMANSHIP SPLIT -->
 <section class="feature-split">
   <div class="fs-grid">
-    <div class="fs-media reveal"><div class="ph">Handloom Weaving — Editorial Photography</div></div>
+    <div class="fs-media reveal"><div class="ph">Handloom Weaving: Editorial Photography</div></div>
     <div class="fs-copy reveal">
       <div class="eyebrow">Why Indian Silk</div>
       <h2>The fibre that travelled the world before trade routes had names.</h2>
-      <p>Indian silk, and Banaras silk in particular, has been documented and admired by travellers and historians for centuries — carried along the Silk Route, sought after in the courts of Europe and Central Asia, and prized for a lustre and hand-feel that natural mulberry, tussar, eri and muga silks are still known for today.</p>
+      <p>Indian silk, and Banaras silk in particular, has been documented and admired by travellers and historians for centuries, carried along the Silk Route, sought after in the courts of Europe and Central Asia, and prized for a lustre and hand-feel that natural mulberry, tussar, eri and muga silks are still known for today.</p>
       <p>That reputation was not built on marketing. It was built on generations of weavers who understood fibre, tension and finish in a way no machine has fully replicated. It is the same knowledge our looms draw on today.</p>
       <a href="#about" class="btn btn-ghost" style="margin-top:10px;">Read Our Heritage</a>
     </div>
@@ -570,7 +699,7 @@
     <div class="quality-copy reveal">
       <div class="eyebrow">Quality Assurance</div>
       <h2>Consistency, verified at every stage.</h2>
-      <p>Quality is not a final check — it is designed into every stage of our process, from yarn selection through to the last inspection before packing. Our systems are built to meet the AQL standards, testing protocols and documentation that international buyers require.</p>
+      <p>Quality is not a final check. It is designed into every stage of our process, from yarn selection through to the last inspection before packing. Our systems are built to meet the AQL standards, testing protocols and documentation that international buyers require.</p>
     </div>
     <ul class="quality-list reveal">
       <li><span class="qmark">01</span><div><h4>In-Process Inspection</h4><p>Fabric is checked at every production stage, not only at the end, so faults are caught before value is added.</p></div></li>
@@ -642,7 +771,7 @@
   <div class="section-inner enquire-inner reveal">
     <div class="eyebrow" style="justify-content:center;">Start a Conversation</div>
     <h2>Let's manufacture your <em>next collection</em>.</h2>
-    <p>Tell us about your brand and requirements — our team responds to every qualified enquiry within two business days.</p>
+    <p>Tell us about your brand and requirements. Our team responds to every qualified enquiry within two business days.</p>
     <div class="btn-row">
       <a href="#contact" class="btn btn-gold">Enquire Now</a>
       <a href="#contact" class="btn btn-ghost">Request Fabric Swatches</a>
@@ -694,6 +823,20 @@
   const header = document.getElementById('siteHeader');
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function setMenu(open){
+    document.body.classList.toggle('menu-open', open);
+    burgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  burgerBtn.addEventListener('click', () => {
+    setMenu(!document.body.classList.contains('menu-open'));
+  });
+  document.getElementById('mmCloseBtn').addEventListener('click', () => setMenu(false));
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => setMenu(false));
   });
 
   const io = new IntersectionObserver((entries) => {
