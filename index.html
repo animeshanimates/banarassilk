@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banaras Silk Mfg. Co. — Handwoven Since 1924</title>
+<meta name="description" content="A Star Export House weaving natural textiles from Varanasi since 1924. OEM, ODM and private-label manufacturing for the world's finest interior and fashion houses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#FFFFFF;
+    --raw-silk:#EEF0F8;
+    --charcoal:#1C2036;
+    --indigo:#242A44;
+    --walnut:#3B4380;
+    --gold:#4A54A0;
+    --gold-soft:#8792D6;
+    --stone:#7A80A0;
+    --line: rgba(28,32,54,0.12);
+    --max: 1360px;
+    --pad: clamp(20px, 5vw, 72px);
+    --serif: 'Fraunces', serif;
+    --sans: 'Manrope', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ivory);
+    color:var(--charcoal);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  ::selection{background:var(--gold-soft); color:var(--charcoal);}
+
+  .wrap{max-width:var(--max); margin:0 auto; padding-left:var(--pad); padding-right:var(--pad);}
+
+  /* ---------- Eyebrow / labels ---------- */
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:11.5px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--walnut);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:28px; height:1px;
+    background:var(--gold);
+    display:inline-block;
+  }
+
+  h1,h2,h3{font-family:var(--serif); font-weight:500; margin:0; letter-spacing:-0.01em;}
+
+  /* ---------- Nav ---------- */
+  header.site{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:22px var(--pad);
+    display:flex; align-items:center; justify-content:space-between;
+    transition:background 0.5s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
+    mix-blend-mode:normal;
+  }
+  header.site.scrolled{
+    background:rgba(244,239,228,0.92);
+    backdrop-filter:blur(10px);
+    padding-top:14px; padding-bottom:14px;
+    box-shadow:0 1px 0 var(--line);
+  }
+  .logo{
+    font-family:var(--serif);
+    font-size:19px;
+    letter-spacing:0.02em;
+    color:var(--ivory);
+    display:flex; flex-direction:column; line-height:1.05;
+    transition:color 0.4s ease;
+  }
+  header.site.scrolled .logo{color:var(--charcoal);}
+  .logo small{font-family:var(--sans); font-size:9.5px; letter-spacing:0.24em; color:var(--gold-soft); margin-top:5px; text-transform:uppercase; font-weight:600;}
+  header.site.scrolled .logo small{color:var(--walnut);}
+
+  nav.links{display:flex; gap:34px; font-size:13px; letter-spacing:0.03em;}
+  nav.links a{
+    color:rgba(244,239,228,0.86);
+    position:relative; padding-bottom:3px;
+    transition:color 0.3s ease;
+  }
+  header.site.scrolled nav.links a{color:var(--charcoal);}
+  nav.links a::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+    background:currentColor; transform:scaleX(0); transform-origin:right;
+    transition:transform 0.35s ease;
+  }
+  nav.links a:hover::after{transform:scaleX(1); transform-origin:left;}
+  .nav-cta{
+    border:1px solid rgba(244,239,228,0.5);
+    padding:10px 22px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ivory); transition:all 0.35s ease; white-space:nowrap;
+    border-radius:12px;
+    corner-shape:squircle;
+  }
+  header.site.scrolled .nav-cta{border-color:var(--charcoal); color:var(--charcoal);}
+  .nav-cta:hover{background:var(--gold); border-color:var(--gold); color:var(--charcoal);}
+  .burger{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; height:100vh; min-height:640px;
+    display:flex; align-items:flex-end;
+    overflow:hidden;
+    background:linear-gradient(180deg, rgba(20,17,14,0.35), rgba(15,13,11,0.72)), var(--charcoal);
+  }
+  .hero video, .hero .hero-fallback{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
+    opacity:0.9;
+  }
+  .hero .hero-fallback{
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(185,138,74,0.18), transparent 55%),
+      linear-gradient(140deg, #232848 0%, #181C32 55%, #0F1122 100%);
+  }
+  .hero::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,17,14,0.15) 0%, rgba(15,13,11,0.08) 40%, rgba(12,10,9,0.82) 100%);
+    z-index:1;
+  }
+  .hero-content{position:relative; z-index:2; width:100%; padding:0 var(--pad) 76px;}
+  .hero-label{
+    color:var(--gold-soft); font-size:11.5px; letter-spacing:0.26em; text-transform:uppercase;
+    margin-bottom:22px; opacity:0; animation:fadeUp 1s ease 0.3s forwards;
+  }
+  .hero h1{
+    color:var(--ivory); font-size:clamp(38px, 6.4vw, 92px); line-height:1.02; max-width:16ch;
+    font-weight:400; opacity:0; animation:fadeUp 1.1s ease 0.5s forwards;
+  }
+  .hero h1 em{font-style:italic; color:var(--gold-soft); font-weight:300;}
+  .hero p.sub{
+    color:rgba(244,239,228,0.78); font-size:17px; max-width:520px; margin-top:24px; line-height:1.6;
+    opacity:0; animation:fadeUp 1.1s ease 0.7s forwards;
+  }
+  .hero-ctas{display:flex; gap:16px; margin-top:38px; flex-wrap:wrap; opacity:0; animation:fadeUp 1.1s ease 0.9s forwards;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:15px 30px; font-size:12.5px; letter-spacing:0.09em; text-transform:uppercase;
+    border:1px solid transparent; transition:all 0.35s cubic-bezier(.4,0,.2,1); cursor:pointer;
+    font-family:var(--sans); font-weight:600;
+    border-radius:14px;
+    corner-shape:squircle;
+  }
+  .btn-gold{background:var(--gold); color:var(--charcoal);}
+  .btn-gold:hover{background:var(--gold-soft); transform:translateY(-2px);}
+  .btn-ghost{border-color:rgba(244,239,228,0.45); color:var(--ivory);}
+  .btn-ghost:hover{border-color:var(--ivory); background:rgba(244,239,228,0.08);}
+  .btn-dark{border-color:var(--charcoal); color:var(--charcoal);}
+  .btn-dark:hover{background:var(--charcoal); color:var(--ivory);}
+
+  .scroll-cue{
+    position:absolute; right:var(--pad); bottom:34px; z-index:2;
+    display:flex; align-items:center; gap:10px; color:rgba(244,239,228,0.6);
+    font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase;
+  }
+  .scroll-cue .line{width:1px; height:38px; background:rgba(244,239,228,0.4); position:relative; overflow:hidden;}
+  .scroll-cue .line::after{
+    content:""; position:absolute; top:-100%; left:0; width:100%; height:100%; background:var(--gold-soft);
+    animation:threadDrop 2.2s ease-in-out infinite;
+  }
+  @keyframes threadDrop{0%{top:-100%;} 60%{top:100%;} 100%{top:100%;}}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);}}
+
+  /* ---------- Signature thread rule ---------- */
+  .thread{
+    height:1px; background:var(--line); position:relative; overflow:hidden;
+    max-width:var(--max); margin:0 auto;
+  }
+  .thread .fill{
+    position:absolute; top:0; left:0; height:100%; width:0%;
+    background:linear-gradient(90deg, transparent, var(--gold), var(--gold-soft), transparent);
+  }
+  .thread.in .fill{width:100%; transition:width 1.6s cubic-bezier(.4,0,.2,1);}
+
+  section{padding:120px var(--pad); position:relative;}
+  .section-inner{max-width:var(--max); margin:0 auto;}
+  @media (max-width:768px){ section{padding:76px var(--pad);} }
+
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity 0.9s ease, transform 0.9s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- Intro ---------- */
+  .intro{background:var(--ivory);}
+  .intro-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:80px; align-items:start;}
+  .intro h2{font-size:clamp(30px,3.6vw,50px); line-height:1.18; font-weight:400;}
+  .intro h2 em{font-style:italic; color:var(--gold);}
+  .intro-copy p{font-size:16px; line-height:1.85; color:#454B72; margin:0 0 20px;}
+  .intro-copy{border-left:1px solid var(--line); padding-left:44px;}
+  @media (max-width:900px){ .intro-grid{grid-template-columns:1fr; gap:36px;} .intro-copy{border-left:none; padding-left:0; border-top:1px solid var(--line); padding-top:32px;} }
+
+  /* ---------- Stat strip ---------- */
+  .stats{background:var(--charcoal); color:var(--ivory);}
+  .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:40px;}
+  .stat-num{font-family:var(--serif); font-size:clamp(34px,4vw,58px); color:var(--gold-soft); font-weight:400; line-height:1;}
+  .stat-label{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,239,228,0.62); margin-top:12px; line-height:1.5;}
+  @media (max-width:900px){ .stats-grid{grid-template-columns:repeat(2,1fr); row-gap:44px;} }
+
+  /* ---------- Why Banaras ---------- */
+  .why{background:var(--raw-silk);}
+  .why-head{display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:64px; flex-wrap:wrap;}
+  .why-head h2{font-size:clamp(30px,3.6vw,50px); max-width:14ch; font-weight:400;}
+  .why-head p{max-width:380px; font-size:15px; line-height:1.75; color:#454B72;}
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);}
+  .why-card{background:var(--raw-silk); padding:44px 36px; transition:background 0.4s ease;}
+  .why-card:hover{background:#F4F5FB;}
+  .why-num{font-family:var(--serif); font-size:14px; color:var(--gold); letter-spacing:0.08em; margin-bottom:26px; display:block;}
+  .why-card h3{font-size:21px; font-weight:500; margin-bottom:14px; line-height:1.3;}
+  .why-card p{font-size:14.5px; line-height:1.7; color:#4E5480; margin:0;}
+  @media (max-width:900px){ .why-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Manufacturing timeline ---------- */
+  .process{background:var(--indigo); color:var(--ivory);}
+  .process .eyebrow{color:var(--gold-soft);}
+  .process .eyebrow::before{background:var(--gold-soft);}
+  .process-head{display:flex; justify-content:space-between; align-items:flex-end; gap:30px; flex-wrap:wrap; margin-bottom:60px;}
+  .process-head h2{font-size:clamp(30px,3.6vw,50px); font-weight:400; max-width:16ch;}
+  .process-scroll{
+    display:flex; gap:1px; overflow-x:auto; scroll-snap-type:x proximity;
+    background:rgba(244,239,228,0.14); border-radius:2px;
+    padding-bottom:6px;
+  }
+  .process-scroll::-webkit-scrollbar{height:5px;}
+  .process-scroll::-webkit-scrollbar-thumb{background:var(--gold); }
+  .process-step{
+    min-width:230px; scroll-snap-align:start; background:var(--indigo);
+    padding:32px 26px; flex-shrink:0; border-top:2px solid rgba(244,239,228,0.15);
+    transition:border-color 0.4s ease;
+  }
+  .process-step:hover{border-top-color:var(--gold);}
+  .process-step .pnum{font-family:var(--serif); font-size:13px; color:var(--gold-soft); letter-spacing:0.1em;}
+  .process-step h4{font-family:var(--serif); font-size:19px; font-weight:500; margin:16px 0 10px; color:var(--ivory);}
+  .process-step p{font-size:13px; line-height:1.65; color:rgba(244,239,228,0.62); margin:0;}
+
+  /* ---------- Categories ---------- */
+  .cats{background:var(--ivory);}
+  .cats-head{max-width:640px; margin-bottom:60px;}
+  .cats-head h2{font-size:clamp(30px,3.6vw,50px); font-weight:400;}
+  .cats-head p{font-size:15px; line-height:1.75; color:#454B72; margin-top:20px;}
+  .cats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
+  .cat-card{position:relative; aspect-ratio:3/4; overflow:hidden; background:#DDE1F2; cursor:pointer;}
+  .cat-card .ph{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(34,30,27,0.35);
+    background:linear-gradient(155deg, #E4E7F6, #C7CCE8);
+    transition:transform 0.7s cubic-bezier(.2,.8,.2,1);
+  }
+  .cat-card:hover .ph{transform:scale(1.08);}
+  .cat-card .overlay{
+    position:absolute; inset:0; background:linear-gradient(0deg, rgba(20,17,14,0.86) 0%, rgba(20,17,14,0.05) 55%);
+    display:flex; align-items:flex-end; padding:26px; z-index:1;
+  }
+  .cat-card .overlay-inner{color:var(--ivory);}
+  .cat-card .cat-tag{font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:8px; display:block;}
+  .cat-card h3{font-family:var(--serif); font-size:22px; font-weight:500;}
+  .cat-card .arrow{
+    position:absolute; top:22px; right:22px; width:34px; height:34px; border-radius:50%;
+    border:1px solid rgba(244,239,228,0.5); display:flex; align-items:center; justify-content:center;
+    color:var(--ivory); z-index:1; transition:all 0.35s ease; font-size:14px;
+  }
+  .cat-card:hover .arrow{background:var(--gold); border-color:var(--gold); color:var(--charcoal); transform:rotate(45deg);}
+  @media (max-width:1000px){ .cats-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .cats-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Craftsmanship / Split feature ---------- */
+  .feature-split{background:var(--charcoal); color:var(--ivory);}
+  .fs-grid{display:grid; grid-template-columns:1fr 1fr; gap:0; align-items:stretch;}
+  .fs-media{aspect-ratio:4/5; background:linear-gradient(150deg,#242A4A,#14172A); position:relative; overflow:hidden;}
+  .fs-media .ph{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:rgba(244,239,228,0.28); font-size:11px; letter-spacing:0.14em; text-transform:uppercase;}
+  .fs-copy{display:flex; flex-direction:column; justify-content:center; padding:60px;}
+  .fs-copy h2{font-size:clamp(28px,3.2vw,42px); font-weight:400; margin-bottom:24px; line-height:1.2;}
+  .fs-copy p{font-size:15.5px; line-height:1.85; color:rgba(244,239,228,0.68); margin:0 0 18px;}
+  @media (max-width:900px){ .fs-grid{grid-template-columns:1fr;} .fs-copy{padding:48px var(--pad);} }
+
+  /* ---------- Certifications ---------- */
+  .certs{background:var(--raw-silk);}
+  .certs-inner{display:flex; justify-content:space-between; align-items:center; gap:40px; flex-wrap:wrap;}
+  .certs-title{max-width:340px;}
+  .certs-title h2{font-size:clamp(26px,3vw,38px); font-weight:400;}
+  .cert-logos{display:flex; gap:44px; flex-wrap:wrap; align-items:center;}
+  .cert-badge{
+    width:96px; height:96px; border:1px solid var(--line); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    font-size:10px; letter-spacing:0.05em; text-transform:uppercase; color:#5C6390; padding:10px;
+    transition:all 0.35s ease;
+  }
+  .cert-badge:hover{border-color:var(--gold); color:var(--walnut); transform:translateY(-4px);}
+
+  /* ---------- Export map ---------- */
+  .export{background:var(--ivory);}
+  .export-grid{display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center;}
+  .export-copy h2{font-size:clamp(28px,3.4vw,44px); font-weight:400; line-height:1.2; margin-bottom:22px;}
+  .export-copy p{font-size:15.5px; line-height:1.8; color:#454B72; margin-bottom:26px;}
+  .export-list{display:grid; grid-template-columns:1fr 1fr; gap:10px 26px; margin:28px 0 32px; padding:0; list-style:none;}
+  .export-list li{font-size:13.5px; color:#454B72; padding:10px 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between;}
+  .export-list li span{color:var(--gold); font-family:var(--serif); font-style:italic;}
+  .map-ph{
+    aspect-ratio:1/1; border-radius:50%; border:1px dashed var(--stone);
+    display:flex; align-items:center; justify-content:center; position:relative;
+    background:radial-gradient(circle at 40% 35%, rgba(185,138,74,0.14), transparent 60%);
+  }
+  .map-ph span{font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--stone);}
+  @media (max-width:900px){ .export-grid{grid-template-columns:1fr; gap:44px;} }
+
+  /* ---------- Gallery preview ---------- */
+  .gallery{background:var(--charcoal); color:var(--ivory);}
+  .gallery-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:50px; flex-wrap:wrap; gap:24px;}
+  .gallery-head h2{font-size:clamp(28px,3.4vw,44px); font-weight:400;}
+  .gal-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:14px;}
+  .gal-item{aspect-ratio:3/4; background:linear-gradient(160deg,#232A4C,#161A2E); position:relative; overflow:hidden;}
+  .gal-item:nth-child(2), .gal-item:nth-child(5){aspect-ratio:3/4; margin-top:36px;}
+  .gal-item .ph{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:rgba(244,239,228,0.25); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; text-align:center; padding:10px;}
+  @media (max-width:900px){ .gal-grid{grid-template-columns:repeat(2,1fr);} .gal-item:nth-child(2), .gal-item:nth-child(5){margin-top:0;} }
+
+  /* ---------- Final CTA ---------- */
+  .enquire{background:var(--indigo); color:var(--ivory); text-align:center;}
+  .enquire-inner{max-width:760px; margin:0 auto;}
+  .enquire h2{font-size:clamp(32px,5vw,64px); font-weight:400; line-height:1.12;}
+  .enquire h2 em{font-style:italic; color:var(--gold-soft);}
+  .enquire p{font-size:16px; color:rgba(244,239,228,0.68); max-width:480px; margin:26px auto 40px; line-height:1.75;}
+  .enquire .btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--charcoal); color:rgba(244,239,228,0.72); padding:80px var(--pad) 30px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr 1fr; gap:40px; max-width:var(--max); margin:0 auto; padding-bottom:56px; border-bottom:1px solid rgba(244,239,228,0.12);}
+  .footer-brand h3{font-family:var(--serif); font-size:22px; color:var(--ivory); font-weight:500; margin-bottom:14px;}
+  .footer-brand p{font-size:13.5px; line-height:1.75; max-width:280px; color:rgba(244,239,228,0.55);}
+  .foot-col h4{font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:20px; font-weight:600;}
+  .foot-col a, .foot-col span{display:block; font-size:13.5px; margin-bottom:12px; color:rgba(244,239,228,0.7); transition:color 0.3s ease;}
+  .foot-col a:hover{color:var(--gold-soft);}
+  .foot-bottom{max-width:var(--max); margin:0 auto; padding-top:26px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-size:12px; color:rgba(244,239,228,0.4);}
+  @media (max-width:900px){ .footer-grid{grid-template-columns:1fr 1fr; row-gap:40px;} }
+
+  @media (max-width:860px){
+    nav.links, .nav-cta{display:none;}
+    .burger{display:block; color:var(--ivory); font-size:22px; cursor:pointer; background:none; border:none;}
+    header.site.scrolled .burger{color:var(--charcoal);}
+  }
+
+  /* ---------- Quality ---------- */
+  .quality{background:var(--ivory);}
+  .quality-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:70px; align-items:start;}
+  .quality-copy h2{font-size:clamp(28px,3.4vw,44px); font-weight:400; line-height:1.2; margin-bottom:20px;}
+  .quality-copy p{font-size:15.5px; line-height:1.8; color:#454B72;}
+  .quality-list{list-style:none; margin:0; padding:0;}
+  .quality-list li{
+    display:grid; grid-template-columns:28px 1fr; gap:18px;
+    padding:24px 0; border-bottom:1px solid var(--line);
+  }
+  .quality-list li:first-child{padding-top:0;}
+  .quality-list .qmark{font-family:var(--serif); font-style:italic; color:var(--gold); font-size:19px;}
+  .quality-list h4{font-family:var(--serif); font-weight:500; font-size:17px; margin:0 0 6px;}
+  .quality-list p{font-size:13.5px; color:#4E5480; line-height:1.65; margin:0;}
+  @media (max-width:900px){ .quality-grid{grid-template-columns:1fr; gap:36px;} }
+
+  /* ---------- Enquiry Form ---------- */
+  .form-section{background:var(--raw-silk);}
+  .form-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:70px; align-items:flex-start;}
+  .form-side h2{font-size:clamp(28px,3.4vw,44px); font-weight:400; line-height:1.2; margin-bottom:20px;}
+  .form-side p{font-size:15px; line-height:1.8; color:#454B72; margin-bottom:30px;}
+  .form-contact-line{display:flex; flex-direction:column; gap:14px; font-size:13.5px; color:#454B72; border-top:1px solid var(--line); padding-top:26px;}
+  .form-contact-line strong{color:var(--charcoal); font-weight:600; display:block; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--walnut); margin-bottom:3px;}
+
+  form.enquiry-form{display:grid; grid-template-columns:1fr 1fr; gap:22px 24px;}
+  .field{display:flex; flex-direction:column; gap:8px;}
+  .field.full{grid-column:1/-1;}
+  .field label{font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--walnut); font-weight:600;}
+  .field input, .field select, .field textarea{
+    background:transparent; border:none; border-bottom:1px solid rgba(34,30,27,0.3);
+    padding:10px 2px; font-family:var(--sans); font-size:14.5px; color:var(--charcoal);
+    outline:none; transition:border-color 0.3s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--gold);}
+  .field textarea{resize:vertical; min-height:90px;}
+  .field.file{border:1px dashed var(--stone); padding:18px; text-align:center; font-size:12.5px; color:var(--stone); cursor:pointer; transition:border-color 0.3s ease;}
+  .field.file:hover{border-color:var(--gold); color:var(--walnut);}
+  form.enquiry-form .submit-row{grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-top:6px;}
+  .form-note{font-size:12px; color:var(--stone); max-width:340px;}
+  @media (max-width:900px){ .form-grid{grid-template-columns:1fr; gap:40px;} form.enquiry-form{grid-template-columns:1fr;} }
+
+  /* ---------- Contact strip ---------- */
+  .contact-strip{background:var(--charcoal); color:var(--ivory);}
+  .contact-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:40px;}
+  .contact-col h4{font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:16px; font-weight:600;}
+  .contact-col p, .contact-col a{display:block; font-size:14px; line-height:1.8; color:rgba(244,239,228,0.7);}
+  .contact-col a:hover{color:var(--gold-soft);}
+  .map-strip{aspect-ratio:16/6; margin-top:14px; border:1px dashed rgba(244,239,228,0.25); display:flex; align-items:center; justify-content:center; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(244,239,228,0.35); grid-column:1/-1;}
+  @media (max-width:900px){ .contact-grid{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<header class="site" id="siteHeader">
+  <a href="#" class="logo">Banaras Silk Mfg. Co.<small>Est. 1924 · Varanasi</small></a>
+  <nav class="links">
+    <a href="#about">About</a>
+    <a href="#process">Manufacturing</a>
+    <a href="#categories">Categories</a>
+    <a href="#quality">Quality</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#export">Export</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a href="#contact" class="nav-cta">Enquire Now</a>
+  <button class="burger" aria-label="Menu">☰</button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- Placeholder: Desktop Hero Video (loom / handweaving footage), mobile variant swapped via media query in production -->
+  <div class="hero-fallback" aria-hidden="true"></div>
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="assets/hero-video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content">
+    <div class="hero-label">Star Export House · Varanasi, India</div>
+    <h1>A century at the loom.<br><em>Woven for the world.</em></h1>
+    <p class="sub">Since 1924, Banaras Silk Mfg. Co. has manufactured natural textiles for the world's most discerning interior and fashion houses — from handloom silk to export-ready private label collections.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-gold">Enquire Now</a>
+      <a href="#about" class="btn btn-ghost">Our Story</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<div class="thread" data-thread><div class="fill"></div></div>
+
+<!-- INTRO -->
+<section class="intro" id="about">
+  <div class="section-inner intro-grid">
+    <div class="reveal">
+      <div class="eyebrow">Since 1924</div>
+      <h2>Four generations.<br>One <em>loom</em>, unbroken.</h2>
+    </div>
+    <div class="intro-copy reveal">
+      <p>Banaras Silk Mfg. Co. was founded in 1924 on the banks of the Ganges, in a city whose weavers have shaped the world's understanding of fine silk for over a thousand years. What began as a single family workshop has grown, across four generations, into a Star Export House trusted by importers, buying houses and luxury brands across Europe, North America and East Asia.</p>
+      <p>We remain, deliberately, a manufacturer — not a marketplace. Every metre we produce is developed, woven, finished and inspected under one roof in Varanasi, combining traditional handloom knowledge with modern production discipline, so that our partners can build collections with confidence.</p>
+      <a href="#process" class="btn btn-dark" style="margin-top:8px;">Explore Our Manufacturing</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="section-inner">
+    <div class="stats-grid">
+      <div class="reveal"><div class="stat-num">1924</div><div class="stat-label">Year Established</div></div>
+      <div class="reveal"><div class="stat-num">4th</div><div class="stat-label">Generation Family-Run</div></div>
+      <div class="reveal"><div class="stat-num">40+</div><div class="stat-label">Export Markets Served</div></div>
+      <div class="reveal"><div class="stat-num">100%</div><div class="stat-label">In-House Manufacturing</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY BANARAS -->
+<section class="why">
+  <div class="section-inner">
+    <div class="why-head reveal">
+      <div>
+        <div class="eyebrow">Why Source From Us</div>
+        <h2>Craftsmanship you can build a collection on.</h2>
+      </div>
+      <p>Sourcing from India means access to the deepest reservoir of natural-fibre weaving knowledge in the world. Sourcing from us means that knowledge is disciplined into export-grade, repeatable manufacturing.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal"><span class="why-num">01</span><h3>Handloom Heritage</h3><p>Our artisans carry weaving knowledge passed down through generations of Banaras karigars, applied to both handloom and modern powerloom production.</p></div>
+      <div class="why-card reveal"><span class="why-num">02</span><h3>Vertical Manufacturing</h3><p>Yarn selection, weaving, dyeing, printing, embroidery and finishing all take place within our own facilities — full control, no subcontracted guesswork.</p></div>
+      <div class="why-card reveal"><span class="why-num">03</span><h3>Flexible & Custom</h3><p>From small sampling runs to full private-label production, we adapt width, weave, finish and packaging to each partner's specification.</p></div>
+      <div class="why-card reveal"><span class="why-num">04</span><h3>Natural Fibres First</h3><p>Silk, cotton, linen and natural blends form the core of our capability, reflecting a longstanding, sustainability-minded approach to material sourcing.</p></div>
+      <div class="why-card reveal"><span class="why-num">05</span><h3>Export Discipline</h3><p>Recognised as a Star Export House, with the documentation, quality systems and logistics experience international buyers require.</p></div>
+      <div class="why-card reveal"><span class="why-num">06</span><h3>A Trusted Partner</h3><p>Decades-long relationships with importers and buying houses across Europe, North America and Asia, many spanning multiple generations of our own family.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MANUFACTURING PROCESS -->
+<section class="process" id="process">
+  <div class="section-inner">
+    <div class="process-head reveal">
+      <div>
+        <div class="eyebrow">Manufacturing</div>
+        <h2>From raw fibre to export crate.</h2>
+      </div>
+      <p style="max-width:380px; font-size:14.5px; line-height:1.75; color:rgba(244,239,228,0.62);">Twelve stages, refined over a century, carried out entirely within our own facilities in Varanasi.</p>
+    </div>
+    <div class="process-scroll reveal">
+      <div class="process-step"><span class="pnum">01</span><h4>Raw Material</h4><p>Natural fibres — mulberry silk, cotton, linen — sourced and graded for consistency before entering production.</p></div>
+      <div class="process-step"><span class="pnum">02</span><h4>Yarn Selection</h4><p>Yarns are selected and tested for count, twist and strength to match the intended weave and end use.</p></div>
+      <div class="process-step"><span class="pnum">03</span><h4>Warping</h4><p>Thousands of warp threads are aligned with precision, setting the foundation for every metre woven.</p></div>
+      <div class="process-step"><span class="pnum">04</span><h4>Handloom</h4><p>Skilled karigars weave fine and complex constructions by hand, preserving techniques unique to Banaras.</p></div>
+      <div class="process-step"><span class="pnum">05</span><h4>Powerloom</h4><p>Modern looms produce volume fabrics with the consistency export orders demand, without sacrificing hand-feel.</p></div>
+      <div class="process-step"><span class="pnum">06</span><h4>Dyeing</h4><p>Colour is matched to international standards and tested for fastness across light, wash and rub.</p></div>
+      <div class="process-step"><span class="pnum">07</span><h4>Printing</h4><p>Traditional and digital printing techniques bring pattern and detail to base cloth with exacting registration.</p></div>
+      <div class="process-step"><span class="pnum">08</span><h4>Embroidery</h4><p>Hand and machine embroidery add texture and value, from fine zari work to contemporary embellishment.</p></div>
+      <div class="process-step"><span class="pnum">09</span><h4>Finishing</h4><p>Washing, calendaring and specialist finishes prepare fabric for its final application and market.</p></div>
+      <div class="process-step"><span class="pnum">10</span><h4>Inspection</h4><p>Every roll passes through multi-point quality inspection against buyer-specific AQL standards.</p></div>
+      <div class="process-step"><span class="pnum">11</span><h4>Packing</h4><p>Goods are packed to destination-market specification, protecting fabric integrity in transit.</p></div>
+      <div class="process-step"><span class="pnum">12</span><h4>Export</h4><p>Documentation, compliance and logistics are managed in-house for reliable delivery worldwide.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="cats" id="categories">
+  <div class="section-inner">
+    <div class="cats-head reveal">
+      <div class="eyebrow">Manufacturing Capabilities</div>
+      <h2>What we manufacture</h2>
+      <p>Four capability groups, each developed to export standard — available for private label, OEM and ODM production.</p>
+    </div>
+    <div class="cats-grid">
+      <a href="#contact" class="cat-card reveal">
+        <div class="ph">Running Fabrics</div>
+        <div class="arrow">↗</div>
+        <div class="overlay"><div class="overlay-inner"><span class="cat-tag">01</span><h3>Running Fabrics</h3></div></div>
+      </a>
+      <a href="#contact" class="cat-card reveal">
+        <div class="ph">Home Furnishings</div>
+        <div class="arrow">↗</div>
+        <div class="overlay"><div class="overlay-inner"><span class="cat-tag">02</span><h3>Home Furnishings</h3></div></div>
+      </a>
+      <a href="#contact" class="cat-card reveal">
+        <div class="ph">Apparel</div>
+        <div class="arrow">↗</div>
+        <div class="overlay"><div class="overlay-inner"><span class="cat-tag">03</span><h3>Apparel</h3></div></div>
+      </a>
+      <a href="#contact" class="cat-card reveal">
+        <div class="ph">Accessories</div>
+        <div class="arrow">↗</div>
+        <div class="overlay"><div class="overlay-inner"><span class="cat-tag">04</span><h3>Accessories</h3></div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CRAFTSMANSHIP SPLIT -->
+<section class="feature-split">
+  <div class="fs-grid">
+    <div class="fs-media reveal"><div class="ph">Handloom Weaving — Editorial Photography</div></div>
+    <div class="fs-copy reveal">
+      <div class="eyebrow">Why Indian Silk</div>
+      <h2>The fibre that travelled the world before trade routes had names.</h2>
+      <p>Indian silk, and Banaras silk in particular, has been documented and admired by travellers and historians for centuries — carried along the Silk Route, sought after in the courts of Europe and Central Asia, and prized for a lustre and hand-feel that natural mulberry, tussar, eri and muga silks are still known for today.</p>
+      <p>That reputation was not built on marketing. It was built on generations of weavers who understood fibre, tension and finish in a way no machine has fully replicated. It is the same knowledge our looms draw on today.</p>
+      <a href="#about" class="btn btn-ghost" style="margin-top:10px;">Read Our Heritage</a>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY -->
+<section class="quality" id="quality">
+  <div class="section-inner quality-grid">
+    <div class="quality-copy reveal">
+      <div class="eyebrow">Quality Assurance</div>
+      <h2>Consistency, verified at every stage.</h2>
+      <p>Quality is not a final check — it is designed into every stage of our process, from yarn selection through to the last inspection before packing. Our systems are built to meet the AQL standards, testing protocols and documentation that international buyers require.</p>
+    </div>
+    <ul class="quality-list reveal">
+      <li><span class="qmark">01</span><div><h4>In-Process Inspection</h4><p>Fabric is checked at every production stage, not only at the end, so faults are caught before value is added.</p></div></li>
+      <li><span class="qmark">02</span><div><h4>Lab Testing</h4><p>Colour fastness, shrinkage, tensile strength and composition are tested against buyer and international standards.</p></div></li>
+      <li><span class="qmark">03</span><div><h4>AQL-Based Final Inspection</h4><p>Finished goods are inspected to agreed AQL levels prior to packing, with reports available on request.</p></div></li>
+      <li><span class="qmark">04</span><div><h4>Consistency Across Runs</h4><p>Documented processes and trained supervisors keep quality consistent between sample and bulk production.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs" id="certifications">
+  <div class="section-inner certs-inner">
+    <div class="certs-title reveal">
+      <div class="eyebrow">Trust & Compliance</div>
+      <h2>Certified for international trade.</h2>
+    </div>
+    <div class="cert-logos reveal">
+      <div class="cert-badge">Star Export House</div>
+      <div class="cert-badge">ISO 9001</div>
+      <div class="cert-badge">OEKO-TEX</div>
+      <div class="cert-badge">GOTS</div>
+      <div class="cert-badge">Silk Mark</div>
+      <div class="cert-badge">SEDEX</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPORT -->
+<section class="export" id="export">
+  <div class="section-inner export-grid">
+    <div class="export-copy reveal">
+      <div class="eyebrow">Global Presence</div>
+      <h2>Manufactured in Varanasi. Trusted worldwide.</h2>
+      <p>Our fabrics and finished textiles ship to importers, buying houses and luxury brands across four continents. We support private label, OEM and ODM programmes with sampling, flexible MOQs and destination-ready documentation.</p>
+      <ul class="export-list">
+        <li>Europe <span>Primary Market</span></li>
+        <li>North America <span>Established</span></li>
+        <li>East Asia <span>Established</span></li>
+        <li>Middle East <span>Growing</span></li>
+      </ul>
+      <a href="#contact" class="btn btn-dark">Request Export Information</a>
+    </div>
+    <div class="map-ph reveal"><span>Interactive Export Map<br>(Admin-Editable)</span></div>
+  </div>
+</section>
+
+<!-- GALLERY PREVIEW -->
+<section class="gallery">
+  <div class="section-inner">
+    <div class="gallery-head reveal">
+      <div>
+        <div class="eyebrow">Gallery</div>
+        <h2>Factory, fibre and finished cloth.</h2>
+      </div>
+    </div>
+    <div class="gal-grid">
+      <div class="gal-item reveal"><div class="ph">Factory Floor</div></div>
+      <div class="gal-item reveal"><div class="ph">Artisans at Loom</div></div>
+      <div class="gal-item reveal"><div class="ph">Raw Silk Yarn</div></div>
+      <div class="gal-item reveal"><div class="ph">Fabric Macro</div></div>
+      <div class="gal-item reveal"><div class="ph">Finished Textiles</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL ENQUIRY -->
+<section class="enquire" id="contact">
+  <div class="section-inner enquire-inner reveal">
+    <div class="eyebrow" style="justify-content:center;">Start a Conversation</div>
+    <h2>Let's manufacture your <em>next collection</em>.</h2>
+    <p>Tell us about your brand and requirements — our team responds to every qualified enquiry within two business days.</p>
+    <div class="btn-row">
+      <a href="#contact" class="btn btn-gold">Enquire Now</a>
+      <a href="#contact" class="btn btn-ghost">Request Fabric Swatches</a>
+      <a href="#contact" class="btn btn-ghost">Request a Meeting</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>Banaras Silk Mfg. Co.</h3>
+      <p>A Star Export House manufacturing natural textiles from Varanasi, India, since 1924. OEM, ODM and private label production for the world's finest brands.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Company</h4>
+      <a href="#about">About</a>
+      <a href="#process">Manufacturing</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="foot-col">
+      <h4>Capabilities</h4>
+      <a href="#categories">Running Fabrics</a>
+      <a href="#categories">Home Furnishings</a>
+      <a href="#categories">Apparel</a>
+      <a href="#categories">Accessories</a>
+    </div>
+    <div class="foot-col">
+      <h4>Resources</h4>
+      <a href="#quality">Quality Assurance</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#export">Export Info</a>
+    </div>
+    <div class="foot-col">
+      <h4>Contact</h4>
+      <span>Varanasi, India</span>
+      <span>export@banarassilk.co</span>
+      <span>+91 (000) 000‑0000</span>
+      <span>WhatsApp</span>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Banaras Silk Mfg. Co. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const threadIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); threadIo.unobserve(e.target); } });
+  }, {threshold:0.5});
+  document.querySelectorAll('[data-thread]').forEach(el => threadIo.observe(el));
+</script>
+
+</body>
+</html>
