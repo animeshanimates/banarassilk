@@ -346,6 +346,29 @@
   .stat-num{font-family:var(--serif); font-size:clamp(34px,4vw,58px); color:var(--gold-soft); font-weight:400; line-height:1;}
   .stat-label{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,239,228,0.62); margin-top:12px; line-height:1.5;}
 
+  /* CRAFT SCROLL-SCRUB */
+  .scrub{position:relative; height:700vh; background:var(--charcoal);}
+  .scrub-sticky{position:sticky; top:0; height:100vh; height:100dvh; width:100%; overflow:hidden; display:flex; align-items:center; justify-content:center; background:#000;}
+  .scrub-canvas{width:100%; height:100%; display:block; object-fit:cover;}
+  .scrub-vignette{position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(10,29,61,0.55) 0%, rgba(10,29,61,0) 22%, rgba(10,29,61,0) 62%, rgba(10,29,61,0.75) 100%);}
+  .scrub-caption{position:absolute; left:0; right:0; bottom:clamp(56px,10vh,110px); padding:0 var(--pad); max-width:640px; color:var(--ivory); pointer-events:none; transition:opacity 0.3s ease;}
+  .scrub-num{font-family:var(--serif); font-style:italic; font-size:14px; color:var(--gold-soft); letter-spacing:0.06em; display:block; margin-bottom:8px; opacity:0.9;}
+  .scrub-caption h3{font-size:clamp(24px,3.4vw,38px); margin-bottom:10px; color:var(--ivory); text-shadow:0 2px 18px rgba(0,0,0,0.4);}
+  .scrub-caption p{font-size:14.5px; line-height:1.7; color:rgba(244,239,228,0.85); max-width:460px; text-shadow:0 1px 12px rgba(0,0,0,0.4);}
+  .scrub-dots{position:absolute; right:var(--pad); top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px; z-index:2;}
+  .scrub-dots .dot{width:6px; height:6px; border-radius:50%; background:rgba(244,239,228,0.28); transition:background 0.3s, transform 0.3s;}
+  .scrub-dots .dot.active{background:var(--gold-soft); transform:scale(1.5);}
+  .scrub-loader{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; background:var(--charcoal); color:rgba(244,239,228,0.7); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; z-index:5; transition:opacity 0.5s ease; }
+  .scrub-loader.hidden{opacity:0; pointer-events:none;}
+  .scrub-loader-bar{width:160px; height:2px; background:rgba(244,239,228,0.15); border-radius:2px; overflow:hidden;}
+  .scrub-loader-fill{height:100%; width:0%; background:var(--gold-soft); transition:width 0.2s ease;}
+  .scrub-cta{padding-top:40px; text-align:center;}
+  @media (max-width:720px){
+    .scrub{height:600vh;}
+    .scrub-caption{bottom:64px;}
+    .scrub-dots{display:none;}
+  }
+
   /* SCROLL-VELOCITY MARQUEE */
   .velocity-marquee{background:var(--charcoal); color:var(--ivory); border-top:1px solid rgba(244,239,228,0.1); border-bottom:1px solid rgba(244,239,228,0.1); padding:22px 0; overflow:hidden;}
   .velocity-row{width:100%; overflow:hidden; white-space:nowrap;}
@@ -943,7 +966,158 @@
 })();
 </script>
 
-<!-- WHY BANARAS -->
+<script>
+/* Craft scroll-scrub: pins a canvas while scrolling through the "Our Craft"
+   section and paints a preloaded frame sequence, mapping scroll progress
+   through the pinned track to a frame index. Cover-fits every frame to the
+   canvas box each draw, so it looks right whether the box is tall/narrow
+   (mobile) or wide/short (desktop) without separate code paths. */
+(function(){
+  var STAGES = [
+    { num:'01', titleKey:'jt01_h', descKey:'jt01_p', title:'The Cocoon', desc:'Mulberry silk cocoons are hand-selected for quality, the raw material from which every thread of our fabric begins.' },
+    { num:'02', titleKey:'jt02_h', descKey:'jt02_p', title:'Reeling', desc:'Cocoons are gently unwound into fine, continuous filaments of raw silk, a delicate process demanding a trained hand.' },
+    { num:'03', titleKey:'jt03_h', descKey:'jt03_p', title:'Dyeing', desc:'Raw yarn is dyed by hand in small batches, achieving the rich, saturated colours our fabrics are known for.' },
+    { num:'04', titleKey:'jt04_h', descKey:'jt04_p', title:'Handloom Weaving', desc:'Master weavers set each thread on the loom by hand, turning dyed yarn into intricate Banarasi fabric, motif by motif.' },
+    { num:'05', titleKey:'jt05_h', descKey:'jt05_p', title:'Finishing & Quality Check', desc:'Every metre is inspected, washed and pressed by hand, checked against export-grade standards before it leaves the floor.' },
+    { num:'06', titleKey:'jt06_h', descKey:'jt06_p', title:'Cutting & Stitching', desc:'Finished fabric is cut and stitched into the final garment, ready to be worn.' },
+    { num:'07', titleKey:'jt07_h', descKey:'jt07_p', title:'The Runway', desc:'From a single cocoon to a garment walking the world\u2019s biggest stages. This is the journey behind every collection we manufacture.' }
+  ];
+
+  function init(){
+    var section = document.getElementById('craftScrub');
+    if(!section) return;
+    var canvas = document.getElementById('craftCanvas');
+    var ctx = canvas.getContext('2d');
+    var loader = document.getElementById('scrubLoader');
+    var loaderFill = document.getElementById('scrubLoaderFill');
+    var captionEl = document.getElementById('scrubCaption');
+    var numEl = document.getElementById('scrubNum');
+    var titleEl = document.getElementById('scrubTitle');
+    var descEl = document.getElementById('scrubDesc');
+    var dotsWrap = document.getElementById('scrubDots');
+
+    var frameCount = parseInt(section.getAttribute('data-frame-count'), 10) || 1;
+    var base = section.getAttribute('data-frame-base') || '';
+    var pad = parseInt(section.getAttribute('data-frame-pad'), 10) || 4;
+    var ext = section.getAttribute('data-frame-ext') || '.jpg';
+
+    function framePath(i){
+      var s = String(i);
+      while(s.length < pad) s = '0' + s;
+      return base + s + ext;
+    }
+
+    // Build dot indicators, one per stage.
+    STAGES.forEach(function(){
+      var d = document.createElement('div');
+      d.className = 'dot';
+      dotsWrap.appendChild(d);
+    });
+    var dots = dotsWrap.querySelectorAll('.dot');
+
+    var images = new Array(frameCount);
+    var loadedCount = 0;
+    var currentFrame = -1;
+    var currentStageIdx = -1;
+    var ready = false;
+
+    function drawFrame(idx){
+      var img = images[idx];
+      if(!img || !img.complete || !img.naturalWidth) return;
+      var cw = canvas.width, ch = canvas.height;
+      var iw = img.naturalWidth, ih = img.naturalHeight;
+      var scale = Math.max(cw / iw, ch / ih); // cover-fit
+      var dw = iw * scale, dh = ih * scale;
+      var dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(img, dx, dy, dw, dh);
+    }
+
+    function resizeCanvas(){
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+      if(currentFrame >= 0) drawFrame(currentFrame);
+    }
+
+    function updateCaption(stageIdx){
+      if(stageIdx === currentStageIdx) return;
+      currentStageIdx = stageIdx;
+      var s = STAGES[stageIdx];
+      captionEl.style.opacity = '0';
+      setTimeout(function(){
+        numEl.textContent = s.num;
+        titleEl.textContent = s.title;
+        descEl.textContent = s.desc;
+        captionEl.style.opacity = '1';
+      }, 140);
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === stageIdx); });
+    }
+
+    function onScroll(){
+      var rect = section.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if(total <= 0) return;
+      var progress = Math.min(1, Math.max(0, -rect.top / total));
+      var frameIdx = Math.min(frameCount - 1, Math.floor(progress * frameCount));
+      if(frameIdx !== currentFrame){
+        currentFrame = frameIdx;
+        if(ready) drawFrame(currentFrame);
+      }
+      var stageIdx = Math.min(STAGES.length - 1, Math.floor(progress * STAGES.length));
+      updateCaption(stageIdx);
+    }
+
+    // Preload: show frame 1 as soon as it's ready, then stream the rest in
+    // the background so scrubbing is smooth once the user reaches the section.
+    function loadAll(){
+      var firstDone = false;
+      for(var i = 0; i < frameCount; i++){
+        (function(i){
+          var img = new Image();
+          img.onload = img.onerror = function(){
+            loadedCount++;
+            loaderFill.style.width = Math.round((loadedCount / frameCount) * 100) + '%';
+            if(i === 0 && !firstDone){
+              firstDone = true;
+              ready = true;
+              currentFrame = 0;
+              resizeCanvas();
+              onScroll();
+            }
+            if(loadedCount >= frameCount){
+              loader.classList.add('hidden');
+            }
+          };
+          img.src = framePath(i + 1);
+          images[i] = img;
+        })(i);
+      }
+    }
+
+    var io = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){
+        loadAll();
+        io.disconnect();
+      }
+    }, { rootMargin: '600px 0px' });
+    io.observe(section);
+
+    window.addEventListener('resize', resizeCanvas, { passive:true });
+    window.addEventListener('scroll', onScroll, { passive:true });
+    resizeCanvas();
+    updateCaption(0);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
 <section class="why">
   <div class="section-inner">
     <div class="why-head reveal">
@@ -1112,112 +1286,31 @@
       <h2 data-i18n="journey_h2">From cocoon to catwalk.</h2>
       <p data-i18n="journey_lead">Every thread begins in nature and ends on the runway. Seven stages of craftsmanship, largely unchanged for five generations, turn a raw silk cocoon into a garment that walks the world's biggest stages.</p>
     </div>
-    <div class="journey-track">
+  </div>
 
-      <div class="journey-step reveal">
-        <div class="journey-photo ph-cocoon">
-          <!-- Replace with: images/journey/01-cocoon.jpg — see shot list, image 1 -->
-          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><ellipse cx="24" cy="26" rx="14" ry="10"/><path d="M14 22c2-6 6-10 10-10s8 4 10 10" stroke-linecap="round"/></svg>
-          <div class="ph-caption" data-i18n="jt01_cap">Photo needed · Raw cocoons</div>
-        </div>
-        <div class="journey-copy">
-          <span class="journey-num">01</span>
-          <h3 data-i18n="jt01_h">The Cocoon</h3>
-          <p data-i18n="jt01_p">Mulberry silk cocoons are hand-selected for quality, the raw material from which every thread of our fabric begins.</p>
-        </div>
+  <div class="scrub" id="craftScrub" data-frame-count="190" data-frame-base="assets/journey/frame_" data-frame-pad="4" data-frame-ext=".jpg">
+    <div class="scrub-sticky">
+      <canvas class="scrub-canvas" id="craftCanvas" aria-label="Silk manufacturing process, from raw cocoon to finished garment on the runway"></canvas>
+      <div class="scrub-vignette" aria-hidden="true"></div>
+
+      <div class="scrub-caption" id="scrubCaption">
+        <span class="scrub-num" id="scrubNum">01</span>
+        <h3 id="scrubTitle" data-i18n="jt01_h">The Cocoon</h3>
+        <p id="scrubDesc" data-i18n="jt01_p">Mulberry silk cocoons are hand-selected for quality, the raw material from which every thread of our fabric begins.</p>
       </div>
 
-      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="scrub-dots" id="scrubDots" aria-hidden="true"></div>
 
-      <div class="journey-step reveal">
-        <div class="journey-photo ph-reeling">
-          <!-- Replace with: images/journey/02-reeling.jpg — see shot list, image 2 -->
-          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><circle cx="24" cy="24" r="15"/><path d="M24 9v30M9 24h30" stroke-dasharray="2 4"/></svg>
-          <div class="ph-caption" data-i18n="jt02_cap">Photo needed · Reeling silk thread</div>
-        </div>
-        <div class="journey-copy">
-          <span class="journey-num">02</span>
-          <h3 data-i18n="jt02_h">Reeling</h3>
-          <p data-i18n="jt02_p">Cocoons are gently unwound into fine, continuous filaments of raw silk, a delicate process demanding a trained hand.</p>
-        </div>
+      <div class="scrub-loader" id="scrubLoader">
+        <div class="scrub-loader-bar"><div class="scrub-loader-fill" id="scrubLoaderFill"></div></div>
+        <span data-i18n="scrub_loading">Loading the journey…</span>
       </div>
+    </div>
+  </div>
 
-      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-      <div class="journey-step reveal">
-        <div class="journey-photo ph-dyeing">
-          <!-- Replace with: images/journey/03-dyeing.jpg — see shot list, image 3 -->
-          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><path d="M24 6c6 8 10 14 10 20a10 10 0 0 1-20 0c0-6 4-12 10-20z"/></svg>
-          <div class="ph-caption" data-i18n="jt03_cap">Photo needed · Dyeing yarn</div>
-        </div>
-        <div class="journey-copy">
-          <span class="journey-num">03</span>
-          <h3 data-i18n="jt03_h">Dyeing</h3>
-          <p data-i18n="jt03_p">Raw yarn is dyed by hand in small batches, achieving the rich, saturated colours our fabrics are known for.</p>
-        </div>
-      </div>
-
-      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-      <div class="journey-step reveal">
-        <div class="journey-photo ph-weaving">
-          <!-- Replace with: images/journey/04-weaving.jpg — see shot list, image 4 -->
-          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><rect x="8" y="8" width="32" height="32" rx="2"/><path d="M8 16h32M8 24h32M8 32h32M16 8v32M24 8v32M32 8v32"/></svg>
-          <div class="ph-caption" data-i18n="jt04_cap">Photo needed · Handloom weaving</div>
-        </div>
-        <div class="journey-copy">
-          <span class="journey-num">04</span>
-          <h3 data-i18n="jt04_h">Handloom Weaving</h3>
-          <p data-i18n="jt04_p">Master weavers set each thread on the loom by hand, turning dyed yarn into intricate Banarasi fabric, motif by motif.</p>
-        </div>
-      </div>
-
-      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-      <div class="journey-step reveal">
-        <div class="journey-photo ph-finishing">
-          <!-- Replace with: images/journey/05-finishing.jpg — see shot list, image 5 -->
-          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><path d="M10 38l8-8M14 10l24 24-6 6L8 16z"/><circle cx="12" cy="14" r="2.4"/></svg>
-          <div class="ph-caption" data-i18n="jt05_cap">Photo needed · Finishing & quality check</div>
-        </div>
-        <div class="journey-copy">
-          <span class="journey-num">05</span>
-          <h3 data-i18n="jt05_h">Finishing &amp; Quality Check</h3>
-          <p data-i18n="jt05_p">Every metre is inspected, washed and pressed by hand, checked against export-grade standards before it leaves the floor.</p>
-        </div>
-      </div>
-
-      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-      <div class="journey-step reveal">
-        <div class="journey-photo ph-stitching">
-          <!-- Replace with: images/journey/06-stitching.jpg — see shot list, image 6 -->
-          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><circle cx="16" cy="14" r="4"/><circle cx="16" cy="34" r="4"/><path d="M18 17l16 20M18 31l16-20"/></svg>
-          <div class="ph-caption" data-i18n="jt06_cap">Photo needed · Cutting & stitching</div>
-        </div>
-        <div class="journey-copy">
-          <span class="journey-num">06</span>
-          <h3 data-i18n="jt06_h">Cutting &amp; Stitching</h3>
-          <p data-i18n="jt06_p">Finished fabric is cut and stitched into the final garment, ready to be worn.</p>
-        </div>
-      </div>
-
-      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-      <div class="journey-step finale reveal">
-        <div class="journey-photo ph-runway">
-          <!-- Replace with: images/journey/07-runway.jpg — see shot list, image 7 -->
-          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><circle cx="24" cy="10" r="4"/><path d="M24 14v14M24 20l-8 6M24 20l8 6M18 44l6-10 6 10" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div class="ph-caption" data-i18n="jt07_cap">Photo needed · Model on the ramp</div>
-        </div>
-        <div class="journey-copy">
-          <span class="journey-num">07</span>
-          <h3 data-i18n="jt07_h">The Runway</h3>
-          <p data-i18n="jt07_p">From a single cocoon to a garment walking the world's biggest stages. This is the journey behind every collection we manufacture.</p>
-          <a href="#contact" class="btn btn-dark" data-i18n="start_collection">Start Your Collection</a>
-        </div>
-      </div>
-
+  <div class="section-inner">
+    <div class="scrub-cta reveal">
+      <a href="#contact" class="btn btn-dark" data-i18n="start_collection">Start Your Collection</a>
     </div>
   </div>
 </section>
