@@ -115,6 +115,33 @@
   .nav-cta:hover{background:var(--gold); border-color:var(--gold); color:var(--charcoal);}
   .burger{display:none;}
 
+  /* ---------- Language switch ---------- */
+  .lang-switch{
+    display:flex; align-items:center; padding:0; margin-left:6px;
+  }
+  .lang-switch select{
+    appearance:none; -webkit-appearance:none; cursor:pointer;
+    font-family:var(--sans); font-size:11px; letter-spacing:0.04em;
+    padding:7px 26px 7px 14px; border-radius:20px;
+    border:1px solid rgba(244,239,228,0.35);
+    background:transparent
+      url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%23F4EFE4' d='M5.5 7.5l4.5 4.5 4.5-4.5z'/%3E%3C/svg%3E")
+      no-repeat right 8px center;
+    background-size:11px;
+    color:var(--ivory); transition:all 0.25s ease;
+  }
+  .lang-switch select option{ color:var(--charcoal); background:var(--ivory); }
+  header.site.scrolled .lang-switch select{
+    border-color:rgba(10,29,61,0.18); color:var(--charcoal);
+    background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%230A1D3D' d='M5.5 7.5l4.5 4.5 4.5-4.5z'/%3E%3C/svg%3E");
+  }
+  .lang-switch select:hover{border-color:var(--gold);}
+  .mm-lang-switch{ align-self:flex-start; margin:4px 0 18px; }
+  .mm-lang-switch select{ border-color:rgba(10,29,61,0.18); color:var(--charcoal);
+    background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%230A1D3D' d='M5.5 7.5l4.5 4.5 4.5-4.5z'/%3E%3C/svg%3E");
+  }
+  @media (max-width:900px){ .lang-switch{display:none;} }
+
   /* ---------- Mobile menu ---------- */
   .burger{
     position:relative; z-index:210;
@@ -362,7 +389,10 @@
   .cats-head h2{font-size:clamp(30px,3.6vw,50px); font-weight:400;}
   .cats-head p{font-size:15px; line-height:1.75; color:#3D5480; margin-top:20px;}
   .cats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
-  .cat-card{position:relative; aspect-ratio:3/4.4; overflow:hidden; background:#DDE1F2; cursor:pointer;}
+  .cat-card{
+    position:relative; aspect-ratio:3/4.4; overflow:hidden; background:#DDE1F2; cursor:pointer;
+    display:block; width:100%; border:none; padding:0; margin:0; font:inherit; text-align:left; -webkit-appearance:none; appearance:none;
+  }
   .cat-card .ph{
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
     font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(34,30,27,0.35);
@@ -389,6 +419,41 @@
   @media (max-width:1000px){ .cats-grid{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:560px){ .cats-grid{grid-template-columns:1fr;} }
 
+  /* ---------- Category gallery modal (20-image grid) ---------- */
+  .gallery-modal{position:fixed; inset:0; z-index:10200; display:none;}
+  .gallery-modal.open{display:block;}
+  .gallery-modal-backdrop{position:absolute; inset:0; background:rgba(9,17,36,0.82); backdrop-filter:blur(3px); opacity:0; transition:opacity 0.3s ease;}
+  .gallery-modal.open .gallery-modal-backdrop{opacity:1;}
+  .gallery-modal-panel{
+    position:relative; z-index:1; max-width:960px; margin:5vh auto; max-height:90vh; overflow-y:auto;
+    background:var(--ivory); border-radius:10px; padding:40px 40px 34px;
+    opacity:0; transform:translateY(18px) scale(0.98); transition:opacity 0.3s ease, transform 0.3s ease;
+  }
+  .gallery-modal.open .gallery-modal-panel{opacity:1; transform:translateY(0) scale(1);}
+  .gallery-modal-close{
+    position:absolute; top:18px; right:18px; width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--line); background:rgba(10,29,61,0.04); display:flex; align-items:center; justify-content:center;
+    color:var(--charcoal); cursor:pointer; transition:all 0.25s ease; z-index:2;
+  }
+  .gallery-modal-close svg{width:18px; height:18px; display:block;}
+  .gallery-modal-close:hover{border-color:var(--gold); background:var(--gold); color:var(--charcoal); transform:rotate(90deg);}
+  .gallery-modal-head{max-width:560px; margin-bottom:26px;}
+  .gallery-modal-head .cat-tag{font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; display:block;}
+  .gallery-modal-head h3{font-family:var(--serif); font-size:clamp(24px,3vw,32px); font-weight:500; color:var(--charcoal); margin-bottom:8px;}
+  .gallery-modal-head p{font-size:14px; line-height:1.7; color:#3D5480;}
+  .gallery-modal-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:30px;}
+  .gallery-thumb{
+    position:relative; aspect-ratio:1; border-radius:6px; overflow:hidden;
+    background:linear-gradient(155deg,#EFE6D2,#E4D8BE); display:flex; align-items:center; justify-content:center;
+  }
+  .gallery-thumb span{font-size:10px; letter-spacing:0.06em; color:var(--walnut); opacity:0.55;}
+  .gallery-thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+  .gallery-modal-cta{display:inline-block;}
+  @media (max-width:760px){
+    .gallery-modal-panel{margin:0; max-height:100vh; height:100%; border-radius:0; padding:70px 20px 30px;}
+    .gallery-modal-grid{grid-template-columns:repeat(3,1fr);}
+  }
+
   /* ---------- Craftsmanship / Split feature ---------- */
   .feature-split{background:var(--charcoal); color:var(--ivory);}
   .fs-grid{display:grid; grid-template-columns:1fr 1fr; gap:0; align-items:stretch;}
@@ -399,28 +464,51 @@
   .fs-copy p{font-size:15.5px; line-height:1.85; color:rgba(244,239,228,0.68); margin:0 0 18px;}
   @media (max-width:900px){ .fs-grid{grid-template-columns:1fr;} .fs-copy{padding:48px var(--pad);} }
 
-  /* ---------- Certifications ---------- */
-  .certs{background:var(--raw-silk);}
-  .certs-inner{display:flex; justify-content:space-between; align-items:center; gap:40px; flex-wrap:wrap;}
-  .certs-title{max-width:340px;}
-  .certs-title h2{font-size:clamp(26px,3vw,38px); font-weight:400;}
-  .cert-logos{display:flex; gap:44px; flex-wrap:wrap; align-items:center;}
-  .cert-badge{
-    width:96px; height:96px; border:1px solid var(--line); border-radius:50%;
-    display:flex; align-items:center; justify-content:center; text-align:center;
-    font-size:10px; letter-spacing:0.05em; text-transform:uppercase; color:#4F6796; padding:10px;
-    transition:all 0.35s ease;
+  /* ---------- Journey: Cocoon to Catwalk ---------- */
+  .journey{background:var(--raw-silk); overflow:hidden;}
+  .journey-title{max-width:640px; margin:0 auto 64px; text-align:center;}
+  .journey-title h2{font-size:clamp(28px,3.6vw,46px); font-weight:400; margin:14px 0 16px;}
+  .journey-title p{font-size:15.5px; line-height:1.75; color:#3D5480;}
+  .journey-track{position:relative; display:flex; flex-direction:column; max-width:920px; margin:0 auto;}
+  .journey-step{display:flex; align-items:center; gap:48px;}
+  .journey-step:nth-child(4n+3){flex-direction:row-reverse;}
+  .journey-photo{
+    flex:0 0 240px; width:240px; height:240px; border-radius:10px;
+    border:1px dashed rgba(61,84,128,0.35); background:linear-gradient(155deg,#EFE6D2,#E4D8BE);
+    display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
   }
-  .cert-badge:hover{border-color:var(--gold); color:var(--walnut); transform:translateY(-4px);}
+  .journey-photo .ph-icon{width:54px; height:54px; stroke:var(--walnut); opacity:0.55;}
+  .journey-photo .ph-caption{
+    position:absolute; left:0; right:0; bottom:0; padding:8px 10px; text-align:center;
+    font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--walnut);
+    background:rgba(244,239,228,0.75); backdrop-filter:blur(2px);
+  }
+  .journey-copy{flex:1;}
+  .journey-num{font-family:var(--serif); font-style:italic; font-size:15px; color:var(--gold); display:block; margin-bottom:6px;}
+  .journey-copy h3{font-size:clamp(20px,2.2vw,26px); font-weight:500; margin-bottom:10px; color:var(--charcoal);}
+  .journey-copy p{font-size:14.5px; line-height:1.75; color:#3D5480;}
+  .journey-arrow{display:flex; justify-content:center; padding:14px 0; opacity:0.75;}
+  .journey-arrow svg{width:20px; height:28px; stroke:var(--gold); animation:journeyBob 1.8s ease-in-out infinite;}
+  @keyframes journeyBob{0%,100%{transform:translateY(0);} 50%{transform:translateY(5px);}}
+  .journey-step.finale{flex-direction:column; text-align:center; margin-top:8px;}
+  .journey-step.finale .journey-photo{width:100%; flex:none; height:340px; border-radius:14px;}
+  .journey-step.finale .journey-copy{margin-top:24px; max-width:480px;}
+  .journey-step.finale .btn{margin-top:20px;}
+  @media (max-width:760px){
+    .journey-step, .journey-step:nth-child(4n+3){flex-direction:column; text-align:center; gap:20px;}
+    .journey-photo{width:100%; flex:none; height:220px;}
+  }
 
   /* ---------- Export map ---------- */
   .export{background:var(--ivory);}
   .export-grid{display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center;}
   .export-copy h2{font-size:clamp(28px,3.4vw,44px); font-weight:400; line-height:1.2; margin-bottom:22px;}
   .export-copy p{font-size:15.5px; line-height:1.8; color:#3D5480; margin-bottom:26px;}
-  .export-list{display:grid; grid-template-columns:1fr 1fr; gap:10px 26px; margin:28px 0 32px; padding:0; list-style:none;}
-  .export-list li{font-size:13.5px; color:#3D5480; padding:10px 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between;}
-  .export-list li span{color:var(--gold); font-family:var(--serif); font-style:italic;}
+  .export-list{display:flex; flex-direction:column; gap:0; margin:30px 0 34px; padding:0; list-style:none;}
+  .export-list li{padding:18px 4px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:7px;}
+  .export-list li:first-child{padding-top:2px;}
+  .export-list .market-name{font-family:var(--sans); font-size:11.5px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--charcoal);}
+  .export-list .market-countries{color:var(--gold); font-family:var(--serif); font-style:italic; font-size:16px; line-height:1.55;}
   .map-card{
     aspect-ratio:1/1; border-radius:24px; position:relative; overflow:hidden;
     background:radial-gradient(circle at 30% 26%, #16305C, var(--charcoal) 68%, #050D1E 100%);
@@ -436,15 +524,11 @@
   .globe-country.export-market{fill:#3D5AA0;}
   .globe-country.active-market{fill:var(--gold); }
   .globe-country.country-hovered{fill:var(--gold); filter:drop-shadow(0 0 5px var(--gold));}
+  .globe-country.country-hovered-generic{fill:var(--gold-soft); filter:drop-shadow(0 0 5px var(--gold-soft));}
   .globe-country.origin-country{fill:var(--gold-soft);}
-  .globe-route{fill:none; stroke:var(--gold-soft); stroke-width:1.1; stroke-dasharray:3 4; opacity:0.4; pointer-events:none; transition:opacity 0.3s ease, stroke 0.3s ease;}
-  .globe-route.active{opacity:1; stroke:var(--gold); filter:drop-shadow(0 0 4px var(--gold));}
-  .globe-marker-dot{fill:var(--gold-soft); stroke:var(--charcoal); stroke-width:1; cursor:pointer; transition:fill 0.2s ease, r 0.2s ease;}
-  .globe-marker-dot.active, .globe-marker-dot.hovered{fill:var(--gold); filter:drop-shadow(0 0 6px var(--gold));}
-  .globe-marker-label{font-family:var(--sans); font-size:9px; letter-spacing:0.05em; text-transform:uppercase; fill:rgba(244,239,228,0.6); pointer-events:none; opacity:0; transition:fill 0.25s ease, opacity 0.25s ease; paint-order:stroke; stroke:rgba(9,17,36,0.85); stroke-width:2px;}
-  .globe-marker-label.active{fill:var(--ivory); opacity:1; font-weight:600;}
   .globe-origin-pulse{fill:none; stroke:var(--gold); stroke-width:1.4; opacity:0.85; pointer-events:none;}
   .globe-origin-dot{fill:var(--gold); pointer-events:none;}
+  .globe-origin-label{font-family:var(--sans); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; fill:var(--ivory); pointer-events:none; paint-order:stroke; stroke:rgba(9,17,36,0.85); stroke-width:2px;}
   .globe-tooltip{box-shadow:0 4px 14px rgba(0,0,0,0.4);}
   .map-caption{
     position:absolute; left:20px; bottom:16px; font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
@@ -452,9 +536,10 @@
     display:flex; align-items:center; gap:8px;
   }
   .map-caption svg.icon{width:13px; height:13px; flex:none; opacity:0.6;}
-  .export-list li{cursor:pointer; transition:padding-left 0.3s ease, color 0.3s ease;}
-  .export-list li:hover, .export-list li.active{padding-left:8px; color:var(--charcoal);}
-  .export-list li:hover span, .export-list li.active span{color:var(--walnut);}
+  .export-list li{cursor:pointer; padding-left:16px; border-left:2px solid transparent; transition:padding-left 0.3s ease, border-color 0.3s ease;}
+  .export-list li:hover, .export-list li.active{padding-left:22px; border-left-color:var(--gold);}
+  .export-list li:hover .market-name, .export-list li.active .market-name{color:var(--gold);}
+  .export-list li:hover .market-countries, .export-list li.active .market-countries{color:var(--walnut);}
   @media (max-width:900px){ .export-grid{grid-template-columns:1fr; gap:44px;} }
 
   /* ---------- Gallery preview ---------- */
@@ -616,9 +701,6 @@
   .process-progress{position:relative; height:2px; background:rgba(244,239,228,0.15); margin-top:18px; border-radius:2px; overflow:hidden;}
   .process-progress-fill{position:absolute; left:0; top:0; height:100%; width:0%; background:var(--gold); transition:width 0.1s linear;}
 
-  .cert-badge{transition:border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(.2,.9,.3,1.3), box-shadow 0.3s ease;}
-  .cert-badge:active{transform:translateY(-1px) scale(0.97);}
-
   .gal-item{cursor:pointer;}
   .gal-item .ph{transition:transform 0.5s cubic-bezier(.2,.9,.3,1), color 0.4s ease;}
   .gal-item:hover .ph{transform:scale(1.06); color:rgba(244,239,228,0.55);}
@@ -636,17 +718,28 @@
 <div id="scrollProgress"></div>
 
 <header class="site" id="siteHeader">
-  <a href="#" class="logo">Banaras Silk Mfg. Co.<small>Weaving Beauty Since 1924</small></a>
+  <a href="#" class="logo"><span data-i18n="brand">Banaras Silk Mfg. Co.</span><small data-i18n="tagline">Weaving Beauty Since 1924</small></a>
   <nav class="links">
-    <a href="#about">About</a>
-    <a href="#process">Manufacturing</a>
-    <a href="#categories">Categories</a>
-    <a href="#quality">Quality</a>
-    <a href="#certifications">Certifications</a>
-    <a href="#export">Export</a>
-    <a href="#contact">Contact</a>
+    <a href="#about" data-i18n="nav_about">About</a>
+    <a href="#process" data-i18n="nav_manufacturing">Manufacturing</a>
+    <a href="#categories" data-i18n="nav_categories">Categories</a>
+    <a href="#quality" data-i18n="nav_quality">Quality</a>
+    <a href="#certifications" data-i18n="nav_craft">Our Craft</a>
+    <a href="#export" data-i18n="nav_export">Export</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
   </nav>
-  <a href="#contact" class="nav-cta">Enquire Now</a>
+  <a href="#contact" class="nav-cta" data-i18n="enquire_now">Enquire Now</a>
+  <div class="lang-switch" role="group" aria-label="Language">
+    <select id="langSelect" onchange="setLanguage(this.value)" aria-label="Select language">
+      <option value="en">EN</option>
+      <option value="de">DE</option>
+      <option value="fr">FR</option>
+      <option value="it">IT</option>
+      <option value="es">ES</option>
+      <option value="pt">PT</option>
+      <option value="zh">中文</option>
+    </select>
+  </div>
   <button class="burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
@@ -657,16 +750,27 @@
     <span></span><span></span>
   </button>
   <nav>
-    <a href="#about">About</a>
-    <a href="#process">Manufacturing</a>
-    <a href="#categories">Categories</a>
-    <a href="#quality">Quality</a>
-    <a href="#certifications">Certifications</a>
-    <a href="#export">Export</a>
-    <a href="#contact">Contact</a>
+    <a href="#about" data-i18n="nav_about">About</a>
+    <a href="#process" data-i18n="nav_manufacturing">Manufacturing</a>
+    <a href="#categories" data-i18n="nav_categories">Categories</a>
+    <a href="#quality" data-i18n="nav_quality">Quality</a>
+    <a href="#certifications" data-i18n="nav_craft">Our Craft</a>
+    <a href="#export" data-i18n="nav_export">Export</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
   </nav>
-  <a href="#contact" class="mm-cta">Enquire Now</a>
-  <div class="mm-foot">Weaving Beauty Since 1924 · Varanasi, India</div>
+  <a href="#contact" class="mm-cta" data-i18n="enquire_now">Enquire Now</a>
+  <div class="lang-switch mm-lang-switch" role="group" aria-label="Language">
+    <select id="mmLangSelect" onchange="setLanguage(this.value)" aria-label="Select language">
+      <option value="en">EN</option>
+      <option value="de">DE</option>
+      <option value="fr">FR</option>
+      <option value="it">IT</option>
+      <option value="es">ES</option>
+      <option value="pt">PT</option>
+      <option value="zh">中文</option>
+    </select>
+  </div>
+  <div class="mm-foot" data-i18n="mm_foot">Weaving Beauty Since 1924 · Varanasi, India</div>
 </div>
 
 <!-- HERO -->
@@ -677,11 +781,11 @@
     <source src="assets/13049211_1080_1920_30fps.mp4" type="video/mp4">
   </video>
   <div class="hero-content">
-    <h1 id="heroTitle">Weaving beauty since 1924.<br><em>Woven for the world.</em></h1>
-    <p class="sub">A five-generation family legacy of handwoven and handloom craftsmanship. Banaras Silk Mfg. Co. manufactures natural textiles for the world's most discerning interior and fashion houses, exporting to more than 55 countries.</p>
+    <h1 id="heroTitle" data-i18n="hero_title">Weaving beauty since 1924.<br><em>Woven for the world.</em></h1>
+    <p class="sub" data-i18n="hero_sub">A five-generation family legacy of handwoven and handloom craftsmanship. Banaras Silk Mfg. Co. manufactures natural textiles for the world's most discerning interior and fashion houses, exporting to more than 55 countries.</p>
     <div class="hero-ctas">
-      <a href="#contact" class="btn btn-gold">Enquire Now</a>
-      <a href="#about" class="btn btn-ghost">Our Story</a>
+      <a href="#contact" class="btn btn-gold" data-i18n="enquire_now">Enquire Now</a>
+      <a href="#about" class="btn btn-ghost" data-i18n="our_story">Our Story</a>
     </div>
   </div>
 </section>
@@ -692,13 +796,13 @@
 <section class="intro" id="about">
   <div class="section-inner intro-grid">
     <div class="reveal">
-      <div class="eyebrow">Since 1924</div>
-      <h2>Five generations.<br>One <em>loom</em>, unbroken.</h2>
+      <div class="eyebrow" data-i18n="intro_eyebrow">Since 1924</div>
+      <h2 data-i18n="intro_h2">Five generations.<br>One <em>loom</em>, unbroken.</h2>
     </div>
     <div class="intro-copy reveal">
-      <p>Established in 1924, Banaras Silk Mfg. Co. is one of India's oldest and most respected textile manufacturers, carrying forward a five-generation family legacy in the art of handwoven and handloom fabrics. Founded originally as the Banaras Brocade Museum, the company quickly became synonymous with the finest handwoven silk brocades from the historic city of Varanasi, and once operated a network of 22 retail stores across India's hill stations, weaving with real gold and silver zari for royal and aristocratic households.</p>
-      <p>An invitation to showcase our work in Great Britain marked the beginning of our export journey. Today, that journey spans more than 55 countries, with the company continuing to blend traditional weaving heritage with contemporary textile innovation across Silk, Cotton, Linen and blended fabrics — under one roof in Varanasi, so our partners can build collections with confidence.</p>
-      <a href="#process" class="btn btn-dark" style="margin-top:8px;">Explore Our Manufacturing</a>
+      <p data-i18n="intro_p1">Established in 1924, Banaras Silk Mfg. Co. is one of India's oldest and most respected textile manufacturers, carrying forward a five-generation family legacy in the art of handwoven and handloom fabrics. Founded originally as the Banaras Brocade Museum, the company quickly became synonymous with the finest handwoven silk brocades from the historic city of Varanasi, and once operated a network of 22 retail stores across India's hill stations, weaving with real gold and silver zari for royal and aristocratic households.</p>
+      <p data-i18n="intro_p2">An invitation to showcase our work in Great Britain marked the beginning of our export journey. Today, that journey spans more than 55 countries, with the company continuing to blend traditional weaving heritage with contemporary textile innovation across Silk, Cotton, Linen and blended fabrics, under one roof in Varanasi, so our partners can build collections with confidence.</p>
+      <a href="#process" class="btn btn-dark" style="margin-top:8px;" data-i18n="explore_manufacturing">Explore Our Manufacturing</a>
     </div>
   </div>
 </section>
@@ -707,10 +811,10 @@
 <section class="stats">
   <div class="section-inner">
     <div class="stats-grid">
-      <div class="reveal"><div class="stat-num">1924</div><div class="stat-label">Year Established</div></div>
-      <div class="reveal"><div class="stat-num">5th</div><div class="stat-label">Generation Family-Run</div></div>
-      <div class="reveal"><div class="stat-num">55+</div><div class="stat-label">Export Markets Served</div></div>
-      <div class="reveal"><div class="stat-num">100%</div><div class="stat-label">In-House Manufacturing</div></div>
+      <div class="reveal"><div class="stat-num">1924</div><div class="stat-label" data-i18n="stat_1">Year Established</div></div>
+      <div class="reveal"><div class="stat-num">5th</div><div class="stat-label" data-i18n="stat_2">Generation Family-Run</div></div>
+      <div class="reveal"><div class="stat-num">55+</div><div class="stat-label" data-i18n="stat_3">Export Markets Served</div></div>
+      <div class="reveal"><div class="stat-num">100%</div><div class="stat-label" data-i18n="stat_4">In-House Manufacturing</div></div>
     </div>
   </div>
 </section>
@@ -720,19 +824,19 @@
   <div class="section-inner">
     <div class="why-head reveal">
       <div>
-        <div class="eyebrow">Why Source From Us</div>
-        <h2>Craftsmanship you can build a collection on.</h2>
+        <div class="eyebrow" data-i18n="why_eyebrow">Why Source From Us</div>
+        <h2 data-i18n="why_h2">Craftsmanship you can build a collection on.</h2>
       </div>
-      <p>Sourcing from India means access to the deepest reservoir of natural-fibre weaving knowledge in the world. Sourcing from us means that knowledge is disciplined into export-grade, repeatable manufacturing.</p>
+      <p data-i18n="why_lead">Sourcing from India means access to the deepest reservoir of natural-fibre weaving knowledge in the world. Sourcing from us means that knowledge is disciplined into export-grade, repeatable manufacturing.</p>
     </div>
     <div class="why-grid">
-      <div class="why-card reveal"><span class="why-num">01</span><h3>A Century of Heritage</h3><p>Over 100 years of experience and a five-generation legacy make us one of India's oldest and most established textile manufacturers, preserving the authentic art of Banarasi weaving.</p></div>
-      <div class="why-card reveal"><span class="why-num">02</span><h3>Proven Global Presence</h3><p>Our products are exported to more than 55 countries, serving importers, wholesalers, luxury brands, designers and retailers who rely on us to understand diverse market requirements.</p></div>
-      <div class="why-card reveal"><span class="why-num">03</span><h3>Unmatched Craftsmanship</h3><p>Exquisite handwoven and handloom fabrics, created by highly skilled artisans whose techniques have been passed down through generations of Varanasi karigars.</p></div>
-      <div class="why-card reveal"><span class="why-num">04</span><h3>Reliability & Timely Delivery</h3><p>Decades of international business built on consistent quality, transparent dealings and dependable delivery schedules, making us a trusted long-term sourcing partner.</p></div>
-      <div class="why-card reveal"><span class="why-num">05</span><h3>Wide Product Expertise</h3><p>A diverse range of natural and sustainable textiles — Silk, Cotton, Linen and innovative blended fabrics — for fashion, home furnishings, luxury accessories and bespoke applications.</p></div>
-      <div class="why-card reveal"><span class="why-num">06</span><h3>Heritage With Innovation</h3><p>Deeply rooted in tradition, yet continuously adapting to evolving global trends with contemporary developments, custom designs and market-specific collections.</p></div>
-      <div class="why-card reveal"><span class="why-num">07</span><h3>Trusted By Generations</h3><p>Trust built over generations through ethical business practices, long-standing relationships and an unwavering commitment to excellence.</p></div>
+      <div class="why-card reveal"><span class="why-num">01</span><h3 data-i18n="why01_h">A Century of Heritage</h3><p data-i18n="why01_p">Over 100 years of experience and a five-generation legacy make us one of India's oldest and most established textile manufacturers, preserving the authentic art of Banarasi weaving.</p></div>
+      <div class="why-card reveal"><span class="why-num">02</span><h3 data-i18n="why02_h">Proven Global Presence</h3><p data-i18n="why02_p">Our products are exported to more than 55 countries, serving importers, wholesalers, luxury brands, designers and retailers who rely on us to understand diverse market requirements.</p></div>
+      <div class="why-card reveal"><span class="why-num">03</span><h3 data-i18n="why03_h">Unmatched Craftsmanship</h3><p data-i18n="why03_p">Exquisite handwoven and handloom fabrics, created by highly skilled artisans whose techniques have been passed down through generations of Varanasi karigars.</p></div>
+      <div class="why-card reveal"><span class="why-num">04</span><h3 data-i18n="why04_h">Reliability & Timely Delivery</h3><p data-i18n="why04_p">Decades of international business built on consistent quality, transparent dealings and dependable delivery schedules, making us a trusted long-term sourcing partner.</p></div>
+      <div class="why-card reveal"><span class="why-num">05</span><h3 data-i18n="why05_h">Wide Product Expertise</h3><p data-i18n="why05_p">A diverse range of natural and sustainable textiles, Silk, Cotton, Linen and innovative blended fabrics, for fashion, home furnishings, luxury accessories and bespoke applications.</p></div>
+      <div class="why-card reveal"><span class="why-num">06</span><h3 data-i18n="why06_h">Heritage With Innovation</h3><p data-i18n="why06_p">Deeply rooted in tradition, yet continuously adapting to evolving global trends with contemporary developments, custom designs and market-specific collections.</p></div>
+      <div class="why-card reveal"><span class="why-num">07</span><h3 data-i18n="why07_h">Trusted By Generations</h3><p data-i18n="why07_p">Trust built over generations through ethical business practices, long-standing relationships and an unwavering commitment to excellence.</p></div>
     </div>
   </div>
 </section>
@@ -742,22 +846,22 @@
   <div class="section-inner">
     <div class="process-head reveal">
       <div>
-        <div class="eyebrow">Manufacturing</div>
-        <h2>From raw fibre to export crate.</h2>
+        <div class="eyebrow" data-i18n="process_eyebrow">Manufacturing</div>
+        <h2 data-i18n="process_h2">From raw fibre to export crate.</h2>
       </div>
-      <p style="max-width:380px; font-size:14.5px; line-height:1.75; color:rgba(244,239,228,0.62);">Ten stages, refined over a century, carried out entirely within our own facilities in Varanasi.</p>
+      <p style="max-width:380px; font-size:14.5px; line-height:1.75; color:rgba(244,239,228,0.62);" data-i18n="process_lead">Ten stages, refined over a century, carried out entirely within our own facilities in Varanasi.</p>
     </div>
     <div class="process-scroll reveal">
-      <div class="process-step"><span class="pnum">01</span><h4>Yarn Procurement</h4><p>Natural fibres and yarns (mulberry silk, cotton, linen) are sourced and graded for consistency before entering production.</p></div>
-      <div class="process-step"><span class="pnum">02</span><h4>Dyeing</h4><p>Yarn is cleaned, treated and dyed to match international colour standards and tested for fastness.</p></div>
-      <div class="process-step"><span class="pnum">03</span><h4>Handloom Weaving</h4><p>Skilled karigars weave fine and complex constructions by hand, preserving techniques unique to Banaras, including intricate brocades.</p></div>
-      <div class="process-step"><span class="pnum">04</span><h4>Power Loom Weaving</h4><p>Modern looms produce volume fabrics with the consistency export orders demand, without sacrificing hand-feel.</p></div>
-      <div class="process-step"><span class="pnum">05</span><h4>Printing</h4><p>Traditional and digital printing techniques bring pattern and detail to base cloth with exacting registration.</p></div>
-      <div class="process-step"><span class="pnum">06</span><h4>Embroidery</h4><p>Hand and machine embroidery add texture and value, from fine zari work to contemporary embellishment.</p></div>
-      <div class="process-step"><span class="pnum">07</span><h4>Finishing</h4><p>Washing, calendaring, polishing and softening prepare fabric for its final application and market.</p></div>
-      <div class="process-step"><span class="pnum">08</span><h4>Stitching</h4><p>Made-ups and apparel are cut and stitched to specification for finished, ready-to-ship products.</p></div>
-      <div class="process-step"><span class="pnum">09</span><h4>Quality Control</h4><p>Every piece passes through multi-point quality inspection for weave, colour consistency, defects and measurements against buyer-specific AQL standards.</p></div>
-      <div class="process-step"><span class="pnum">10</span><h4>Packaging</h4><p>Goods are measured, folded or rolled, labelled and packed to destination-market specification for dispatch worldwide.</p></div>
+      <div class="process-step"><span class="pnum">01</span><h4 data-i18n="proc01_h">Yarn Procurement</h4><p data-i18n="proc01_p">Natural fibres and yarns (mulberry silk, cotton, linen) are sourced and graded for consistency before entering production.</p></div>
+      <div class="process-step"><span class="pnum">02</span><h4 data-i18n="proc02_h">Dyeing</h4><p data-i18n="proc02_p">Yarn is cleaned, treated and dyed to match international colour standards and tested for fastness.</p></div>
+      <div class="process-step"><span class="pnum">03</span><h4 data-i18n="proc03_h">Handloom Weaving</h4><p data-i18n="proc03_p">Skilled karigars weave fine and complex constructions by hand, preserving techniques unique to Banaras, including intricate brocades.</p></div>
+      <div class="process-step"><span class="pnum">04</span><h4 data-i18n="proc04_h">Power Loom Weaving</h4><p data-i18n="proc04_p">Modern looms produce volume fabrics with the consistency export orders demand, without sacrificing hand-feel.</p></div>
+      <div class="process-step"><span class="pnum">05</span><h4 data-i18n="proc05_h">Printing</h4><p data-i18n="proc05_p">Traditional and digital printing techniques bring pattern and detail to base cloth with exacting registration.</p></div>
+      <div class="process-step"><span class="pnum">06</span><h4 data-i18n="proc06_h">Embroidery</h4><p data-i18n="proc06_p">Hand and machine embroidery add texture and value, from fine zari work to contemporary embellishment.</p></div>
+      <div class="process-step"><span class="pnum">07</span><h4 data-i18n="proc07_h">Finishing</h4><p data-i18n="proc07_p">Washing, calendaring, polishing and softening prepare fabric for its final application and market.</p></div>
+      <div class="process-step"><span class="pnum">08</span><h4 data-i18n="proc08_h">Stitching</h4><p data-i18n="proc08_p">Made-ups and apparel are cut and stitched to specification for finished, ready-to-ship products.</p></div>
+      <div class="process-step"><span class="pnum">09</span><h4 data-i18n="proc09_h">Quality Control</h4><p data-i18n="proc09_p">Every piece passes through multi-point quality inspection for weave, colour consistency, defects and measurements against buyer-specific AQL standards.</p></div>
+      <div class="process-step"><span class="pnum">10</span><h4 data-i18n="proc10_h">Packaging</h4><p data-i18n="proc10_p">Goods are measured, folded or rolled, labelled and packed to destination-market specification for dispatch worldwide.</p></div>
     </div>
     <div class="process-progress"><div class="process-progress-fill" id="processFill"></div></div>
   </div>
@@ -767,76 +871,93 @@
 <section class="cats" id="categories">
   <div class="section-inner">
     <div class="cats-head reveal">
-      <div class="eyebrow">Manufacturing Capabilities</div>
-      <h2>What we manufacture</h2>
-      <p>Four capability groups, each developed to export standard and available for private label, OEM and ODM production.</p>
+      <div class="eyebrow" data-i18n="cats_eyebrow">Manufacturing Capabilities</div>
+      <h2 data-i18n="cats_h2">What we manufacture</h2>
+      <p data-i18n="cats_lead">Four capability groups, each developed to export standard and available for private label, OEM and ODM production.</p>
     </div>
     <div class="cats-grid">
-      <a href="#contact" class="cat-card reveal">
-        <div class="ph">Running Fabrics</div>
+      <button type="button" class="cat-card reveal" data-gallery="running-fabrics" aria-haspopup="dialog">
+        <div class="ph" data-i18n="cat1_name">Running Fabrics</div>
         <div class="arrow">↗</div>
         <div class="overlay"><div class="overlay-inner">
-          <span class="cat-tag">01 · Fabrics</span><h3>Running Fabrics</h3>
+          <span class="cat-tag" data-i18n="cat1_tag">01 · Fabrics</span><h3 data-i18n="cat1_name">Running Fabrics</h3>
           <ul class="cat-list">
-            <li>Hand-woven Silk</li>
-            <li>Cotton &amp; Linen</li>
-            <li>Velvet &amp; Viscose</li>
-            <li>Man-made Fibre Blends</li>
+            <li data-i18n="cat1_l1">Hand-woven Silk</li>
+            <li data-i18n="cat1_l2">Cotton &amp; Linen</li>
+            <li data-i18n="cat1_l3">Velvet &amp; Viscose</li>
+            <li data-i18n="cat1_l4">Man-made Fibre Blends</li>
           </ul>
         </div></div>
-      </a>
-      <a href="#contact" class="cat-card reveal">
-        <div class="ph">Home Furnishings</div>
+      </button>
+      <button type="button" class="cat-card reveal" data-gallery="home-furnishings" aria-haspopup="dialog">
+        <div class="ph" data-i18n="cat2_name">Home Furnishings</div>
         <div class="arrow">↗</div>
         <div class="overlay"><div class="overlay-inner">
-          <span class="cat-tag">02 · Made-Ups</span><h3>Home Furnishings</h3>
+          <span class="cat-tag" data-i18n="cat2_tag">02 · Made-Ups</span><h3 data-i18n="cat2_name">Home Furnishings</h3>
           <ul class="cat-list">
-            <li>Curtains &amp; Throws</li>
-            <li>Cushion Covers &amp; Floor Cushions</li>
-            <li>Table Runners &amp; Table Covers</li>
-            <li>Napkins, Pouf &amp; more</li>
+            <li data-i18n="cat2_l1">Curtains &amp; Throws</li>
+            <li data-i18n="cat2_l2">Cushion Covers &amp; Floor Cushions</li>
+            <li data-i18n="cat2_l3">Table Runners &amp; Table Covers</li>
+            <li data-i18n="cat2_l4">Napkins, Pouf &amp; more</li>
           </ul>
         </div></div>
-      </a>
-      <a href="#contact" class="cat-card reveal">
-        <div class="ph">Apparel</div>
+      </button>
+      <button type="button" class="cat-card reveal" data-gallery="apparel" aria-haspopup="dialog">
+        <div class="ph" data-i18n="cat3_name">Apparel</div>
         <div class="arrow">↗</div>
         <div class="overlay"><div class="overlay-inner">
-          <span class="cat-tag">03 · Readymade</span><h3>Apparel</h3>
+          <span class="cat-tag" data-i18n="cat3_tag">03 · Readymade</span><h3 data-i18n="cat3_name">Apparel</h3>
           <ul class="cat-list">
-            <li>Custom Shirts &amp; Pyjamas</li>
-            <li>Sarees</li>
-            <li>Stoles &amp; Scarves</li>
+            <li data-i18n="cat3_l1">Custom Shirts &amp; Pyjamas</li>
+            <li data-i18n="cat3_l2">Sarees</li>
+            <li data-i18n="cat3_l3">Stoles &amp; Scarves</li>
           </ul>
         </div></div>
-      </a>
-      <a href="#contact" class="cat-card reveal">
-        <div class="ph">Accessories</div>
+      </button>
+      <button type="button" class="cat-card reveal" data-gallery="accessories" aria-haspopup="dialog">
+        <div class="ph" data-i18n="cat4_name">Accessories</div>
         <div class="arrow">↗</div>
         <div class="overlay"><div class="overlay-inner">
-          <span class="cat-tag">04 · Accessories</span><h3>Accessories</h3>
+          <span class="cat-tag" data-i18n="cat4_tag">04 · Accessories</span><h3 data-i18n="cat4_name">Accessories</h3>
           <ul class="cat-list">
-            <li>Fancy Yarn</li>
-            <li>Wooden &amp; Glass Beads</li>
-            <li>Fancy Laces</li>
-            <li>Sequins &amp; Embellishments</li>
+            <li data-i18n="cat4_l1">Fancy Yarn</li>
+            <li data-i18n="cat4_l2">Wooden &amp; Glass Beads</li>
+            <li data-i18n="cat4_l3">Fancy Laces</li>
+            <li data-i18n="cat4_l4">Sequins &amp; Embellishments</li>
           </ul>
         </div></div>
-      </a>
+      </button>
     </div>
   </div>
 </section>
 
+<!-- CATEGORY GALLERY MODAL -->
+<div class="gallery-modal" id="galleryModal" aria-hidden="true">
+  <div class="gallery-modal-backdrop" data-gallery-close></div>
+  <div class="gallery-modal-panel" role="dialog" aria-modal="true" aria-labelledby="galleryModalTitle">
+    <button type="button" class="gallery-modal-close" data-gallery-close aria-label="Close gallery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+    </button>
+    <div class="gallery-modal-head">
+      <span class="cat-tag" id="galleryModalTag"></span>
+      <h3 id="galleryModalTitle"></h3>
+      <p id="galleryModalSub"></p>
+    </div>
+    <div class="gallery-modal-grid" id="galleryModalGrid"></div>
+    <a href="#contact" class="btn btn-dark gallery-modal-cta" data-gallery-close data-i18n="request_quote">Request a Quote</a>
+  </div>
+</div>
+
 <!-- CRAFTSMANSHIP SPLIT -->
 <section class="feature-split">
   <div class="fs-grid">
-    <div class="fs-media reveal"><div class="ph">Handloom Weaving: Editorial Photography</div></div>
+    <div class="fs-media reveal"><div class="ph" data-i18n="fs_ph">Handloom Weaving: Editorial Photography</div></div>
     <div class="fs-copy reveal">
-      <div class="eyebrow">Why Indian Silk</div>
-      <h2>The fibre that travelled the world before trade routes had names.</h2>
-      <p>Indian silk, and Banaras silk in particular, has been documented and admired by travellers and historians for centuries, carried along the Silk Route, sought after in the courts of Europe and Central Asia, and prized for a lustre and hand-feel that natural mulberry, tussar, eri and muga silks are still known for today.</p>
-      <p>That reputation was not built on marketing. It was built on generations of weavers who understood fibre, tension and finish in a way no machine has fully replicated — the same craftsmanship that earned our family an invitation to showcase Indian silk brocades in Great Britain, opening the doors to the global markets we serve today.</p>
-      <a href="#about" class="btn btn-ghost" style="margin-top:10px;">Read Our Heritage</a>
+      <div class="eyebrow" data-i18n="fs_eyebrow">Why Indian Silk</div>
+      <h2 data-i18n="fs_h2">The fibre that travelled the world before trade routes had names.</h2>
+      <p data-i18n="fs_p1">Indian silk, and Banaras silk in particular, has been documented and admired by travellers and historians for centuries, carried along the Silk Route, sought after in the courts of Europe and Central Asia, and prized for a lustre and hand-feel that natural mulberry, tussar, eri and muga silks are still known for today.</p>
+      <p data-i18n="fs_p2">That reputation was not built on marketing. It was built on generations of weavers who understood fibre, tension and finish in a way no machine has fully replicated. The same craftsmanship that earned our family an invitation to showcase Indian silk brocades in Great Britain, opening the doors to the global markets we serve today.</p>
+      <a href="#about" class="btn btn-ghost" style="margin-top:10px;" data-i18n="read_heritage">Read Our Heritage</a>
     </div>
   </div>
 </section>
@@ -845,29 +966,134 @@
 <section class="quality" id="quality">
   <div class="section-inner quality-grid">
     <div class="quality-copy reveal">
-      <div class="eyebrow">Quality Assurance</div>
-      <h2>Consistency, verified at every stage.</h2>
-      <p>Quality is not a final check. It is designed into every stage of our process, from yarn selection through to the last inspection before packing. Our systems are built to meet the AQL standards, testing protocols and documentation that international buyers require.</p>
+      <div class="eyebrow" data-i18n="qa_eyebrow">Quality Assurance</div>
+      <h2 data-i18n="qa_h2">Consistency, verified at every stage.</h2>
+      <p data-i18n="qa_lead">Quality is not a final check. It is designed into every stage of our process, from yarn selection through to the last inspection before packing. Our systems are built to meet the AQL standards, testing protocols and documentation that international buyers require.</p>
     </div>
     <ul class="quality-list reveal">
-      <li><span class="qmark">01</span><div><h4>In-Process Inspection</h4><p>Fabric is checked at every production stage, not only at the end, so faults are caught before value is added.</p></div></li>
-      <li><span class="qmark">02</span><div><h4>Lab Testing</h4><p>Colour fastness, shrinkage, tensile strength and composition are tested against buyer and international standards.</p></div></li>
-      <li><span class="qmark">03</span><div><h4>AQL-Based Final Inspection</h4><p>Finished goods are inspected to agreed AQL levels prior to packing, with reports available on request.</p></div></li>
-      <li><span class="qmark">04</span><div><h4>Consistency Across Runs</h4><p>Documented processes and trained supervisors keep quality consistent between sample and bulk production.</p></div></li>
+      <li><span class="qmark">01</span><div><h4 data-i18n="qa01_h">In-Process Inspection</h4><p data-i18n="qa01_p">Fabric is checked at every production stage, not only at the end, so faults are caught before value is added.</p></div></li>
+      <li><span class="qmark">02</span><div><h4 data-i18n="qa02_h">Lab Testing</h4><p data-i18n="qa02_p">Colour fastness, shrinkage, tensile strength and composition are tested against buyer and international standards.</p></div></li>
+      <li><span class="qmark">03</span><div><h4 data-i18n="qa03_h">AQL-Based Final Inspection</h4><p data-i18n="qa03_p">Finished goods are inspected to agreed AQL levels prior to packing, with reports available on request.</p></div></li>
+      <li><span class="qmark">04</span><div><h4 data-i18n="qa04_h">Consistency Across Runs</h4><p data-i18n="qa04_p">Documented processes and trained supervisors keep quality consistent between sample and bulk production.</p></div></li>
     </ul>
   </div>
 </section>
 
 <!-- CERTIFICATIONS -->
-<section class="certs" id="certifications">
-  <div class="section-inner certs-inner">
-    <div class="certs-title reveal">
-      <div class="eyebrow">Trust & Compliance</div>
-      <h2>Certified for international trade.</h2>
+<!-- JOURNEY: COCOON TO CATWALK -->
+<section class="journey" id="certifications">
+  <div class="section-inner">
+    <div class="journey-title reveal">
+      <div class="eyebrow" data-i18n="journey_eyebrow">Our Craft</div>
+      <h2 data-i18n="journey_h2">From cocoon to catwalk.</h2>
+      <p data-i18n="journey_lead">Every thread begins in nature and ends on the runway. Seven stages of craftsmanship, largely unchanged for five generations, turn a raw silk cocoon into a garment that walks the world's biggest stages.</p>
     </div>
-    <div class="cert-logos reveal">
-      <div class="cert-badge">Star Export House</div>
-      <div class="cert-badge">MSME</div>
+    <div class="journey-track">
+
+      <div class="journey-step reveal">
+        <div class="journey-photo ph-cocoon">
+          <!-- Replace with: images/journey/01-cocoon.jpg — see shot list, image 1 -->
+          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><ellipse cx="24" cy="26" rx="14" ry="10"/><path d="M14 22c2-6 6-10 10-10s8 4 10 10" stroke-linecap="round"/></svg>
+          <div class="ph-caption" data-i18n="jt01_cap">Photo needed · Raw cocoons</div>
+        </div>
+        <div class="journey-copy">
+          <span class="journey-num">01</span>
+          <h3 data-i18n="jt01_h">The Cocoon</h3>
+          <p data-i18n="jt01_p">Mulberry silk cocoons are hand-selected for quality, the raw material from which every thread of our fabric begins.</p>
+        </div>
+      </div>
+
+      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="journey-step reveal">
+        <div class="journey-photo ph-reeling">
+          <!-- Replace with: images/journey/02-reeling.jpg — see shot list, image 2 -->
+          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><circle cx="24" cy="24" r="15"/><path d="M24 9v30M9 24h30" stroke-dasharray="2 4"/></svg>
+          <div class="ph-caption" data-i18n="jt02_cap">Photo needed · Reeling silk thread</div>
+        </div>
+        <div class="journey-copy">
+          <span class="journey-num">02</span>
+          <h3 data-i18n="jt02_h">Reeling</h3>
+          <p data-i18n="jt02_p">Cocoons are gently unwound into fine, continuous filaments of raw silk, a delicate process demanding a trained hand.</p>
+        </div>
+      </div>
+
+      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="journey-step reveal">
+        <div class="journey-photo ph-dyeing">
+          <!-- Replace with: images/journey/03-dyeing.jpg — see shot list, image 3 -->
+          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><path d="M24 6c6 8 10 14 10 20a10 10 0 0 1-20 0c0-6 4-12 10-20z"/></svg>
+          <div class="ph-caption" data-i18n="jt03_cap">Photo needed · Dyeing yarn</div>
+        </div>
+        <div class="journey-copy">
+          <span class="journey-num">03</span>
+          <h3 data-i18n="jt03_h">Dyeing</h3>
+          <p data-i18n="jt03_p">Raw yarn is dyed by hand in small batches, achieving the rich, saturated colours our fabrics are known for.</p>
+        </div>
+      </div>
+
+      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="journey-step reveal">
+        <div class="journey-photo ph-weaving">
+          <!-- Replace with: images/journey/04-weaving.jpg — see shot list, image 4 -->
+          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><rect x="8" y="8" width="32" height="32" rx="2"/><path d="M8 16h32M8 24h32M8 32h32M16 8v32M24 8v32M32 8v32"/></svg>
+          <div class="ph-caption" data-i18n="jt04_cap">Photo needed · Handloom weaving</div>
+        </div>
+        <div class="journey-copy">
+          <span class="journey-num">04</span>
+          <h3 data-i18n="jt04_h">Handloom Weaving</h3>
+          <p data-i18n="jt04_p">Master weavers set each thread on the loom by hand, turning dyed yarn into intricate Banarasi fabric, motif by motif.</p>
+        </div>
+      </div>
+
+      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="journey-step reveal">
+        <div class="journey-photo ph-finishing">
+          <!-- Replace with: images/journey/05-finishing.jpg — see shot list, image 5 -->
+          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><path d="M10 38l8-8M14 10l24 24-6 6L8 16z"/><circle cx="12" cy="14" r="2.4"/></svg>
+          <div class="ph-caption" data-i18n="jt05_cap">Photo needed · Finishing & quality check</div>
+        </div>
+        <div class="journey-copy">
+          <span class="journey-num">05</span>
+          <h3 data-i18n="jt05_h">Finishing &amp; Quality Check</h3>
+          <p data-i18n="jt05_p">Every metre is inspected, washed and pressed by hand, checked against export-grade standards before it leaves the floor.</p>
+        </div>
+      </div>
+
+      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="journey-step reveal">
+        <div class="journey-photo ph-stitching">
+          <!-- Replace with: images/journey/06-stitching.jpg — see shot list, image 6 -->
+          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><circle cx="16" cy="14" r="4"/><circle cx="16" cy="34" r="4"/><path d="M18 17l16 20M18 31l16-20"/></svg>
+          <div class="ph-caption" data-i18n="jt06_cap">Photo needed · Cutting & stitching</div>
+        </div>
+        <div class="journey-copy">
+          <span class="journey-num">06</span>
+          <h3 data-i18n="jt06_h">Cutting &amp; Stitching</h3>
+          <p data-i18n="jt06_p">Finished fabric is cut and stitched into the final garment, ready to be worn.</p>
+        </div>
+      </div>
+
+      <div class="journey-arrow" aria-hidden="true"><svg viewBox="0 0 20 28" fill="none" stroke-width="2"><path d="M10 2v22M3 17l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="journey-step finale reveal">
+        <div class="journey-photo ph-runway">
+          <!-- Replace with: images/journey/07-runway.jpg — see shot list, image 7 -->
+          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke-width="1.4"><circle cx="24" cy="10" r="4"/><path d="M24 14v14M24 20l-8 6M24 20l8 6M18 44l6-10 6 10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="ph-caption" data-i18n="jt07_cap">Photo needed · Model on the ramp</div>
+        </div>
+        <div class="journey-copy">
+          <span class="journey-num">07</span>
+          <h3 data-i18n="jt07_h">The Runway</h3>
+          <p data-i18n="jt07_p">From a single cocoon to a garment walking the world's biggest stages. This is the journey behind every collection we manufacture.</p>
+          <a href="#contact" class="btn btn-dark" data-i18n="start_collection">Start Your Collection</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -876,20 +1102,20 @@
 <section class="export" id="export">
   <div class="section-inner export-grid">
     <div class="export-copy reveal">
-      <div class="eyebrow">Global Presence</div>
-      <h2 id="globalPresenceTitle">Manufactured in Varanasi. Trusted worldwide.</h2>
-      <p>Our fabrics and finished textiles ship to importers, buying houses and luxury brands in more than 55 countries across four continents. We support private label, OEM and ODM programmes with sampling, flexible MOQs and destination-ready documentation.</p>
+      <div class="eyebrow" data-i18n="export_eyebrow">Global Presence</div>
+      <h2 id="globalPresenceTitle" data-i18n="export_h2">Manufactured in Varanasi. Trusted worldwide.</h2>
+      <p data-i18n="export_lead">Our fabrics and finished textiles ship to importers, buying houses and luxury brands in more than 55 countries across four continents. We support private label, OEM and ODM programmes with sampling, flexible MOQs and destination-ready documentation.</p>
       <ul class="export-list" id="exportList">
-        <li data-market="europe">Europe <span>France, Germany, Spain, Italy, UK, Portugal</span></li>
-        <li data-market="namerica">Americas <span>U.S.A., Brazil, Argentina</span></li>
-        <li data-market="eastasia">East Asia <span>China, Japan, South Korea, Hong Kong, Malaysia</span></li>
-        <li data-market="middleeast">Other Markets <span>Morocco &amp; more</span></li>
+        <li data-market="europe"><span class="market-name" data-i18n="mkt_europe">Europe</span><span class="market-countries" data-i18n="mkt_europe_c">France, Germany, Spain, Italy, UK, Portugal</span></li>
+        <li data-market="namerica"><span class="market-name" data-i18n="mkt_americas">Americas</span><span class="market-countries" data-i18n="mkt_americas_c">U.S.A., Brazil, Argentina</span></li>
+        <li data-market="eastasia"><span class="market-name" data-i18n="mkt_eastasia">East Asia</span><span class="market-countries" data-i18n="mkt_eastasia_c">China, Japan, South Korea, Hong Kong, Malaysia</span></li>
+        <li data-market="middleeast"><span class="market-name" data-i18n="mkt_other">Other Markets</span><span class="market-countries" data-i18n="mkt_other_c">Morocco &amp; more</span></li>
       </ul>
-      <a href="#contact" class="btn btn-dark">Request Export Information</a>
+      <a href="#contact" class="btn btn-dark" data-i18n="request_export_info">Request Export Information</a>
     </div>
     <div class="map-card reveal" id="exportMap">
       <svg id="globeSvg" aria-label="Interactive 3D globe of export markets from Varanasi. Drag or swipe to spin."></svg>
-      <div class="map-caption"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M2 12h20" stroke-linecap="round" stroke-linejoin="round"></path></svg>Drag to spin the globe · hover a market to trace the route</div>
+      <div class="map-caption"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M2 12h20" stroke-linecap="round" stroke-linejoin="round"></path></svg><span data-i18n="globe_caption">Drag to spin the globe · hover any country to see its name</span></div>
     </div>
   </div>
 </section>
@@ -899,16 +1125,16 @@
   <div class="section-inner">
     <div class="gallery-head reveal">
       <div>
-        <div class="eyebrow">Gallery</div>
-        <h2>Factory, fibre and finished cloth.</h2>
+        <div class="eyebrow" data-i18n="gallery_eyebrow">Gallery</div>
+        <h2 data-i18n="gallery_h2">Factory, fibre and finished cloth.</h2>
       </div>
     </div>
     <div class="gal-grid">
-      <div class="gal-item reveal"><div class="ph">Factory Floor</div></div>
-      <div class="gal-item reveal"><div class="ph">Artisans at Loom</div></div>
-      <div class="gal-item reveal"><div class="ph">Raw Silk Yarn</div></div>
-      <div class="gal-item reveal"><div class="ph">Fabric Macro</div></div>
-      <div class="gal-item reveal"><div class="ph">Finished Textiles</div></div>
+      <div class="gal-item reveal"><div class="ph" data-i18n="gal_1">Factory Floor</div></div>
+      <div class="gal-item reveal"><div class="ph" data-i18n="gal_2">Artisans at Loom</div></div>
+      <div class="gal-item reveal"><div class="ph" data-i18n="gal_3">Raw Silk Yarn</div></div>
+      <div class="gal-item reveal"><div class="ph" data-i18n="gal_4">Fabric Macro</div></div>
+      <div class="gal-item reveal"><div class="ph" data-i18n="gal_5">Finished Textiles</div></div>
     </div>
   </div>
 </section>
@@ -916,12 +1142,12 @@
 <!-- FINAL ENQUIRY -->
 <section class="enquire" id="contact">
   <div class="section-inner enquire-inner reveal">
-    <div class="eyebrow" style="justify-content:center;">Start a Conversation</div>
-    <h2 id="ctaTitle">Let's manufacture your <em>next collection</em>.</h2>
-    <p>Tell us about your brand and requirements. Our team responds to every qualified enquiry within two business days.</p>
+    <div class="eyebrow" style="justify-content:center;" data-i18n="cta_eyebrow">Start a Conversation</div>
+    <h2 id="ctaTitle" data-i18n="cta_h2">Let's manufacture your <em>next collection</em>.</h2>
+    <p data-i18n="cta_lead">Tell us about your brand and requirements. Our team responds to every qualified enquiry within two business days.</p>
     <div class="btn-row">
-      <a href="#contact" class="btn btn-gold">Enquire Now</a>
-      <a href="#contact" class="btn btn-ghost">Request a Meeting</a>
+      <a href="#contact" class="btn btn-gold" data-i18n="enquire_now">Enquire Now</a>
+      <a href="#contact" class="btn btn-ghost" data-i18n="request_meeting">Request a Meeting</a>
     </div>
   </div>
 </section>
@@ -929,46 +1155,1324 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <h3>Banaras Silk Mfg. Co.</h3>
-      <p>Weaving beauty since 1924. A five-generation, Star Export House manufacturing natural textiles from Varanasi, India, exporting to 55+ countries. OEM, ODM and private label production for the world's finest brands.</p>
+      <h3 data-i18n="brand">Banaras Silk Mfg. Co.</h3>
+      <p data-i18n="footer_desc">Weaving beauty since 1924. A five-generation, Star Export House manufacturing natural textiles from Varanasi, India, exporting to 55+ countries. OEM, ODM and private label production for the world's finest brands.</p>
       <p style="margin-top:14px; font-size:12.5px; letter-spacing:0.03em; color:rgba(244,239,228,0.55);">Sunil Kumar &middot; Ashutosh Kumar &middot; Arun K. Shukla</p>
     </div>
     <div class="foot-col">
-      <h4>Company</h4>
-      <a href="#about">About</a>
-      <a href="#process">Manufacturing</a>
-      <a href="#certifications">Certifications</a>
-      <a href="#contact">Contact</a>
+      <h4 data-i18n="foot_company">Company</h4>
+      <a href="#about" data-i18n="nav_about">About</a>
+      <a href="#process" data-i18n="nav_manufacturing">Manufacturing</a>
+      <a href="#certifications" data-i18n="nav_craft">Our Craft</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
     </div>
     <div class="foot-col">
-      <h4>Capabilities</h4>
-      <a href="#categories">Running Fabrics</a>
-      <a href="#categories">Home Furnishings</a>
-      <a href="#categories">Apparel</a>
-      <a href="#categories">Accessories</a>
+      <h4 data-i18n="foot_capabilities">Capabilities</h4>
+      <a href="#categories" data-i18n="cat1_name">Running Fabrics</a>
+      <a href="#categories" data-i18n="cat2_name">Home Furnishings</a>
+      <a href="#categories" data-i18n="cat3_name">Apparel</a>
+      <a href="#categories" data-i18n="cat4_name">Accessories</a>
     </div>
     <div class="foot-col">
-      <h4>Resources</h4>
-      <a href="#quality">Quality Assurance</a>
-      <a href="#certifications">Certifications</a>
-      <a href="#export">Export Info</a>
+      <h4 data-i18n="foot_resources">Resources</h4>
+      <a href="#quality" data-i18n="foot_qa">Quality Assurance</a>
+      <a href="#certifications" data-i18n="nav_craft">Our Craft</a>
+      <a href="#export" data-i18n="foot_export_info">Export Info</a>
     </div>
     <div class="foot-col">
-      <h4>Contact</h4>
-      <span>6, Gandhi Nagar, Sigra</span>
-      <span>Post Box #62, Varanasi &ndash; 221010, U.P., India</span>
-      <a href="tel:+915422220813">Tel: +91 (542) 2220813 / 814 / 815</a>
-      <span>Fax: +91 (542) 2223920</span>
+      <h4 data-i18n="nav_contact">Contact</h4>
+      <span data-i18n="foot_addr1">6, Gandhi Nagar, Sigra</span>
+      <span data-i18n="foot_addr2">Post Box #62, Varanasi &ndash; 221010, U.P., India</span>
+      <a href="tel:+915422220813"><span data-i18n="foot_tel">Tel:</span> +91 (542) 2220813 / 814 / 815</a>
+      <span><span data-i18n="foot_fax">Fax:</span> +91 (542) 2223920</span>
       <a href="mailto:bsm_daskumar@banarassilk.in">bsm_daskumar@banarassilk.in</a>
       <a href="mailto:bsmco@banarassilk.in">bsmco@banarassilk.in</a>
       <a href="https://www.banarassilk.in" target="_blank" rel="noopener">www.banarassilk.in</a>
     </div>
   </div>
   <div class="foot-bottom">
-    <span>© 2026 Banaras Silk Mfg. Co. All rights reserved.</span>
+    <span data-i18n="foot_copyright">© 2026 Banaras Silk Mfg. Co. All rights reserved.</span>
   </div>
 </footer>
 
+<script>
+/* ==========================================================================
+   Banaras Silk Mfg. Co. — i18n engine
+   Detects visitor region via IP geolocation, falls back to browser language,
+   and lets the visitor override manually. Choice is remembered in localStorage.
+   ========================================================================== */
+
+const I18N_TRANSLATIONS = {
+  en: {
+    brand: "Banaras Silk Mfg. Co.",
+    tagline: "Weaving Beauty Since 1924",
+    nav_about: "About",
+    nav_manufacturing: "Manufacturing",
+    nav_categories: "Categories",
+    nav_quality: "Quality",
+    nav_craft: "Our Craft",
+    nav_export: "Export",
+    nav_contact: "Contact",
+    enquire_now: "Enquire Now",
+    mm_foot: "Weaving Beauty Since 1924 · Varanasi, India",
+    hero_title: 'Weaving beauty since 1924.<br><em>Woven for the world.</em>',
+    hero_sub: "A five-generation family legacy of handwoven and handloom craftsmanship. Banaras Silk Mfg. Co. manufactures natural textiles for the world's most discerning interior and fashion houses, exporting to more than 55 countries.",
+    our_story: "Our Story",
+    intro_eyebrow: "Since 1924",
+    intro_h2: 'Five generations.<br>One <em>loom</em>, unbroken.',
+    intro_p1: "Established in 1924, Banaras Silk Mfg. Co. is one of India's oldest and most respected textile manufacturers, carrying forward a five-generation family legacy in the art of handwoven and handloom fabrics. Founded originally as the Banaras Brocade Museum, the company quickly became synonymous with the finest handwoven silk brocades from the historic city of Varanasi, and once operated a network of 22 retail stores across India's hill stations, weaving with real gold and silver zari for royal and aristocratic households.",
+    intro_p2: "An invitation to showcase our work in Great Britain marked the beginning of our export journey. Today, that journey spans more than 55 countries, with the company continuing to blend traditional weaving heritage with contemporary textile innovation across Silk, Cotton, Linen and blended fabrics, under one roof in Varanasi, so our partners can build collections with confidence.",
+    explore_manufacturing: "Explore Our Manufacturing",
+    stat_1: "Year Established",
+    stat_2: "Generation Family-Run",
+    stat_3: "Export Markets Served",
+    stat_4: "In-House Manufacturing",
+    why_eyebrow: "Why Source From Us",
+    why_h2: "Craftsmanship you can build a collection on.",
+    why_lead: "Sourcing from India means access to the deepest reservoir of natural-fibre weaving knowledge in the world. Sourcing from us means that knowledge is disciplined into export-grade, repeatable manufacturing.",
+    why01_h: "A Century of Heritage",
+    why01_p: "Over 100 years of experience and a five-generation legacy make us one of India's oldest and most established textile manufacturers, preserving the authentic art of Banarasi weaving.",
+    why02_h: "Proven Global Presence",
+    why02_p: "Our products are exported to more than 55 countries, serving importers, wholesalers, luxury brands, designers and retailers who rely on us to understand diverse market requirements.",
+    why03_h: "Unmatched Craftsmanship",
+    why03_p: "Exquisite handwoven and handloom fabrics, created by highly skilled artisans whose techniques have been passed down through generations of Varanasi karigars.",
+    why04_h: "Reliability & Timely Delivery",
+    why04_p: "Decades of international business built on consistent quality, transparent dealings and dependable delivery schedules, making us a trusted long-term sourcing partner.",
+    why05_h: "Wide Product Expertise",
+    why05_p: "A diverse range of natural and sustainable textiles, Silk, Cotton, Linen and innovative blended fabrics, for fashion, home furnishings, luxury accessories and bespoke applications.",
+    why06_h: "Heritage With Innovation",
+    why06_p: "Deeply rooted in tradition, yet continuously adapting to evolving global trends with contemporary developments, custom designs and market-specific collections.",
+    why07_h: "Trusted By Generations",
+    why07_p: "Trust built over generations through ethical business practices, long-standing relationships and an unwavering commitment to excellence.",
+    process_eyebrow: "Manufacturing",
+    process_h2: "From raw fibre to export crate.",
+    process_lead: "Ten stages, refined over a century, carried out entirely within our own facilities in Varanasi.",
+    proc01_h: "Yarn Procurement",
+    proc01_p: "Natural fibres and yarns (mulberry silk, cotton, linen) are sourced and graded for consistency before entering production.",
+    proc02_h: "Dyeing",
+    proc02_p: "Yarn is cleaned, treated and dyed to match international colour standards and tested for fastness.",
+    proc03_h: "Handloom Weaving",
+    proc03_p: "Skilled karigars weave fine and complex constructions by hand, preserving techniques unique to Banaras, including intricate brocades.",
+    proc04_h: "Power Loom Weaving",
+    proc04_p: "Modern looms produce volume fabrics with the consistency export orders demand, without sacrificing hand-feel.",
+    proc05_h: "Printing",
+    proc05_p: "Traditional and digital printing techniques bring pattern and detail to base cloth with exacting registration.",
+    proc06_h: "Embroidery",
+    proc06_p: "Hand and machine embroidery add texture and value, from fine zari work to contemporary embellishment.",
+    proc07_h: "Finishing",
+    proc07_p: "Washing, calendaring, polishing and softening prepare fabric for its final application and market.",
+    proc08_h: "Stitching",
+    proc08_p: "Made-ups and apparel are cut and stitched to specification for finished, ready-to-ship products.",
+    proc09_h: "Quality Control",
+    proc09_p: "Every piece passes through multi-point quality inspection for weave, colour consistency, defects and measurements against buyer-specific AQL standards.",
+    proc10_h: "Packaging",
+    proc10_p: "Goods are measured, folded or rolled, labelled and packed to destination-market specification for dispatch worldwide.",
+    cats_eyebrow: "Manufacturing Capabilities",
+    cats_h2: "What we manufacture",
+    cats_lead: "Four capability groups, each developed to export standard and available for private label, OEM and ODM production.",
+    cat1_name: "Running Fabrics",
+    cat1_tag: "01 · Fabrics",
+    cat1_l1: "Hand-woven Silk",
+    cat1_l2: "Cotton &amp; Linen",
+    cat1_l3: "Velvet &amp; Viscose",
+    cat1_l4: "Man-made Fibre Blends",
+    cat2_name: "Home Furnishings",
+    cat2_tag: "02 · Made-Ups",
+    cat2_l1: "Curtains &amp; Throws",
+    cat2_l2: "Cushion Covers &amp; Floor Cushions",
+    cat2_l3: "Table Runners &amp; Table Covers",
+    cat2_l4: "Napkins, Pouf &amp; more",
+    cat3_name: "Apparel",
+    cat3_tag: "03 · Readymade",
+    cat3_l1: "Custom Shirts &amp; Pyjamas",
+    cat3_l2: "Sarees",
+    cat3_l3: "Stoles &amp; Scarves",
+    cat4_name: "Accessories",
+    cat4_tag: "04 · Accessories",
+    cat4_l1: "Fancy Yarn",
+    cat4_l2: "Wooden &amp; Glass Beads",
+    cat4_l3: "Fancy Laces",
+    cat4_l4: "Sequins &amp; Embellishments",
+    request_quote: "Request a Quote",
+    fs_ph: "Handloom Weaving: Editorial Photography",
+    fs_eyebrow: "Why Indian Silk",
+    fs_h2: "The fibre that travelled the world before trade routes had names.",
+    fs_p1: "Indian silk, and Banaras silk in particular, has been documented and admired by travellers and historians for centuries, carried along the Silk Route, sought after in the courts of Europe and Central Asia, and prized for a lustre and hand-feel that natural mulberry, tussar, eri and muga silks are still known for today.",
+    fs_p2: "That reputation was not built on marketing. It was built on generations of weavers who understood fibre, tension and finish in a way no machine has fully replicated. The same craftsmanship that earned our family an invitation to showcase Indian silk brocades in Great Britain, opening the doors to the global markets we serve today.",
+    read_heritage: "Read Our Heritage",
+    qa_eyebrow: "Quality Assurance",
+    qa_h2: "Consistency, verified at every stage.",
+    qa_lead: "Quality is not a final check. It is designed into every stage of our process, from yarn selection through to the last inspection before packing. Our systems are built to meet the AQL standards, testing protocols and documentation that international buyers require.",
+    qa01_h: "In-Process Inspection",
+    qa01_p: "Fabric is checked at every production stage, not only at the end, so faults are caught before value is added.",
+    qa02_h: "Lab Testing",
+    qa02_p: "Colour fastness, shrinkage, tensile strength and composition are tested against buyer and international standards.",
+    qa03_h: "AQL-Based Final Inspection",
+    qa03_p: "Finished goods are inspected to agreed AQL levels prior to packing, with reports available on request.",
+    qa04_h: "Consistency Across Runs",
+    qa04_p: "Documented processes and trained supervisors keep quality consistent between sample and bulk production.",
+    journey_eyebrow: "Our Craft",
+    journey_h2: "From cocoon to catwalk.",
+    journey_lead: "Every thread begins in nature and ends on the runway. Seven stages of craftsmanship, largely unchanged for five generations, turn a raw silk cocoon into a garment that walks the world's biggest stages.",
+    jt01_cap: "Photo needed · Raw cocoons",
+    jt01_h: "The Cocoon",
+    jt01_p: "Mulberry silk cocoons are hand-selected for quality, the raw material from which every thread of our fabric begins.",
+    jt02_cap: "Photo needed · Reeling silk thread",
+    jt02_h: "Reeling",
+    jt02_p: "Cocoons are gently unwound into fine, continuous filaments of raw silk, a delicate process demanding a trained hand.",
+    jt03_cap: "Photo needed · Dyeing yarn",
+    jt03_h: "Dyeing",
+    jt03_p: "Raw yarn is dyed by hand in small batches, achieving the rich, saturated colours our fabrics are known for.",
+    jt04_cap: "Photo needed · Handloom weaving",
+    jt04_h: "Handloom Weaving",
+    jt04_p: "Master weavers set each thread on the loom by hand, turning dyed yarn into intricate Banarasi fabric, motif by motif.",
+    jt05_cap: "Photo needed · Finishing & quality check",
+    jt05_h: "Finishing &amp; Quality Check",
+    jt05_p: "Every metre is inspected, washed and pressed by hand, checked against export-grade standards before it leaves the floor.",
+    jt06_cap: "Photo needed · Cutting & stitching",
+    jt06_h: "Cutting &amp; Stitching",
+    jt06_p: "Finished fabric is cut and stitched into the final garment, ready to be worn.",
+    jt07_cap: "Photo needed · Model on the ramp",
+    jt07_h: "The Runway",
+    jt07_p: "From a single cocoon to a garment walking the world's biggest stages. This is the journey behind every collection we manufacture.",
+    start_collection: "Start Your Collection",
+    export_eyebrow: "Global Presence",
+    export_h2: "Manufactured in Varanasi. Trusted worldwide.",
+    export_lead: "Our fabrics and finished textiles ship to importers, buying houses and luxury brands in more than 55 countries across four continents. We support private label, OEM and ODM programmes with sampling, flexible MOQs and destination-ready documentation.",
+    mkt_europe: "Europe",
+    mkt_europe_c: "France, Germany, Spain, Italy, UK, Portugal",
+    mkt_americas: "Americas",
+    mkt_americas_c: "U.S.A., Brazil, Argentina",
+    mkt_eastasia: "East Asia",
+    mkt_eastasia_c: "China, Japan, South Korea, Hong Kong, Malaysia",
+    mkt_other: "Other Markets",
+    mkt_other_c: "Morocco &amp; more",
+    request_export_info: "Request Export Information",
+    globe_caption: "Drag to spin the globe · hover any country to see its name",
+    gallery_eyebrow: "Gallery",
+    gallery_h2: "Factory, fibre and finished cloth.",
+    gal_1: "Factory Floor",
+    gal_2: "Artisans at Loom",
+    gal_3: "Raw Silk Yarn",
+    gal_4: "Fabric Macro",
+    gal_5: "Finished Textiles",
+    cta_eyebrow: "Start a Conversation",
+    cta_h2: "Let's manufacture your <em>next collection</em>.",
+    cta_lead: "Tell us about your brand and requirements. Our team responds to every qualified enquiry within two business days.",
+    request_meeting: "Request a Meeting",
+    footer_desc: "Weaving beauty since 1924. A five-generation, Star Export House manufacturing natural textiles from Varanasi, India, exporting to 55+ countries. OEM, ODM and private label production for the world's finest brands.",
+    foot_company: "Company",
+    foot_capabilities: "Capabilities",
+    foot_resources: "Resources",
+    foot_qa: "Quality Assurance",
+    foot_export_info: "Export Info",
+    foot_addr1: "6, Gandhi Nagar, Sigra",
+    foot_addr2: "Post Box #62, Varanasi &ndash; 221010, U.P., India",
+    foot_tel: "Tel:",
+    foot_fax: "Fax:",
+    foot_copyright: "© 2026 Banaras Silk Mfg. Co. All rights reserved."
+  },
+
+  de: {
+    brand: "Banaras Silk Mfg. Co.",
+    tagline: "Weberei der Schönheit seit 1924",
+    nav_about: "Über uns",
+    nav_manufacturing: "Fertigung",
+    nav_categories: "Kategorien",
+    nav_quality: "Qualität",
+    nav_craft: "Unsere Handwerkskunst",
+    nav_export: "Export",
+    nav_contact: "Kontakt",
+    enquire_now: "Jetzt anfragen",
+    mm_foot: "Weberei der Schönheit seit 1924 · Varanasi, Indien",
+    hero_title: 'Weberei der Schönheit seit 1924.<br><em>Gewebt für die Welt.</em>',
+    hero_sub: "Ein über fünf Generationen gewachsenes Familienerbe handgewebter Textilkunst. Banaras Silk Mfg. Co. fertigt Naturtextilien für die anspruchsvollsten Einrichtungs- und Modehäuser der Welt und exportiert in mehr als 55 Länder.",
+    our_story: "Unsere Geschichte",
+    intro_eyebrow: "Seit 1924",
+    intro_h2: 'Fünf Generationen.<br>Ein <em>Webstuhl</em>, ununterbrochen.',
+    intro_p1: "Gegründet 1924, zählt Banaras Silk Mfg. Co. zu den ältesten und angesehensten Textilherstellern Indiens und führt ein fünf Generationen umfassendes Familienerbe in der Kunst des Handwebens fort. Ursprünglich als Banaras Brocade Museum gegründet, wurde das Unternehmen schnell zum Inbegriff feinster handgewebter Seidenbrokate aus der historischen Stadt Varanasi und betrieb einst ein Netz von 22 Einzelhandelsgeschäften in den Bergstationen Indiens, wo mit echtem Gold- und Silberfaden für königliche und aristokratische Haushalte gewebt wurde.",
+    intro_p2: "Eine Einladung, unsere Arbeit in Großbritannien zu präsentieren, markierte den Beginn unserer Exportreise. Heute erstreckt sich diese Reise auf mehr als 55 Länder, wobei das Unternehmen traditionelles Weberhandwerk mit zeitgenössischer Textilinnovation über Seide, Baumwolle, Leinen und Mischgewebe hinweg verbindet, alles unter einem Dach in Varanasi, sodass unsere Partner ihre Kollektionen mit Zuversicht aufbauen können.",
+    explore_manufacturing: "Unsere Fertigung entdecken",
+    stat_1: "Gründungsjahr",
+    stat_2: "Generation in Familienhand",
+    stat_3: "Belieferte Exportmärkte",
+    stat_4: "Eigenfertigung",
+    why_eyebrow: "Warum bei uns beziehen",
+    why_h2: "Handwerkskunst, auf der Sie eine Kollektion aufbauen können.",
+    why_lead: "Die Beschaffung aus Indien bedeutet Zugang zum tiefsten Wissensschatz über Naturfaser-Weberei weltweit. Die Beschaffung bei uns bedeutet, dass dieses Wissen in exportfähige, wiederholbare Fertigung überführt wird.",
+    why01_h: "Ein Jahrhundert Tradition",
+    why01_p: "Über 100 Jahre Erfahrung und ein fünf Generationen umfassendes Erbe machen uns zu einem der ältesten und etabliertesten Textilhersteller Indiens, der die authentische Kunst des Banarasi-Webens bewahrt.",
+    why02_h: "Bewährte globale Präsenz",
+    why02_p: "Unsere Produkte werden in mehr als 55 Länder exportiert und beliefern Importeure, Großhändler, Luxusmarken, Designer und Einzelhändler, die auf unser Verständnis vielfältiger Marktanforderungen vertrauen.",
+    why03_h: "Unerreichte Handwerkskunst",
+    why03_p: "Exquisite handgewebte Stoffe, geschaffen von hochqualifizierten Kunsthandwerkern, deren Techniken über Generationen von Varanasi-Webern weitergegeben wurden.",
+    why04_h: "Zuverlässigkeit & pünktliche Lieferung",
+    why04_p: "Jahrzehntelanges internationales Geschäft, aufgebaut auf gleichbleibender Qualität, transparenten Geschäften und verlässlichen Lieferzeiten, das uns zu einem vertrauenswürdigen langfristigen Beschaffungspartner macht.",
+    why05_h: "Breite Produktexpertise",
+    why05_p: "Eine vielfältige Palette natürlicher und nachhaltiger Textilien, Seide, Baumwolle, Leinen und innovative Mischgewebe, für Mode, Wohntextilien, Luxusaccessoires und maßgeschneiderte Anwendungen.",
+    why06_h: "Tradition mit Innovation",
+    why06_p: "Tief in der Tradition verwurzelt und dennoch stetig an globale Trends angepasst mit zeitgemäßen Entwicklungen, kundenspezifischen Designs und marktspezifischen Kollektionen.",
+    why07_h: "Vertrauen über Generationen",
+    why07_p: "Vertrauen, das über Generationen durch ethische Geschäftspraktiken, langjährige Beziehungen und ein unerschütterliches Streben nach Exzellenz aufgebaut wurde.",
+    process_eyebrow: "Fertigung",
+    process_h2: "Von der Rohfaser bis zur Exportkiste.",
+    process_lead: "Zehn Fertigungsstufen, über ein Jahrhundert verfeinert, vollständig in unseren eigenen Anlagen in Varanasi durchgeführt.",
+    proc01_h: "Garnbeschaffung",
+    proc01_p: "Naturfasern und Garne (Maulbeerseide, Baumwolle, Leinen) werden beschafft und für Konsistenz sortiert, bevor sie in die Produktion gehen.",
+    proc02_h: "Färben",
+    proc02_p: "Garn wird gereinigt, behandelt und nach internationalen Farbstandards gefärbt sowie auf Farbechtheit geprüft.",
+    proc03_h: "Handwebstuhl-Weberei",
+    proc03_p: "Erfahrene Kunsthandwerker weben feine und komplexe Konstruktionen von Hand und bewahren dabei Techniken, die einzigartig für Banaras sind, einschließlich kunstvoller Brokate.",
+    proc04_h: "Kraftwebstuhl-Weberei",
+    proc04_p: "Moderne Webstühle produzieren Volumenstoffe mit der von Exportaufträgen geforderten Konsistenz, ohne den Handgefühl zu opfern.",
+    proc05_h: "Druck",
+    proc05_p: "Traditionelle und digitale Drucktechniken bringen Muster und Details mit präziser Passung auf das Grundgewebe.",
+    proc06_h: "Stickerei",
+    proc06_p: "Hand- und Maschinenstickerei verleihen Textur und Wert, von feiner Zari-Arbeit bis zu zeitgenössischer Verzierung.",
+    proc07_h: "Veredelung",
+    proc07_p: "Waschen, Kalandrieren, Polieren und Weichmachen bereiten den Stoff auf seine endgültige Anwendung und den Markt vor.",
+    proc08_h: "Konfektion",
+    proc08_p: "Fertigwaren und Bekleidung werden nach Spezifikation zugeschnitten und genäht, um versandfertige Produkte zu erhalten.",
+    proc09_h: "Qualitätskontrolle",
+    proc09_p: "Jedes Stück durchläuft eine mehrpunktige Qualitätsprüfung hinsichtlich Webart, Farbkonsistenz, Fehlern und Maßen gemäß kundenspezifischer AQL-Standards.",
+    proc10_h: "Verpackung",
+    proc10_p: "Waren werden vermessen, gefaltet oder gerollt, etikettiert und gemäß Zielmarktspezifikation für den weltweiten Versand verpackt.",
+    cats_eyebrow: "Fertigungskompetenzen",
+    cats_h2: "Was wir herstellen",
+    cats_lead: "Vier Kompetenzbereiche, jeweils nach Exportstandard entwickelt und verfügbar für Private Label, OEM- und ODM-Fertigung.",
+    cat1_name: "Meterware",
+    cat1_tag: "01 · Stoffe",
+    cat1_l1: "Handgewebte Seide",
+    cat1_l2: "Baumwolle & Leinen",
+    cat1_l3: "Samt & Viskose",
+    cat1_l4: "Kunstfasergemische",
+    cat2_name: "Wohntextilien",
+    cat2_tag: "02 · Konfektionsware",
+    cat2_l1: "Vorhänge & Decken",
+    cat2_l2: "Kissenbezüge & Bodenkissen",
+    cat2_l3: "Tischläufer & Tischdecken",
+    cat2_l4: "Servietten, Poufs & mehr",
+    cat3_name: "Bekleidung",
+    cat3_tag: "03 · Konfektion",
+    cat3_l1: "Maßhemden & Pyjamas",
+    cat3_l2: "Saris",
+    cat3_l3: "Stolen & Schals",
+    cat4_name: "Accessoires",
+    cat4_tag: "04 · Accessoires",
+    cat4_l1: "Fantasiegarn",
+    cat4_l2: "Holz- & Glasperlen",
+    cat4_l3: "Modische Spitzen",
+    cat4_l4: "Pailletten & Verzierungen",
+    request_quote: "Angebot anfordern",
+    fs_ph: "Handwebkunst: Editorial-Fotografie",
+    fs_eyebrow: "Warum indische Seide",
+    fs_h2: "Die Faser, die die Welt bereiste, bevor Handelsrouten Namen hatten.",
+    fs_p1: "Indische Seide, insbesondere Banaras-Seide, wird seit Jahrhunderten von Reisenden und Historikern dokumentiert und bewundert, entlang der Seidenstraße transportiert, an den Höfen Europas und Zentralasiens begehrt und für einen Glanz und ein Griffgefühl geschätzt, für das natürliche Maulbeer-, Tussar-, Eri- und Muga-Seide bis heute bekannt sind.",
+    fs_p2: "Dieser Ruf wurde nicht durch Marketing aufgebaut. Er wurde durch Generationen von Webern geschaffen, die Faser, Spannung und Verarbeitung auf eine Weise verstanden, die keine Maschine bislang vollständig nachbilden konnte. Dieselbe Handwerkskunst, die unserer Familie die Einladung einbrachte, indische Seidenbrokate in Großbritannien zu präsentieren, und die Türen zu den globalen Märkten öffnete, die wir heute bedienen.",
+    read_heritage: "Unsere Tradition entdecken",
+    qa_eyebrow: "Qualitätssicherung",
+    qa_h2: "Konsistenz, in jeder Phase geprüft.",
+    qa_lead: "Qualität ist keine abschließende Prüfung. Sie ist in jede Phase unseres Prozesses eingebaut, von der Garnauswahl bis zur letzten Kontrolle vor der Verpackung. Unsere Systeme sind darauf ausgelegt, die AQL-Standards, Prüfprotokolle und Dokumentation zu erfüllen, die internationale Käufer verlangen.",
+    qa01_h: "Prozessbegleitende Prüfung",
+    qa01_p: "Der Stoff wird bei jeder Produktionsstufe geprüft, nicht nur am Ende, sodass Fehler erkannt werden, bevor Wert hinzugefügt wird.",
+    qa02_h: "Labortests",
+    qa02_p: "Farbechtheit, Schrumpfung, Zugfestigkeit und Zusammensetzung werden gegen Kunden- und internationale Standards geprüft.",
+    qa03_h: "AQL-basierte Endkontrolle",
+    qa03_p: "Fertigwaren werden vor der Verpackung auf vereinbarten AQL-Niveaus geprüft, Berichte sind auf Anfrage erhältlich.",
+    qa04_h: "Konsistenz über Chargen hinweg",
+    qa04_p: "Dokumentierte Prozesse und geschulte Vorgesetzte halten die Qualität zwischen Muster- und Großproduktion konsistent.",
+    journey_eyebrow: "Unsere Handwerkskunst",
+    journey_h2: "Vom Kokon zum Laufsteg.",
+    journey_lead: "Jeder Faden beginnt in der Natur und endet auf dem Laufsteg. Sieben Stufen der Handwerkskunst, über fünf Generationen weitgehend unverändert, verwandeln einen rohen Seidenkokon in ein Kleidungsstück, das auf den größten Bühnen der Welt läuft.",
+    jt01_cap: "Foto benötigt · Rohe Kokons",
+    jt01_h: "Der Kokon",
+    jt01_p: "Maulbeerseidenkokons werden von Hand für ihre Qualität ausgewählt, das Rohmaterial, aus dem jeder Faden unseres Stoffes beginnt.",
+    jt02_cap: "Foto benötigt · Abhaspeln der Seide",
+    jt02_h: "Abhaspeln",
+    jt02_p: "Kokons werden sanft zu feinen, durchgehenden Rohseidenfäden abgewickelt, ein filigraner Prozess, der eine geübte Hand erfordert.",
+    jt03_cap: "Foto benötigt · Garnfärbung",
+    jt03_h: "Färben",
+    jt03_p: "Rohes Garn wird in kleinen Chargen von Hand gefärbt, wodurch die satten, gesättigten Farben entstehen, für die unsere Stoffe bekannt sind.",
+    jt04_cap: "Foto benötigt · Handwebstuhl-Weberei",
+    jt04_h: "Handwebstuhl-Weberei",
+    jt04_p: "Meisterweber setzen jeden Faden von Hand auf den Webstuhl und verwandeln gefärbtes Garn Motiv für Motiv in kunstvollen Banarasi-Stoff.",
+    jt05_cap: "Foto benötigt · Veredelung & Qualitätskontrolle",
+    jt05_h: "Veredelung & Qualitätskontrolle",
+    jt05_p: "Jeder Meter wird von Hand geprüft, gewaschen und gepresst, gegen exportfähige Standards kontrolliert, bevor er die Produktion verlässt.",
+    jt06_cap: "Foto benötigt · Zuschnitt & Näherei",
+    jt06_h: "Zuschnitt & Näherei",
+    jt06_p: "Fertiger Stoff wird zugeschnitten und zum endgültigen Kleidungsstück vernäht, bereit zum Tragen.",
+    jt07_cap: "Foto benötigt · Model auf dem Laufsteg",
+    jt07_h: "Der Laufsteg",
+    jt07_p: "Von einem einzelnen Kokon zu einem Kleidungsstück, das auf den größten Bühnen der Welt läuft. Dies ist die Reise hinter jeder Kollektion, die wir fertigen.",
+    start_collection: "Ihre Kollektion starten",
+    export_eyebrow: "Globale Präsenz",
+    export_h2: "Hergestellt in Varanasi. Weltweit vertraut.",
+    export_lead: "Unsere Stoffe und fertigen Textilien werden an Importeure, Einkaufshäuser und Luxusmarken in mehr als 55 Ländern auf vier Kontinenten versandt. Wir unterstützen Private-Label-, OEM- und ODM-Programme mit Musterung, flexiblen Mindestmengen und versandfertiger Dokumentation.",
+    mkt_europe: "Europa",
+    mkt_europe_c: "Frankreich, Deutschland, Spanien, Italien, Großbritannien, Portugal",
+    mkt_americas: "Amerika",
+    mkt_americas_c: "USA, Brasilien, Argentinien",
+    mkt_eastasia: "Ostasien",
+    mkt_eastasia_c: "China, Japan, Südkorea, Hongkong, Malaysia",
+    mkt_other: "Weitere Märkte",
+    mkt_other_c: "Marokko & mehr",
+    request_export_info: "Exportinformationen anfordern",
+    globe_caption: "Zum Drehen des Globus ziehen · Land für Namen berühren",
+    gallery_eyebrow: "Galerie",
+    gallery_h2: "Fabrik, Faser und fertiges Gewebe.",
+    gal_1: "Fabrikhalle",
+    gal_2: "Handwerker am Webstuhl",
+    gal_3: "Rohseidengarn",
+    gal_4: "Stoff-Nahaufnahme",
+    gal_5: "Fertige Textilien",
+    cta_eyebrow: "Ein Gespräch beginnen",
+    cta_h2: "Lassen Sie uns Ihre <em>nächste Kollektion</em> fertigen.",
+    cta_lead: "Erzählen Sie uns von Ihrer Marke und Ihren Anforderungen. Unser Team beantwortet jede qualifizierte Anfrage innerhalb von zwei Werktagen.",
+    request_meeting: "Termin anfragen",
+    footer_desc: "Weberei der Schönheit seit 1924. Ein fünf Generationen umfassendes Star Export House, das Naturtextilien aus Varanasi, Indien, herstellt und in über 55 Länder exportiert. OEM-, ODM- und Private-Label-Fertigung für die feinsten Marken der Welt.",
+    foot_company: "Unternehmen",
+    foot_capabilities: "Kompetenzen",
+    foot_resources: "Ressourcen",
+    foot_qa: "Qualitätssicherung",
+    foot_export_info: "Exportinformationen",
+    foot_addr1: "6, Gandhi Nagar, Sigra",
+    foot_addr2: "Postfach #62, Varanasi – 221010, U.P., Indien",
+    foot_tel: "Tel:",
+    foot_fax: "Fax:",
+    foot_copyright: "© 2026 Banaras Silk Mfg. Co. Alle Rechte vorbehalten."
+  },
+
+  fr: {
+    brand: "Banaras Silk Mfg. Co.",
+    tagline: "Tisser la beauté depuis 1924",
+    nav_about: "À propos",
+    nav_manufacturing: "Fabrication",
+    nav_categories: "Catégories",
+    nav_quality: "Qualité",
+    nav_craft: "Notre savoir-faire",
+    nav_export: "Export",
+    nav_contact: "Contact",
+    enquire_now: "Demander un devis",
+    mm_foot: "Tisser la beauté depuis 1924 · Varanasi, Inde",
+    hero_title: 'Tisser la beauté depuis 1924.<br><em>Tissé pour le monde.</em>',
+    hero_sub: "Un héritage familial de cinq générations dans l'art du tissage artisanal. Banaras Silk Mfg. Co. fabrique des textiles naturels pour les maisons de décoration et de mode les plus exigeantes au monde, exportant vers plus de 55 pays.",
+    our_story: "Notre histoire",
+    intro_eyebrow: "Depuis 1924",
+    intro_h2: 'Cinq générations.<br>Un <em>métier à tisser</em>, sans interruption.',
+    intro_p1: "Fondée en 1924, Banaras Silk Mfg. Co. est l'un des fabricants textiles les plus anciens et les plus respectés d'Inde, perpétuant un héritage familial de cinq générations dans l'art du tissage artisanal. Fondée à l'origine sous le nom de Banaras Brocade Museum, l'entreprise est rapidement devenue synonyme des plus beaux brocarts de soie tissés à la main de la ville historique de Varanasi, et exploitait autrefois un réseau de 22 boutiques dans les stations de montagne de l'Inde, tissant avec du fil d'or et d'argent véritable pour les familles royales et aristocratiques.",
+    intro_p2: "Une invitation à présenter notre travail en Grande-Bretagne a marqué le début de notre aventure à l'export. Aujourd'hui, ce parcours s'étend à plus de 55 pays, l'entreprise continuant d'allier héritage textile traditionnel et innovation contemporaine à travers la soie, le coton, le lin et les mélanges de fibres, le tout sous un même toit à Varanasi, permettant à nos partenaires de bâtir leurs collections en toute confiance.",
+    explore_manufacturing: "Découvrir notre fabrication",
+    stat_1: "Année de fondation",
+    stat_2: "Génération familiale",
+    stat_3: "Marchés d'exportation desservis",
+    stat_4: "Fabrication intégrée",
+    why_eyebrow: "Pourquoi s'approvisionner chez nous",
+    why_h2: "Un savoir-faire sur lequel bâtir votre collection.",
+    why_lead: "S'approvisionner en Inde, c'est accéder au réservoir de savoir-faire textile le plus riche au monde. S'approvisionner chez nous, c'est bénéficier de ce savoir discipliné en une fabrication reproductible, aux normes d'exportation.",
+    why01_h: "Un siècle d'héritage",
+    why01_p: "Plus de 100 ans d'expérience et un héritage familial de cinq générations font de nous l'un des fabricants textiles les plus anciens et les plus établis d'Inde, préservant l'art authentique du tissage banarasi.",
+    why02_h: "Présence mondiale reconnue",
+    why02_p: "Nos produits sont exportés vers plus de 55 pays, au service d'importateurs, de grossistes, de marques de luxe, de designers et de détaillants qui comptent sur notre compréhension des exigences des différents marchés.",
+    why03_h: "Un savoir-faire inégalé",
+    why03_p: "Des tissus tissés à la main d'une qualité exquise, créés par des artisans hautement qualifiés dont les techniques se transmettent depuis des générations de tisserands de Varanasi.",
+    why04_h: "Fiabilité et livraison ponctuelle",
+    why04_p: "Des décennies d'activité internationale fondées sur une qualité constante, des transactions transparentes et des délais de livraison fiables, faisant de nous un partenaire d'approvisionnement de confiance sur le long terme.",
+    why05_h: "Large expertise produits",
+    why05_p: "Une gamme diversifiée de textiles naturels et durables, soie, coton, lin et mélanges innovants, pour la mode, l'ameublement, les accessoires de luxe et les applications sur mesure.",
+    why06_h: "Héritage et innovation",
+    why06_p: "Profondément enraciné dans la tradition, tout en s'adaptant continuellement aux tendances mondiales avec des développements contemporains, des designs personnalisés et des collections spécifiques à chaque marché.",
+    why07_h: "Une confiance transmise",
+    why07_p: "Une confiance bâtie au fil des générations grâce à des pratiques commerciales éthiques, des relations durables et un engagement indéfectible envers l'excellence.",
+    process_eyebrow: "Fabrication",
+    process_h2: "De la fibre brute à la caisse d'exportation.",
+    process_lead: "Dix étapes, perfectionnées sur plus d'un siècle, entièrement réalisées au sein de nos propres installations à Varanasi.",
+    proc01_h: "Approvisionnement en fil",
+    proc01_p: "Les fibres et fils naturels (soie mûrier, coton, lin) sont sourcés et calibrés pour garantir une constance avant d'entrer en production.",
+    proc02_h: "Teinture",
+    proc02_p: "Le fil est nettoyé, traité et teint selon les normes de couleur internationales, puis testé pour sa solidité.",
+    proc03_h: "Tissage sur métier à tisser manuel",
+    proc03_p: "Des artisans qualifiés tissent à la main des motifs fins et complexes, préservant des techniques propres à Banaras, y compris des brocarts élaborés.",
+    proc04_h: "Tissage sur métier mécanique",
+    proc04_p: "Des métiers modernes produisent des tissus en volume avec la constance exigée par les commandes d'exportation, sans sacrifier le toucher artisanal.",
+    proc05_h: "Impression",
+    proc05_p: "Des techniques d'impression traditionnelles et numériques apportent motifs et détails au tissu de base avec un registre précis.",
+    proc06_h: "Broderie",
+    proc06_p: "La broderie manuelle et mécanique ajoute texture et valeur, du fin travail de zari à l'embellissement contemporain.",
+    proc07_h: "Finition",
+    proc07_p: "Lavage, calandrage, polissage et assouplissement préparent le tissu pour son application finale et sa mise sur le marché.",
+    proc08_h: "Confection",
+    proc08_p: "Les articles confectionnés et vêtements sont coupés et cousus selon les spécifications pour des produits finis, prêts à l'expédition.",
+    proc09_h: "Contrôle qualité",
+    proc09_p: "Chaque pièce passe par une inspection qualité en plusieurs points portant sur le tissage, la constance des couleurs, les défauts et les mesures, selon les normes AQL propres à chaque acheteur.",
+    proc10_h: "Emballage",
+    proc10_p: "Les marchandises sont mesurées, pliées ou roulées, étiquetées et emballées selon les spécifications du marché de destination pour une expédition mondiale.",
+    cats_eyebrow: "Capacités de fabrication",
+    cats_h2: "Ce que nous fabriquons",
+    cats_lead: "Quatre pôles de compétences, chacun développé aux normes d'exportation et disponible pour la marque privée, l'OEM et l'ODM.",
+    cat1_name: "Tissus en pièce",
+    cat1_tag: "01 · Tissus",
+    cat1_l1: "Soie tissée à la main",
+    cat1_l2: "Coton et lin",
+    cat1_l3: "Velours et viscose",
+    cat1_l4: "Mélanges de fibres synthétiques",
+    cat2_name: "Linge de maison",
+    cat2_tag: "02 · Articles confectionnés",
+    cat2_l1: "Rideaux et plaids",
+    cat2_l2: "Housses de coussin et coussins de sol",
+    cat2_l3: "Chemins de table et nappes",
+    cat2_l4: "Serviettes, poufs et plus",
+    cat3_name: "Vêtements",
+    cat3_tag: "03 · Prêt-à-porter",
+    cat3_l1: "Chemises et pyjamas sur mesure",
+    cat3_l2: "Saris",
+    cat3_l3: "Étoles et foulards",
+    cat4_name: "Accessoires",
+    cat4_tag: "04 · Accessoires",
+    cat4_l1: "Fils fantaisie",
+    cat4_l2: "Perles en bois et en verre",
+    cat4_l3: "Dentelles fantaisie",
+    cat4_l4: "Paillettes et ornements",
+    request_quote: "Demander un devis",
+    fs_ph: "Tissage manuel : photographie éditoriale",
+    fs_eyebrow: "Pourquoi la soie indienne",
+    fs_h2: "La fibre qui a parcouru le monde avant que les routes commerciales n'aient de nom.",
+    fs_p1: "La soie indienne, et la soie de Banaras en particulier, est documentée et admirée par les voyageurs et historiens depuis des siècles, transportée le long de la route de la soie, recherchée dans les cours d'Europe et d'Asie centrale, et appréciée pour un lustre et un toucher que les soies naturelles mûrier, tussar, eri et muga continuent d'incarner aujourd'hui.",
+    fs_p2: "Cette réputation ne s'est pas construite par le marketing. Elle s'est bâtie grâce à des générations de tisserands qui comprenaient la fibre, la tension et la finition d'une manière qu'aucune machine n'a encore su reproduire pleinement. Le même savoir-faire qui a valu à notre famille une invitation à présenter les brocarts de soie indienne en Grande-Bretagne, ouvrant les portes des marchés mondiaux que nous servons aujourd'hui.",
+    read_heritage: "Découvrir notre héritage",
+    qa_eyebrow: "Assurance qualité",
+    qa_h2: "Une constance vérifiée à chaque étape.",
+    qa_lead: "La qualité n'est pas un simple contrôle final. Elle est intégrée à chaque étape de notre processus, du choix du fil jusqu'à la dernière inspection avant emballage. Nos systèmes sont conçus pour répondre aux normes AQL, protocoles de test et documentation exigés par les acheteurs internationaux.",
+    qa01_h: "Inspection en cours de production",
+    qa01_p: "Le tissu est contrôlé à chaque étape de production, et non seulement à la fin, afin de détecter les défauts avant qu'ils n'ajoutent de la valeur au produit.",
+    qa02_h: "Tests en laboratoire",
+    qa02_p: "La solidité des couleurs, le rétrécissement, la résistance à la traction et la composition sont testés selon les normes de l'acheteur et les normes internationales.",
+    qa03_h: "Inspection finale basée sur l'AQL",
+    qa03_p: "Les produits finis sont inspectés selon les niveaux AQL convenus avant l'emballage, avec des rapports disponibles sur demande.",
+    qa04_h: "Constance entre les lots",
+    qa04_p: "Des processus documentés et des superviseurs formés maintiennent une qualité constante entre l'échantillon et la production en volume.",
+    journey_eyebrow: "Notre savoir-faire",
+    journey_h2: "Du cocon au podium.",
+    journey_lead: "Chaque fil commence dans la nature et se termine sur le podium. Sept étapes de savoir-faire, largement inchangées depuis cinq générations, transforment un cocon de soie brut en un vêtement qui défile sur les plus grandes scènes du monde.",
+    jt01_cap: "Photo à venir · Cocons bruts",
+    jt01_h: "Le cocon",
+    jt01_p: "Les cocons de soie mûrier sont sélectionnés à la main pour leur qualité, matière première à partir de laquelle commence chaque fil de notre tissu.",
+    jt02_cap: "Photo à venir · Dévidage de la soie",
+    jt02_h: "Dévidage",
+    jt02_p: "Les cocons sont délicatement dévidés en fins filaments continus de soie brute, un processus délicat qui exige une main experte.",
+    jt03_cap: "Photo à venir · Teinture du fil",
+    jt03_h: "Teinture",
+    jt03_p: "Le fil brut est teint à la main en petites quantités, produisant les couleurs riches et saturées qui font la réputation de nos tissus.",
+    jt04_cap: "Photo à venir · Tissage manuel",
+    jt04_h: "Tissage sur métier manuel",
+    jt04_p: "Les maîtres tisserands placent chaque fil sur le métier à la main, transformant le fil teint en un tissu banarasi complexe, motif par motif.",
+    jt05_cap: "Photo à venir · Finition et contrôle qualité",
+    jt05_h: "Finition et contrôle qualité",
+    jt05_p: "Chaque mètre est inspecté, lavé et pressé à la main, contrôlé selon les normes d'exportation avant de quitter l'atelier.",
+    jt06_cap: "Photo à venir · Coupe et couture",
+    jt06_h: "Coupe et couture",
+    jt06_p: "Le tissu fini est coupé et cousu pour devenir le vêtement final, prêt à être porté.",
+    jt07_cap: "Photo à venir · Mannequin sur le podium",
+    jt07_h: "Le podium",
+    jt07_p: "D'un simple cocon à un vêtement qui défile sur les plus grandes scènes du monde. Voici le parcours derrière chaque collection que nous fabriquons.",
+    start_collection: "Démarrer votre collection",
+    export_eyebrow: "Présence mondiale",
+    export_h2: "Fabriqué à Varanasi. Reconnu dans le monde entier.",
+    export_lead: "Nos tissus et textiles finis sont expédiés vers des importateurs, des centrales d'achat et des marques de luxe dans plus de 55 pays sur quatre continents. Nous accompagnons les programmes de marque privée, OEM et ODM avec échantillonnage, quantités minimales flexibles et documentation prête pour la destination.",
+    mkt_europe: "Europe",
+    mkt_europe_c: "France, Allemagne, Espagne, Italie, Royaume-Uni, Portugal",
+    mkt_americas: "Amériques",
+    mkt_americas_c: "États-Unis, Brésil, Argentine",
+    mkt_eastasia: "Asie de l'Est",
+    mkt_eastasia_c: "Chine, Japon, Corée du Sud, Hong Kong, Malaisie",
+    mkt_other: "Autres marchés",
+    mkt_other_c: "Maroc et plus",
+    request_export_info: "Demander des informations export",
+    globe_caption: "Faites glisser pour faire pivoter le globe · survolez un pays pour voir son nom",
+    gallery_eyebrow: "Galerie",
+    gallery_h2: "Usine, fibre et tissu fini.",
+    gal_1: "Atelier de production",
+    gal_2: "Artisans au métier à tisser",
+    gal_3: "Fil de soie brute",
+    gal_4: "Gros plan du tissu",
+    gal_5: "Textiles finis",
+    cta_eyebrow: "Entamons la conversation",
+    cta_h2: "Fabriquons ensemble votre <em>prochaine collection</em>.",
+    cta_lead: "Parlez-nous de votre marque et de vos besoins. Notre équipe répond à chaque demande qualifiée sous deux jours ouvrés.",
+    request_meeting: "Demander un rendez-vous",
+    footer_desc: "Tisser la beauté depuis 1924. Un Star Export House familial de cinq générations, fabriquant des textiles naturels depuis Varanasi, en Inde, et exportant vers plus de 55 pays. Fabrication OEM, ODM et marque privée pour les plus grandes marques au monde.",
+    foot_company: "Entreprise",
+    foot_capabilities: "Compétences",
+    foot_resources: "Ressources",
+    foot_qa: "Assurance qualité",
+    foot_export_info: "Infos export",
+    foot_addr1: "6, Gandhi Nagar, Sigra",
+    foot_addr2: "Boîte postale n°62, Varanasi – 221010, U.P., Inde",
+    foot_tel: "Tél :",
+    foot_fax: "Fax :",
+    foot_copyright: "© 2026 Banaras Silk Mfg. Co. Tous droits réservés."
+  },
+
+  it: {
+    brand: "Banaras Silk Mfg. Co.",
+    tagline: "Tessendo bellezza dal 1924",
+    nav_about: "Chi siamo",
+    nav_manufacturing: "Produzione",
+    nav_categories: "Categorie",
+    nav_quality: "Qualità",
+    nav_craft: "La nostra arte",
+    nav_export: "Export",
+    nav_contact: "Contatti",
+    enquire_now: "Richiedi informazioni",
+    mm_foot: "Tessendo bellezza dal 1924 · Varanasi, India",
+    hero_title: 'Tessendo bellezza dal 1924.<br><em>Tessuto per il mondo.</em>',
+    hero_sub: "Un'eredità familiare di cinque generazioni nell'arte della tessitura artigianale. Banaras Silk Mfg. Co. produce tessuti naturali per le case di arredamento e moda più esigenti al mondo, esportando in oltre 55 Paesi.",
+    our_story: "La nostra storia",
+    intro_eyebrow: "Dal 1924",
+    intro_h2: 'Cinque generazioni.<br>Un <em>telaio</em>, mai interrotto.',
+    intro_p1: "Fondata nel 1924, Banaras Silk Mfg. Co. è uno dei produttori tessili più antichi e rispettati dell'India, portando avanti un'eredità familiare di cinque generazioni nell'arte della tessitura artigianale. Nata originariamente come Banaras Brocade Museum, l'azienda divenne rapidamente sinonimo dei più pregiati broccati di seta tessuti a mano della storica città di Varanasi, gestendo un tempo una rete di 22 negozi nelle stazioni collinari indiane, tessendo con filo d'oro e argento autentico per famiglie reali e aristocratiche.",
+    intro_p2: "Un invito a presentare il nostro lavoro in Gran Bretagna segnò l'inizio del nostro percorso di esportazione. Oggi questo percorso si estende a oltre 55 Paesi, con l'azienda che continua a unire l'eredità tessile tradizionale all'innovazione tessile contemporanea attraverso seta, cotone, lino e tessuti misti, tutto sotto lo stesso tetto a Varanasi, così che i nostri partner possano costruire le proprie collezioni con fiducia.",
+    explore_manufacturing: "Scopri la nostra produzione",
+    stat_1: "Anno di fondazione",
+    stat_2: "Generazione a conduzione familiare",
+    stat_3: "Mercati di esportazione serviti",
+    stat_4: "Produzione interna",
+    why_eyebrow: "Perché scegliere noi",
+    why_h2: "Un'artigianalità su cui costruire una collezione.",
+    why_lead: "Rifornirsi dall'India significa accedere al più profondo patrimonio di sapere tessile in fibre naturali al mondo. Rifornirsi da noi significa che questo sapere è disciplinato in una produzione ripetibile e conforme agli standard di esportazione.",
+    why01_h: "Un secolo di eredità",
+    why01_p: "Oltre 100 anni di esperienza e un'eredità familiare di cinque generazioni ci rendono uno dei produttori tessili più antichi e affermati dell'India, custodi dell'autentica arte della tessitura banarasi.",
+    why02_h: "Presenza globale comprovata",
+    why02_p: "I nostri prodotti vengono esportati in oltre 55 Paesi, servendo importatori, grossisti, marchi di lusso, designer e rivenditori che si affidano alla nostra comprensione delle diverse esigenze di mercato.",
+    why03_h: "Un'artigianalità senza pari",
+    why03_p: "Tessuti pregiati tessuti a mano, creati da artigiani altamente qualificati le cui tecniche si tramandano da generazioni di tessitori di Varanasi.",
+    why04_h: "Affidabilità e consegne puntuali",
+    why04_p: "Decenni di attività internazionale costruiti su qualità costante, rapporti trasparenti e tempi di consegna affidabili, che ci rendono un partner di fiducia per l'approvvigionamento a lungo termine.",
+    why05_h: "Ampia competenza di prodotto",
+    why05_p: "Una gamma diversificata di tessuti naturali e sostenibili, seta, cotone, lino e innovativi tessuti misti, per moda, arredamento per la casa, accessori di lusso e applicazioni su misura.",
+    why06_h: "Tradizione e innovazione",
+    why06_p: "Profondamente radicati nella tradizione, ma in continuo adeguamento alle tendenze globali con sviluppi contemporanei, design personalizzati e collezioni specifiche per mercato.",
+    why07_h: "Fiducia tramandata nel tempo",
+    why07_p: "Una fiducia costruita nel corso delle generazioni grazie a pratiche commerciali etiche, relazioni durature e un impegno costante verso l'eccellenza.",
+    process_eyebrow: "Produzione",
+    process_h2: "Dalla fibra grezza alla cassa per l'export.",
+    process_lead: "Dieci fasi, perfezionate nel corso di un secolo, svolte interamente all'interno dei nostri stabilimenti a Varanasi.",
+    proc01_h: "Approvvigionamento del filato",
+    proc01_p: "Fibre e filati naturali (seta gelso, cotone, lino) vengono selezionati e classificati per garantire uniformità prima di entrare in produzione.",
+    proc02_h: "Tintura",
+    proc02_p: "Il filato viene pulito, trattato e tinto secondo gli standard cromatici internazionali e testato per la solidità del colore.",
+    proc03_h: "Tessitura a telaio manuale",
+    proc03_p: "Artigiani esperti tessono a mano trame fini e complesse, preservando tecniche uniche di Varanasi, inclusi intricati broccati.",
+    proc04_h: "Tessitura a telaio meccanico",
+    proc04_p: "I telai moderni producono tessuti in volume con la costanza richiesta dagli ordini di esportazione, senza sacrificare la mano artigianale.",
+    proc05_h: "Stampa",
+    proc05_p: "Tecniche di stampa tradizionali e digitali conferiscono motivi e dettagli al tessuto base con precisione di registro.",
+    proc06_h: "Ricamo",
+    proc06_p: "Il ricamo a mano e a macchina aggiunge texture e valore, dal fine lavoro di zari agli abbellimenti contemporanei.",
+    proc07_h: "Finissaggio",
+    proc07_p: "Lavaggio, calandratura, lucidatura e ammorbidimento preparano il tessuto per l'applicazione finale e il mercato.",
+    proc08_h: "Confezione",
+    proc08_p: "Capi e articoli confezionati vengono tagliati e cuciti secondo le specifiche per prodotti finiti, pronti alla spedizione.",
+    proc09_h: "Controllo qualità",
+    proc09_p: "Ogni pezzo passa attraverso un'ispezione qualità multipunto su tessitura, uniformità del colore, difetti e misure secondo gli standard AQL specifici del cliente.",
+    proc10_h: "Confezionamento",
+    proc10_p: "Le merci vengono misurate, piegate o arrotolate, etichettate e imballate secondo le specifiche del mercato di destinazione per la spedizione in tutto il mondo.",
+    cats_eyebrow: "Capacità produttive",
+    cats_h2: "Cosa produciamo",
+    cats_lead: "Quattro aree di competenza, ciascuna sviluppata secondo lo standard di esportazione e disponibile per private label, OEM e ODM.",
+    cat1_name: "Tessuti al metro",
+    cat1_tag: "01 · Tessuti",
+    cat1_l1: "Seta tessuta a mano",
+    cat1_l2: "Cotone e lino",
+    cat1_l3: "Velluto e viscosa",
+    cat1_l4: "Misti in fibra sintetica",
+    cat2_name: "Arredamento per la casa",
+    cat2_tag: "02 · Articoli confezionati",
+    cat2_l1: "Tende e plaid",
+    cat2_l2: "Federe per cuscini e cuscini da pavimento",
+    cat2_l3: "Runner e tovaglie",
+    cat2_l4: "Tovaglioli, pouf e altro",
+    cat3_name: "Abbigliamento",
+    cat3_tag: "03 · Confezionato",
+    cat3_l1: "Camicie e pigiami su misura",
+    cat3_l2: "Sari",
+    cat3_l3: "Stole e sciarpe",
+    cat4_name: "Accessori",
+    cat4_tag: "04 · Accessori",
+    cat4_l1: "Filati fantasia",
+    cat4_l2: "Perline in legno e vetro",
+    cat4_l3: "Pizzi fantasia",
+    cat4_l4: "Paillettes e decorazioni",
+    request_quote: "Richiedi un preventivo",
+    fs_ph: "Tessitura a mano: fotografia editoriale",
+    fs_eyebrow: "Perché la seta indiana",
+    fs_h2: "La fibra che ha viaggiato per il mondo prima che le rotte commerciali avessero un nome.",
+    fs_p1: "La seta indiana, e in particolare la seta di Banaras, è stata documentata e ammirata da viaggiatori e storici per secoli, trasportata lungo la Via della Seta, ricercata nelle corti d'Europa e Asia centrale, e apprezzata per una lucentezza e una mano che le sete naturali gelso, tussar, eri e muga sono ancora oggi note per possedere.",
+    fs_p2: "Questa reputazione non è stata costruita con il marketing. È stata costruita da generazioni di tessitori che comprendevano fibra, tensione e finissaggio in un modo che nessuna macchina ha ancora saputo replicare pienamente. La stessa maestria che valse alla nostra famiglia l'invito a presentare i broccati di seta indiana in Gran Bretagna, aprendo le porte ai mercati globali che serviamo oggi.",
+    read_heritage: "Scopri la nostra eredità",
+    qa_eyebrow: "Garanzia di qualità",
+    qa_h2: "Coerenza, verificata in ogni fase.",
+    qa_lead: "La qualità non è un controllo finale. È progettata in ogni fase del nostro processo, dalla selezione del filato all'ultima ispezione prima dell'imballaggio. I nostri sistemi sono costruiti per rispettare gli standard AQL, i protocolli di test e la documentazione richiesti dagli acquirenti internazionali.",
+    qa01_h: "Ispezione in corso di lavorazione",
+    qa01_p: "Il tessuto viene controllato ad ogni fase produttiva, non solo alla fine, così i difetti vengono individuati prima che venga aggiunto valore.",
+    qa02_h: "Test di laboratorio",
+    qa02_p: "Solidità del colore, restringimento, resistenza alla trazione e composizione vengono testati secondo gli standard del cliente e internazionali.",
+    qa03_h: "Ispezione finale basata su AQL",
+    qa03_p: "I prodotti finiti vengono ispezionati secondo i livelli AQL concordati prima dell'imballaggio, con rapporti disponibili su richiesta.",
+    qa04_h: "Coerenza tra le partite",
+    qa04_p: "Processi documentati e supervisori formati mantengono la qualità costante tra campionatura e produzione in volume.",
+    journey_eyebrow: "La nostra arte",
+    journey_h2: "Dal bozzolo alla passerella.",
+    journey_lead: "Ogni filo inizia nella natura e termina in passerella. Sette fasi di artigianalità, rimaste in gran parte invariate per cinque generazioni, trasformano un bozzolo di seta grezzo in un capo che sfila sui palcoscenici più grandi del mondo.",
+    jt01_cap: "Foto necessaria · Bozzoli grezzi",
+    jt01_h: "Il bozzolo",
+    jt01_p: "I bozzoli di seta gelso vengono selezionati a mano per qualità, la materia prima da cui inizia ogni filo del nostro tessuto.",
+    jt02_cap: "Foto necessaria · Filatura della seta",
+    jt02_h: "Filatura",
+    jt02_p: "I bozzoli vengono svolti delicatamente in fini filamenti continui di seta grezza, un processo delicato che richiede mano esperta.",
+    jt03_cap: "Foto necessaria · Tintura del filato",
+    jt03_h: "Tintura",
+    jt03_p: "Il filato grezzo viene tinto a mano in piccoli lotti, ottenendo i colori ricchi e saturi per cui i nostri tessuti sono noti.",
+    jt04_cap: "Foto necessaria · Tessitura a telaio manuale",
+    jt04_h: "Tessitura a telaio manuale",
+    jt04_p: "I maestri tessitori posizionano ogni filo sul telaio a mano, trasformando il filato tinto in un intricato tessuto banarasi, motivo dopo motivo.",
+    jt05_cap: "Foto necessaria · Finissaggio e controllo qualità",
+    jt05_h: "Finissaggio e controllo qualità",
+    jt05_p: "Ogni metro viene ispezionato, lavato e stirato a mano, controllato secondo gli standard di esportazione prima di lasciare lo stabilimento.",
+    jt06_cap: "Foto necessaria · Taglio e cucitura",
+    jt06_h: "Taglio e cucitura",
+    jt06_p: "Il tessuto finito viene tagliato e cucito nel capo finale, pronto per essere indossato.",
+    jt07_cap: "Foto necessaria · Modella in passerella",
+    jt07_h: "La passerella",
+    jt07_p: "Da un singolo bozzolo a un capo che sfila sui palcoscenici più grandi del mondo. Questo è il percorso dietro ogni collezione che produciamo.",
+    start_collection: "Avvia la tua collezione",
+    export_eyebrow: "Presenza globale",
+    export_h2: "Prodotto a Varanasi. Riconosciuto nel mondo.",
+    export_lead: "I nostri tessuti e prodotti tessili finiti vengono spediti a importatori, buying house e marchi di lusso in oltre 55 Paesi su quattro continenti. Supportiamo programmi di private label, OEM e ODM con campionatura, quantità minime flessibili e documentazione pronta per la destinazione.",
+    mkt_europe: "Europa",
+    mkt_europe_c: "Francia, Germania, Spagna, Italia, Regno Unito, Portogallo",
+    mkt_americas: "Americhe",
+    mkt_americas_c: "USA, Brasile, Argentina",
+    mkt_eastasia: "Asia orientale",
+    mkt_eastasia_c: "Cina, Giappone, Corea del Sud, Hong Kong, Malesia",
+    mkt_other: "Altri mercati",
+    mkt_other_c: "Marocco e altri",
+    request_export_info: "Richiedi informazioni sull'export",
+    globe_caption: "Trascina per far ruotare il globo · passa il mouse su un Paese per vederne il nome",
+    gallery_eyebrow: "Galleria",
+    gallery_h2: "Stabilimento, fibra e tessuto finito.",
+    gal_1: "Reparto produttivo",
+    gal_2: "Artigiani al telaio",
+    gal_3: "Filato di seta grezza",
+    gal_4: "Dettaglio del tessuto",
+    gal_5: "Tessuti finiti",
+    cta_eyebrow: "Iniziamo a parlare",
+    cta_h2: "Realizziamo insieme la tua <em>prossima collezione</em>.",
+    cta_lead: "Raccontaci del tuo marchio e delle tue esigenze. Il nostro team risponde a ogni richiesta qualificata entro due giorni lavorativi.",
+    request_meeting: "Richiedi un incontro",
+    footer_desc: "Tessendo bellezza dal 1924. Una Star Export House a conduzione familiare da cinque generazioni, che produce tessuti naturali da Varanasi, India, esportando in oltre 55 Paesi. Produzione OEM, ODM e private label per i marchi più prestigiosi al mondo.",
+    foot_company: "Azienda",
+    foot_capabilities: "Competenze",
+    foot_resources: "Risorse",
+    foot_qa: "Garanzia di qualità",
+    foot_export_info: "Info export",
+    foot_addr1: "6, Gandhi Nagar, Sigra",
+    foot_addr2: "Casella postale n. 62, Varanasi – 221010, U.P., India",
+    foot_tel: "Tel:",
+    foot_fax: "Fax:",
+    foot_copyright: "© 2026 Banaras Silk Mfg. Co. Tutti i diritti riservati."
+  },
+
+  es: {
+    brand: "Banaras Silk Mfg. Co.",
+    tagline: "Tejiendo belleza desde 1924",
+    nav_about: "Nosotros",
+    nav_manufacturing: "Fabricación",
+    nav_categories: "Categorías",
+    nav_quality: "Calidad",
+    nav_craft: "Nuestro oficio",
+    nav_export: "Exportación",
+    nav_contact: "Contacto",
+    enquire_now: "Solicitar información",
+    mm_foot: "Tejiendo belleza desde 1924 · Varanasi, India",
+    hero_title: 'Tejiendo belleza desde 1924.<br><em>Tejido para el mundo.</em>',
+    hero_sub: "Un legado familiar de cinco generaciones en el arte del tejido artesanal. Banaras Silk Mfg. Co. fabrica textiles naturales para las casas de decoración y moda más exigentes del mundo, exportando a más de 55 países.",
+    our_story: "Nuestra historia",
+    intro_eyebrow: "Desde 1924",
+    intro_h2: 'Cinco generaciones.<br>Un <em>telar</em>, sin interrupciones.',
+    intro_p1: "Fundada en 1924, Banaras Silk Mfg. Co. es uno de los fabricantes textiles más antiguos y respetados de la India, continuando un legado familiar de cinco generaciones en el arte del tejido artesanal. Fundada originalmente como Banaras Brocade Museum, la empresa se convirtió rápidamente en sinónimo de los mejores brocados de seda tejidos a mano de la histórica ciudad de Varanasi, y en su día operó una red de 22 tiendas en las estaciones de montaña de la India, tejiendo con hilo de oro y plata auténticos para familias reales y aristocráticas.",
+    intro_p2: "Una invitación para mostrar nuestro trabajo en Gran Bretaña marcó el inicio de nuestro camino exportador. Hoy, ese camino abarca más de 55 países, y la empresa sigue combinando el legado textil tradicional con la innovación textil contemporánea en seda, algodón, lino y mezclas de fibras, todo bajo un mismo techo en Varanasi, para que nuestros socios puedan construir sus colecciones con confianza.",
+    explore_manufacturing: "Descubra nuestra fabricación",
+    stat_1: "Año de fundación",
+    stat_2: "Generación de gestión familiar",
+    stat_3: "Mercados de exportación atendidos",
+    stat_4: "Fabricación propia",
+    why_eyebrow: "Por qué elegirnos",
+    why_h2: "Artesanía sobre la que construir una colección.",
+    why_lead: "Abastecerse en la India significa acceder a la mayor reserva de conocimiento en tejido de fibras naturales del mundo. Abastecerse con nosotros significa que ese conocimiento se traduce en una fabricación repetible y con estándares de exportación.",
+    why01_h: "Un siglo de legado",
+    why01_p: "Más de 100 años de experiencia y un legado familiar de cinco generaciones nos convierten en uno de los fabricantes textiles más antiguos y consolidados de la India, preservando el auténtico arte del tejido banarasi.",
+    why02_h: "Presencia global consolidada",
+    why02_p: "Nuestros productos se exportan a más de 55 países, sirviendo a importadores, mayoristas, marcas de lujo, diseñadores y minoristas que confían en nuestra comprensión de las diversas exigencias de cada mercado.",
+    why03_h: "Artesanía inigualable",
+    why03_p: "Exquisitos tejidos hechos a mano, creados por artesanos altamente cualificados cuyas técnicas se han transmitido a lo largo de generaciones de tejedores de Varanasi.",
+    why04_h: "Fiabilidad y entrega puntual",
+    why04_p: "Décadas de negocio internacional basadas en una calidad constante, tratos transparentes y plazos de entrega fiables, lo que nos convierte en un socio de confianza a largo plazo.",
+    why05_h: "Amplia experiencia en productos",
+    why05_p: "Una gama diversa de textiles naturales y sostenibles, seda, algodón, lino y mezclas innovadoras, para moda, textiles para el hogar, accesorios de lujo y aplicaciones a medida.",
+    why06_h: "Legado con innovación",
+    why06_p: "Profundamente arraigados en la tradición, pero adaptándonos continuamente a las tendencias globales con desarrollos contemporáneos, diseños personalizados y colecciones específicas para cada mercado.",
+    why07_h: "Confianza generación tras generación",
+    why07_p: "Confianza construida a lo largo de generaciones mediante prácticas comerciales éticas, relaciones duraderas y un compromiso constante con la excelencia.",
+    process_eyebrow: "Fabricación",
+    process_h2: "De la fibra en bruto a la caja de exportación.",
+    process_lead: "Diez etapas, perfeccionadas a lo largo de un siglo, realizadas íntegramente en nuestras propias instalaciones en Varanasi.",
+    proc01_h: "Aprovisionamiento de hilo",
+    proc01_p: "Las fibras y los hilos naturales (seda de morera, algodón, lino) se seleccionan y clasifican para garantizar consistencia antes de entrar en producción.",
+    proc02_h: "Teñido",
+    proc02_p: "El hilo se limpia, trata y tiñe según los estándares internacionales de color y se somete a pruebas de solidez.",
+    proc03_h: "Tejido en telar manual",
+    proc03_p: "Artesanos expertos tejen a mano diseños finos y complejos, preservando técnicas propias de Banaras, incluidos elaborados brocados.",
+    proc04_h: "Tejido en telar mecánico",
+    proc04_p: "Los telares modernos producen tejidos en volumen con la consistencia que exigen los pedidos de exportación, sin sacrificar el tacto artesanal.",
+    proc05_h: "Estampado",
+    proc05_p: "Las técnicas de estampado tradicionales y digitales aportan patrones y detalles a la tela base con un registro preciso.",
+    proc06_h: "Bordado",
+    proc06_p: "El bordado manual y a máquina añade textura y valor, desde el fino trabajo de zari hasta los adornos contemporáneos.",
+    proc07_h: "Acabado",
+    proc07_p: "El lavado, calandrado, pulido y suavizado preparan la tela para su aplicación final y su comercialización.",
+    proc08_h: "Confección",
+    proc08_p: "Los artículos confeccionados y las prendas se cortan y cosen según especificaciones para obtener productos terminados y listos para enviar.",
+    proc09_h: "Control de calidad",
+    proc09_p: "Cada pieza pasa por una inspección de calidad en múltiples puntos que evalúa el tejido, la consistencia del color, los defectos y las medidas, conforme a los estándares AQL específicos del comprador.",
+    proc10_h: "Embalaje",
+    proc10_p: "Las mercancías se miden, doblan o enrollan, etiquetan y embalan según las especificaciones del mercado de destino para su envío mundial.",
+    cats_eyebrow: "Capacidades de fabricación",
+    cats_h2: "Lo que fabricamos",
+    cats_lead: "Cuatro áreas de capacidad, cada una desarrollada según estándares de exportación y disponible para marca privada, OEM y ODM.",
+    cat1_name: "Telas por metro",
+    cat1_tag: "01 · Telas",
+    cat1_l1: "Seda tejida a mano",
+    cat1_l2: "Algodón y lino",
+    cat1_l3: "Terciopelo y viscosa",
+    cat1_l4: "Mezclas de fibras sintéticas",
+    cat2_name: "Textiles para el hogar",
+    cat2_tag: "02 · Artículos confeccionados",
+    cat2_l1: "Cortinas y mantas",
+    cat2_l2: "Fundas de cojín y cojines de suelo",
+    cat2_l3: "Caminos de mesa y manteles",
+    cat2_l4: "Servilletas, pufs y más",
+    cat3_name: "Prendas de vestir",
+    cat3_tag: "03 · Confección",
+    cat3_l1: "Camisas y pijamas a medida",
+    cat3_l2: "Saris",
+    cat3_l3: "Estolas y pañuelos",
+    cat4_name: "Accesorios",
+    cat4_tag: "04 · Accesorios",
+    cat4_l1: "Hilo de fantasía",
+    cat4_l2: "Cuentas de madera y vidrio",
+    cat4_l3: "Encajes de fantasía",
+    cat4_l4: "Lentejuelas y adornos",
+    request_quote: "Solicitar presupuesto",
+    fs_ph: "Tejido manual: fotografía editorial",
+    fs_eyebrow: "Por qué la seda india",
+    fs_h2: "La fibra que recorrió el mundo antes de que las rutas comerciales tuvieran nombre.",
+    fs_p1: "La seda india, y en particular la seda de Banaras, ha sido documentada y admirada por viajeros e historiadores durante siglos, transportada a lo largo de la Ruta de la Seda, codiciada en las cortes de Europa y Asia Central, y valorada por un brillo y un tacto que las sedas naturales de morera, tussar, eri y muga siguen manteniendo hoy en día.",
+    fs_p2: "Esta reputación no se construyó con marketing. Se construyó con generaciones de tejedores que comprendían la fibra, la tensión y el acabado de una manera que ninguna máquina ha logrado replicar por completo aún. La misma maestría que le valió a nuestra familia una invitación para mostrar los brocados de seda india en Gran Bretaña, abriendo las puertas a los mercados globales a los que hoy servimos.",
+    read_heritage: "Descubra nuestro legado",
+    qa_eyebrow: "Aseguramiento de calidad",
+    qa_h2: "Consistencia, verificada en cada etapa.",
+    qa_lead: "La calidad no es una simple revisión final. Está integrada en cada etapa de nuestro proceso, desde la selección del hilo hasta la última inspección antes del embalaje. Nuestros sistemas están diseñados para cumplir con los estándares AQL, protocolos de prueba y documentación que exigen los compradores internacionales.",
+    qa01_h: "Inspección durante el proceso",
+    qa01_p: "El tejido se revisa en cada etapa de producción, no solo al final, para detectar fallos antes de que se les añada valor.",
+    qa02_h: "Pruebas de laboratorio",
+    qa02_p: "La solidez del color, la contracción, la resistencia a la tracción y la composición se prueban conforme a los estándares del comprador e internacionales.",
+    qa03_h: "Inspección final basada en AQL",
+    qa03_p: "Los productos terminados se inspeccionan según los niveles AQL acordados antes del embalaje, con informes disponibles a solicitud.",
+    qa04_h: "Consistencia entre lotes",
+    qa04_p: "Los procesos documentados y los supervisores capacitados mantienen la calidad constante entre la muestra y la producción en volumen.",
+    journey_eyebrow: "Nuestro oficio",
+    journey_h2: "Del capullo a la pasarela.",
+    journey_lead: "Cada hilo comienza en la naturaleza y termina en la pasarela. Siete etapas de artesanía, en gran parte inalteradas durante cinco generaciones, convierten un capullo de seda en bruto en una prenda que desfila por los escenarios más grandes del mundo.",
+    jt01_cap: "Foto pendiente · Capullos en bruto",
+    jt01_h: "El capullo",
+    jt01_p: "Los capullos de seda de morera se seleccionan a mano por su calidad, la materia prima con la que comienza cada hilo de nuestro tejido.",
+    jt02_cap: "Foto pendiente · Devanado de la seda",
+    jt02_h: "Devanado",
+    jt02_p: "Los capullos se desenrollan cuidadosamente en finos filamentos continuos de seda en bruto, un proceso delicado que exige una mano experta.",
+    jt03_cap: "Foto pendiente · Teñido del hilo",
+    jt03_h: "Teñido",
+    jt03_p: "El hilo en bruto se tiñe a mano en pequeños lotes, logrando los colores intensos y saturados por los que son conocidos nuestros tejidos.",
+    jt04_cap: "Foto pendiente · Tejido en telar manual",
+    jt04_h: "Tejido en telar manual",
+    jt04_p: "Los maestros tejedores colocan cada hilo en el telar a mano, transformando el hilo teñido en un intrincado tejido banarasi, motivo a motivo.",
+    jt05_cap: "Foto pendiente · Acabado y control de calidad",
+    jt05_h: "Acabado y control de calidad",
+    jt05_p: "Cada metro se inspecciona, lava y plancha a mano, verificado según los estándares de exportación antes de salir de la planta.",
+    jt06_cap: "Foto pendiente · Corte y confección",
+    jt06_h: "Corte y confección",
+    jt06_p: "El tejido terminado se corta y cose para convertirse en la prenda final, lista para ser usada.",
+    jt07_cap: "Foto pendiente · Modelo en la pasarela",
+    jt07_h: "La pasarela",
+    jt07_p: "De un simple capullo a una prenda que desfila por los escenarios más grandes del mundo. Este es el recorrido detrás de cada colección que fabricamos.",
+    start_collection: "Inicie su colección",
+    export_eyebrow: "Presencia global",
+    export_h2: "Fabricado en Varanasi. De confianza en todo el mundo.",
+    export_lead: "Nuestros tejidos y textiles terminados se envían a importadores, centrales de compra y marcas de lujo en más de 55 países en cuatro continentes. Apoyamos programas de marca privada, OEM y ODM con muestreo, cantidades mínimas flexibles y documentación lista para el destino.",
+    mkt_europe: "Europa",
+    mkt_europe_c: "Francia, Alemania, España, Italia, Reino Unido, Portugal",
+    mkt_americas: "Américas",
+    mkt_americas_c: "EE. UU., Brasil, Argentina",
+    mkt_eastasia: "Asia Oriental",
+    mkt_eastasia_c: "China, Japón, Corea del Sur, Hong Kong, Malasia",
+    mkt_other: "Otros mercados",
+    mkt_other_c: "Marruecos y más",
+    request_export_info: "Solicitar información de exportación",
+    globe_caption: "Arrastre para girar el globo · pase el cursor sobre un país para ver su nombre",
+    gallery_eyebrow: "Galería",
+    gallery_h2: "Fábrica, fibra y tejido terminado.",
+    gal_1: "Planta de producción",
+    gal_2: "Artesanos en el telar",
+    gal_3: "Hilo de seda en bruto",
+    gal_4: "Detalle del tejido",
+    gal_5: "Textiles terminados",
+    cta_eyebrow: "Iniciemos una conversación",
+    cta_h2: "Fabriquemos juntos su <em>próxima colección</em>.",
+    cta_lead: "Cuéntenos sobre su marca y sus necesidades. Nuestro equipo responde a cada consulta cualificada en un plazo de dos días hábiles.",
+    request_meeting: "Solicitar una reunión",
+    footer_desc: "Tejiendo belleza desde 1924. Una Star Export House familiar de cinco generaciones, que fabrica textiles naturales desde Varanasi, India, y exporta a más de 55 países. Fabricación OEM, ODM y de marca privada para las mejores marcas del mundo.",
+    foot_company: "Empresa",
+    foot_capabilities: "Capacidades",
+    foot_resources: "Recursos",
+    foot_qa: "Aseguramiento de calidad",
+    foot_export_info: "Información de exportación",
+    foot_addr1: "6, Gandhi Nagar, Sigra",
+    foot_addr2: "Apartado postal n.º 62, Varanasi – 221010, U.P., India",
+    foot_tel: "Tel:",
+    foot_fax: "Fax:",
+    foot_copyright: "© 2026 Banaras Silk Mfg. Co. Todos los derechos reservados."
+  },
+
+  pt: {
+    brand: "Banaras Silk Mfg. Co.",
+    tagline: "Tecendo beleza desde 1924",
+    nav_about: "Sobre nós",
+    nav_manufacturing: "Fabricação",
+    nav_categories: "Categorias",
+    nav_quality: "Qualidade",
+    nav_craft: "Nosso ofício",
+    nav_export: "Exportação",
+    nav_contact: "Contato",
+    enquire_now: "Solicitar informações",
+    mm_foot: "Tecendo beleza desde 1924 · Varanasi, Índia",
+    hero_title: 'Tecendo beleza desde 1924.<br><em>Tecido para o mundo.</em>',
+    hero_sub: "Um legado familiar de cinco gerações na arte da tecelagem artesanal. A Banaras Silk Mfg. Co. fabrica têxteis naturais para as mais exigentes casas de decoração e moda do mundo, exportando para mais de 55 países.",
+    our_story: "Nossa história",
+    intro_eyebrow: "Desde 1924",
+    intro_h2: 'Cinco gerações.<br>Um <em>tear</em>, ininterrupto.',
+    intro_p1: "Fundada em 1924, a Banaras Silk Mfg. Co. é uma das fabricantes têxteis mais antigas e respeitadas da Índia, dando continuidade a um legado familiar de cinco gerações na arte da tecelagem artesanal. Originalmente fundada como Banaras Brocade Museum, a empresa rapidamente se tornou sinônimo dos mais finos brocados de seda tecidos à mão da histórica cidade de Varanasi, e já operou uma rede de 22 lojas nas estações de montanha da Índia, tecendo com fio de ouro e prata verdadeiros para famílias reais e aristocráticas.",
+    intro_p2: "Um convite para apresentar nosso trabalho na Grã-Bretanha marcou o início de nossa jornada de exportação. Hoje, essa jornada abrange mais de 55 países, com a empresa continuando a unir o legado têxtil tradicional à inovação têxtil contemporânea em seda, algodão, linho e tecidos mistos, tudo sob o mesmo teto em Varanasi, permitindo que nossos parceiros construam suas coleções com confiança.",
+    explore_manufacturing: "Conheça nossa fabricação",
+    stat_1: "Ano de fundação",
+    stat_2: "Geração de gestão familiar",
+    stat_3: "Mercados de exportação atendidos",
+    stat_4: "Fabricação própria",
+    why_eyebrow: "Por que comprar de nós",
+    why_h2: "Um saber-fazer sobre o qual construir sua coleção.",
+    why_lead: "Comprar da Índia significa ter acesso ao maior acervo de conhecimento em tecelagem de fibras naturais do mundo. Comprar de nós significa que esse conhecimento é aplicado de forma disciplinada em uma fabricação repetível e dentro dos padrões de exportação.",
+    why01_h: "Um século de legado",
+    why01_p: "Mais de 100 anos de experiência e um legado familiar de cinco gerações nos tornam uma das fabricantes têxteis mais antigas e consolidadas da Índia, preservando a autêntica arte da tecelagem banarasi.",
+    why02_h: "Presença global comprovada",
+    why02_p: "Nossos produtos são exportados para mais de 55 países, atendendo importadores, atacadistas, marcas de luxo, designers e varejistas que confiam em nossa compreensão das diversas exigências de mercado.",
+    why03_h: "Artesanato incomparável",
+    why03_p: "Tecidos requintados feitos à mão, criados por artesãos altamente qualificados cujas técnicas são transmitidas há gerações entre os tecelões de Varanasi.",
+    why04_h: "Confiabilidade e entrega pontual",
+    why04_p: "Décadas de negócios internacionais construídas sobre qualidade constante, negociações transparentes e prazos de entrega confiáveis, o que nos torna um parceiro de fornecimento de confiança a longo prazo.",
+    why05_h: "Ampla especialização em produtos",
+    why05_p: "Uma gama diversificada de têxteis naturais e sustentáveis, seda, algodão, linho e tecidos mistos inovadores, para moda, decoração de interiores, acessórios de luxo e aplicações sob medida.",
+    why06_h: "Legado com inovação",
+    why06_p: "Profundamente enraizados na tradição, mas em constante adaptação às tendências globais com desenvolvimentos contemporâneos, designs personalizados e coleções específicas para cada mercado.",
+    why07_h: "Confiança ao longo de gerações",
+    why07_p: "Confiança construída ao longo de gerações por meio de práticas comerciais éticas, relacionamentos duradouros e um compromisso inabalável com a excelência.",
+    process_eyebrow: "Fabricação",
+    process_h2: "Da fibra bruta ao caixote de exportação.",
+    process_lead: "Dez etapas, aperfeiçoadas ao longo de um século, realizadas inteiramente em nossas próprias instalações em Varanasi.",
+    proc01_h: "Aquisição de fio",
+    proc01_p: "Fibras e fios naturais (seda de amoreira, algodão, linho) são adquiridos e classificados para garantir consistência antes de entrarem em produção.",
+    proc02_h: "Tingimento",
+    proc02_p: "O fio é limpo, tratado e tingido de acordo com padrões internacionais de cor e testado quanto à solidez.",
+    proc03_h: "Tecelagem em tear manual",
+    proc03_p: "Artesãos experientes tecem à mão padrões finos e complexos, preservando técnicas exclusivas de Varanasi, incluindo brocados intrincados.",
+    proc04_h: "Tecelagem em tear mecânico",
+    proc04_p: "Teares modernos produzem tecidos em grande volume com a consistência exigida por pedidos de exportação, sem sacrificar o toque artesanal.",
+    proc05_h: "Estamparia",
+    proc05_p: "Técnicas de estamparia tradicionais e digitais conferem padrões e detalhes ao tecido base com registro preciso.",
+    proc06_h: "Bordado",
+    proc06_p: "O bordado manual e mecânico agrega textura e valor, desde o fino trabalho em zari até adornos contemporâneos.",
+    proc07_h: "Acabamento",
+    proc07_p: "Lavagem, calandragem, polimento e amaciamento preparam o tecido para sua aplicação final e comercialização.",
+    proc08_h: "Costura",
+    proc08_p: "Artigos confeccionados e peças de vestuário são cortados e costurados conforme especificações para produtos finalizados, prontos para envio.",
+    proc09_h: "Controle de qualidade",
+    proc09_p: "Cada peça passa por uma inspeção de qualidade em múltiplos pontos quanto à tecelagem, consistência de cor, defeitos e medidas, de acordo com os padrões AQL específicos do comprador.",
+    proc10_h: "Embalagem",
+    proc10_p: "As mercadorias são medidas, dobradas ou enroladas, etiquetadas e embaladas conforme as especificações do mercado de destino para envio mundial.",
+    cats_eyebrow: "Capacidades de fabricação",
+    cats_h2: "O que fabricamos",
+    cats_lead: "Quatro grupos de competência, cada um desenvolvido dentro do padrão de exportação e disponível para marca própria, OEM e ODM.",
+    cat1_name: "Tecidos por metro",
+    cat1_tag: "01 · Tecidos",
+    cat1_l1: "Seda tecida à mão",
+    cat1_l2: "Algodão e linho",
+    cat1_l3: "Veludo e viscose",
+    cat1_l4: "Misturas de fibras sintéticas",
+    cat2_name: "Enxoval para casa",
+    cat2_tag: "02 · Artigos confeccionados",
+    cat2_l1: "Cortinas e mantas",
+    cat2_l2: "Capas de almofada e almofadas de chão",
+    cat2_l3: "Caminhos de mesa e toalhas de mesa",
+    cat2_l4: "Guardanapos, pufes e mais",
+    cat3_name: "Vestuário",
+    cat3_tag: "03 · Confeccionado",
+    cat3_l1: "Camisas e pijamas sob medida",
+    cat3_l2: "Sáris",
+    cat3_l3: "Estolas e lenços",
+    cat4_name: "Acessórios",
+    cat4_tag: "04 · Acessórios",
+    cat4_l1: "Fio de fantasia",
+    cat4_l2: "Contas de madeira e vidro",
+    cat4_l3: "Rendas de fantasia",
+    cat4_l4: "Paetês e adornos",
+    request_quote: "Solicitar orçamento",
+    fs_ph: "Tecelagem manual: fotografia editorial",
+    fs_eyebrow: "Por que a seda indiana",
+    fs_h2: "A fibra que percorreu o mundo antes de as rotas comerciais terem nomes.",
+    fs_p1: "A seda indiana, e a seda de Banaras em particular, é documentada e admirada por viajantes e historiadores há séculos, transportada ao longo da Rota da Seda, cobiçada nas cortes da Europa e da Ásia Central, e valorizada por um brilho e um toque que as sedas naturais de amoreira, tussar, eri e muga ainda hoje mantêm.",
+    fs_p2: "Essa reputação não foi construída com marketing. Foi construída por gerações de tecelões que compreendiam fibra, tensão e acabamento de uma forma que nenhuma máquina ainda conseguiu replicar totalmente. O mesmo saber-fazer que rendeu à nossa família um convite para apresentar brocados de seda indiana na Grã-Bretanha, abrindo as portas para os mercados globais que atendemos hoje.",
+    read_heritage: "Conheça nosso legado",
+    qa_eyebrow: "Garantia de qualidade",
+    qa_h2: "Consistência, verificada em cada etapa.",
+    qa_lead: "Qualidade não é uma verificação final. Ela é projetada em cada etapa do nosso processo, desde a seleção do fio até a última inspeção antes da embalagem. Nossos sistemas são construídos para atender aos padrões AQL, protocolos de teste e documentação exigidos por compradores internacionais.",
+    qa01_h: "Inspeção durante o processo",
+    qa01_p: "O tecido é verificado em cada etapa de produção, não apenas ao final, para que as falhas sejam detectadas antes que valor seja adicionado.",
+    qa02_h: "Testes laboratoriais",
+    qa02_p: "Solidez de cor, encolhimento, resistência à tração e composição são testados de acordo com os padrões do comprador e internacionais.",
+    qa03_h: "Inspeção final baseada em AQL",
+    qa03_p: "Os produtos acabados são inspecionados conforme os níveis de AQL acordados antes da embalagem, com relatórios disponíveis mediante solicitação.",
+    qa04_h: "Consistência entre lotes",
+    qa04_p: "Processos documentados e supervisores treinados mantêm a qualidade consistente entre a amostra e a produção em volume.",
+    journey_eyebrow: "Nosso ofício",
+    journey_h2: "Do casulo à passarela.",
+    journey_lead: "Cada fio começa na natureza e termina na passarela. Sete etapas de artesanato, praticamente inalteradas ao longo de cinco gerações, transformam um casulo de seda bruto em uma peça que desfila nos maiores palcos do mundo.",
+    jt01_cap: "Foto pendente · Casulos brutos",
+    jt01_h: "O casulo",
+    jt01_p: "Os casulos de seda de amoreira são selecionados à mão por sua qualidade, a matéria-prima da qual começa cada fio do nosso tecido.",
+    jt02_cap: "Foto pendente · Fiação da seda",
+    jt02_h: "Fiação",
+    jt02_p: "Os casulos são cuidadosamente desenrolados em finos filamentos contínuos de seda bruta, um processo delicado que exige mão experiente.",
+    jt03_cap: "Foto pendente · Tingimento do fio",
+    jt03_h: "Tingimento",
+    jt03_p: "O fio bruto é tingido à mão em pequenos lotes, obtendo as cores ricas e saturadas pelas quais nossos tecidos são conhecidos.",
+    jt04_cap: "Foto pendente · Tecelagem em tear manual",
+    jt04_h: "Tecelagem em tear manual",
+    jt04_p: "Mestres tecelões posicionam cada fio no tear à mão, transformando o fio tingido em um intrincado tecido banarasi, motivo por motivo.",
+    jt05_cap: "Foto pendente · Acabamento e controle de qualidade",
+    jt05_h: "Acabamento e controle de qualidade",
+    jt05_p: "Cada metro é inspecionado, lavado e passado à mão, verificado de acordo com os padrões de exportação antes de deixar a fábrica.",
+    jt06_cap: "Foto pendente · Corte e costura",
+    jt06_h: "Corte e costura",
+    jt06_p: "O tecido acabado é cortado e costurado até se tornar a peça final, pronta para ser usada.",
+    jt07_cap: "Foto pendente · Modelo na passarela",
+    jt07_h: "A passarela",
+    jt07_p: "De um único casulo a uma peça que desfila nos maiores palcos do mundo. Esta é a jornada por trás de cada coleção que fabricamos.",
+    start_collection: "Inicie sua coleção",
+    export_eyebrow: "Presença global",
+    export_h2: "Fabricado em Varanasi. Confiável no mundo todo.",
+    export_lead: "Nossos tecidos e têxteis acabados são enviados para importadores, centrais de compra e marcas de luxo em mais de 55 países em quatro continentes. Apoiamos programas de marca própria, OEM e ODM com amostragem, quantidades mínimas flexíveis e documentação pronta para o destino.",
+    mkt_europe: "Europa",
+    mkt_europe_c: "França, Alemanha, Espanha, Itália, Reino Unido, Portugal",
+    mkt_americas: "Américas",
+    mkt_americas_c: "EUA, Brasil, Argentina",
+    mkt_eastasia: "Ásia Oriental",
+    mkt_eastasia_c: "China, Japão, Coreia do Sul, Hong Kong, Malásia",
+    mkt_other: "Outros mercados",
+    mkt_other_c: "Marrocos e mais",
+    request_export_info: "Solicitar informações de exportação",
+    globe_caption: "Arraste para girar o globo · passe o mouse sobre um país para ver o nome",
+    gallery_eyebrow: "Galeria",
+    gallery_h2: "Fábrica, fibra e tecido acabado.",
+    gal_1: "Chão de fábrica",
+    gal_2: "Artesãos no tear",
+    gal_3: "Fio de seda bruta",
+    gal_4: "Detalhe do tecido",
+    gal_5: "Têxteis acabados",
+    cta_eyebrow: "Vamos conversar",
+    cta_h2: "Vamos fabricar sua <em>próxima coleção</em>.",
+    cta_lead: "Conte-nos sobre sua marca e suas necessidades. Nossa equipe responde a cada consulta qualificada em até dois dias úteis.",
+    request_meeting: "Solicitar uma reunião",
+    footer_desc: "Tecendo beleza desde 1924. Uma Star Export House familiar de cinco gerações, fabricando têxteis naturais a partir de Varanasi, Índia, exportando para mais de 55 países. Fabricação OEM, ODM e de marca própria para as melhores marcas do mundo.",
+    foot_company: "Empresa",
+    foot_capabilities: "Competências",
+    foot_resources: "Recursos",
+    foot_qa: "Garantia de qualidade",
+    foot_export_info: "Informações de exportação",
+    foot_addr1: "6, Gandhi Nagar, Sigra",
+    foot_addr2: "Caixa postal nº 62, Varanasi – 221010, U.P., Índia",
+    foot_tel: "Tel:",
+    foot_fax: "Fax:",
+    foot_copyright: "© 2026 Banaras Silk Mfg. Co. Todos os direitos reservados."
+  },
+
+  zh: {
+    brand: "瓦拉纳西丝绸制造公司",
+    tagline: "编织美丽，始于1924年",
+    nav_about: "关于我们",
+    nav_manufacturing: "生产制造",
+    nav_categories: "产品分类",
+    nav_quality: "品质保证",
+    nav_craft: "工艺传承",
+    nav_export: "出口业务",
+    nav_contact: "联系我们",
+    enquire_now: "立即咨询",
+    mm_foot: "编织美丽，始于1924年 · 印度瓦拉纳西",
+    hero_title: '编织美丽，始于1924年。<br><em>为世界而织。</em>',
+    hero_sub: "五代家族传承的手工纺织与手织工艺。瓦拉纳西丝绸制造公司为全球最挑剔的家居与时装品牌生产天然纺织品，出口至55多个国家。",
+    our_story: "我们的故事",
+    intro_eyebrow: "自1924年",
+    intro_h2: '五代传承。<br>一台<em>织机</em>，从未间断。',
+    intro_p1: "瓦拉纳西丝绸制造公司创立于1924年，是印度历史最悠久、最受尊敬的纺织制造商之一，五代家族传承手工纺织与手织工艺。公司最初以瓦拉纳西织锦博物馆的名义创立，很快便以来自瓦拉纳西古城的顶级手织丝绸织锦而闻名，曾在印度各山区经营22家零售门店，以真金真银丝线为皇室及贵族家庭织造服饰。",
+    intro_p2: "一次赴英国展示作品的邀请，开启了我们的出口之旅。如今，这段旅程已延伸至55多个国家，公司持续将传统织造技艺与现代纺织创新相融合，涵盖丝绸、棉、麻及混纺面料，全部产于瓦拉纳西一地，让合作伙伴能够放心打造自己的产品系列。",
+    explore_manufacturing: "了解我们的生产制造",
+    stat_1: "创立年份",
+    stat_2: "家族传承代数",
+    stat_3: "服务出口市场数",
+    stat_4: "自主生产比例",
+    why_eyebrow: "为何选择我们",
+    why_h2: "值得信赖的工艺，助您打造产品系列。",
+    why_lead: "从印度采购，意味着接触世界上最深厚的天然纤维织造知识。从我们这里采购，意味着这些知识已被系统化为可出口、可复制的生产标准。",
+    why01_h: "百年传承",
+    why01_p: "拥有超过100年的经验与五代家族传承，使我们成为印度历史最悠久、最具规模的纺织制造商之一，传承正宗的瓦拉纳西织造工艺。",
+    why02_h: "成熟的全球业务",
+    why02_p: "我们的产品出口至55多个国家，服务进口商、批发商、奢侈品牌、设计师及零售商，深谙不同市场的多样化需求。",
+    why03_h: "无与伦比的工艺",
+    why03_p: "精美的手工纺织与手织面料，由技艺高超的工匠制作，其技术代代相传，源自瓦拉纳西织工世家。",
+    why04_h: "可靠且准时交付",
+    why04_p: "数十年国际业务经验，建立在稳定品质、透明交易与可靠交货周期之上，是值得长期信赖的采购合作伙伴。",
+    why05_h: "丰富的产品专长",
+    why05_p: "涵盖天然与可持续纺织品的多样化产品线，包括丝绸、棉、麻及创新混纺面料，适用于时装、家居装饰、奢侈品配饰及定制应用。",
+    why06_h: "传统与创新并重",
+    why06_p: "根植于传统，同时持续顺应全球潮流，不断推出新款设计、定制方案及针对特定市场的产品系列。",
+    why07_h: "历经数代的信赖",
+    why07_p: "通过诚信经营、长期合作关系及对卓越品质的不懈追求，建立起代代相传的信任。",
+    process_eyebrow: "生产制造",
+    process_h2: "从原料纤维到出口装箱。",
+    process_lead: "十道工序，历经百年精炼，全部在我们瓦拉纳西自有工厂内完成。",
+    proc01_h: "纱线采购",
+    proc01_p: "天然纤维与纱线（桑蚕丝、棉、麻）经采购与分级，确保投入生产前的一致性。",
+    proc02_h: "染色",
+    proc02_p: "纱线经清洗、处理并染色，以符合国际色彩标准，并测试色牢度。",
+    proc03_h: "手工织造",
+    proc03_p: "技艺精湛的工匠手工织造精细复杂的图案，传承瓦拉纳西独有的织造技艺，包括精美织锦。",
+    proc04_h: "动力织机织造",
+    proc04_p: "现代织机生产批量面料，满足出口订单对一致性的要求，同时不失手工质感。",
+    proc05_h: "印花",
+    proc05_p: "传统与数码印花技术为坯布带来精准对位的图案与细节。",
+    proc06_h: "刺绣",
+    proc06_p: "手工与机器刺绣增添质感与价值，从精细的金银线绣到现代装饰工艺。",
+    proc07_h: "整理",
+    proc07_p: "水洗、压光、抛光与柔软处理，为面料最终用途与市场做好准备。",
+    proc08_h: "缝制",
+    proc08_p: "成品与服装按规格裁剪缝制，成为可直接发货的成品。",
+    proc09_h: "品质检验",
+    proc09_p: "每件产品均经过多点品质检验，涵盖织造、色彩一致性、瑕疵及按客户AQL标准的尺寸测量。",
+    proc10_h: "包装",
+    proc10_p: "货品经过测量、折叠或卷装、贴标并按目的地市场规格包装，准备全球发货。",
+    cats_eyebrow: "生产能力",
+    cats_h2: "我们的产品范围",
+    cats_lead: "四大能力板块，均按出口标准开发，支持私人定制、OEM及ODM生产。",
+    cat1_name: "面料系列",
+    cat1_tag: "01 · 面料",
+    cat1_l1: "手织丝绸",
+    cat1_l2: "棉麻面料",
+    cat1_l3: "天鹅绒与人造丝",
+    cat1_l4: "人造纤维混纺",
+    cat2_name: "家居装饰",
+    cat2_tag: "02 · 成品",
+    cat2_l1: "窗帘与披毯",
+    cat2_l2: "靠垫套与地垫",
+    cat2_l3: "桌旗与桌布",
+    cat2_l4: "餐巾、蒲团及更多",
+    cat3_name: "成衣",
+    cat3_tag: "03 · 成品服装",
+    cat3_l1: "定制衬衫与睡衣",
+    cat3_l2: "纱丽",
+    cat3_l3: "披肩与围巾",
+    cat4_name: "配件",
+    cat4_tag: "04 · 配件",
+    cat4_l1: "花式纱线",
+    cat4_l2: "木质与玻璃珠",
+    cat4_l3: "花边饰带",
+    cat4_l4: "亮片与装饰配件",
+    request_quote: "索取报价",
+    fs_ph: "手工织造：专题摄影",
+    fs_eyebrow: "为何选择印度丝绸",
+    fs_h2: "在贸易路线尚未命名之前，便已行遍天下的纤维。",
+    fs_p1: "印度丝绸，尤其是瓦拉纳西丝绸，数百年来一直被旅行者与历史学家所记载和赞誉，沿丝绸之路传播，深受欧洲与中亚宫廷的追捧，其光泽与手感至今仍是天然桑蚕丝、柞蚕丝、蓖麻蚕丝及野蚕丝备受推崇的原因。",
+    fs_p2: "这份声誉并非源自营销宣传，而是源自数代织工对纤维、张力与整理工艺的深刻理解，这种工艺是机器至今仍无法完全复制的。正是同样的匠心，为我们家族赢得了赴英国展示印度丝绸织锦的邀请，也由此打开了我们今日所服务的全球市场之门。",
+    read_heritage: "了解我们的传承历史",
+    qa_eyebrow: "品质保证",
+    qa_h2: "每一阶段都经过严格验证。",
+    qa_lead: "品质保证并非最终一道检查，而是贯穿于我们生产流程每一阶段的设计理念，从原料选择到出货前的最后检验。我们的体系严格遵循国际买家所要求的AQL标准、测试规范与文件要求。",
+    qa01_h: "过程中检验",
+    qa01_p: "面料在每个生产阶段均经过检验，而非仅在最后环节，从而在增加价值前及时发现问题。",
+    qa02_h: "实验室测试",
+    qa02_p: "色牢度、缩水率、拉伸强度及成分均按买家及国际标准进行测试。",
+    qa03_h: "基于AQL标准的最终检验",
+    qa03_p: "成品在包装前按约定的AQL等级进行检验，并可应要求提供检验报告。",
+    qa04_h: "批次间品质一致性",
+    qa04_p: "规范化的流程与经过培训的主管，确保样品与大货生产之间的品质保持一致。",
+    journey_eyebrow: "工艺传承",
+    journey_h2: "从蚕茧到T台。",
+    journey_lead: "每一根丝线始于自然，终于T台。七道工序，五代传承几乎未曾改变，将一枚原始蚕茧转化为登上世界顶级舞台的服装。",
+    jt01_cap: "待添加照片 · 原始蚕茧",
+    jt01_h: "蚕茧",
+    jt01_p: "桑蚕茧经过精心手工挑选以确保品质，是我们每一根丝线的原始材料。",
+    jt02_cap: "待添加照片 · 缫丝",
+    jt02_h: "缫丝",
+    jt02_p: "蚕茧被轻柔地抽出，形成细密连续的生丝纤维，这是一道需要熟练技艺的精细工序。",
+    jt03_cap: "待添加照片 · 纱线染色",
+    jt03_h: "染色",
+    jt03_p: "生丝以小批量手工染色，呈现出我们面料闻名的浓郁饱和色彩。",
+    jt04_cap: "待添加照片 · 手工织造",
+    jt04_h: "手工织造",
+    jt04_p: "织造大师逐一手工上机，将染色纱线转化为精美的瓦拉纳西面料，一图一案精心织就。",
+    jt05_cap: "待添加照片 · 整理与品质检验",
+    jt05_h: "整理与品质检验",
+    jt05_p: "每一米面料均经过手工检验、水洗与熨烫，在离开车间前需通过出口级标准的检验。",
+    jt06_cap: "待添加照片 · 裁剪与缝制",
+    jt06_h: "裁剪与缝制",
+    jt06_p: "成品面料经过裁剪与缝制，制成可穿着的最终服装。",
+    jt07_cap: "待添加照片 · T台模特",
+    jt07_h: "T台",
+    jt07_p: "从一枚蚕茧到登上世界顶级舞台的服装，这正是我们所生产每一个系列背后的旅程。",
+    start_collection: "开启您的系列",
+    export_eyebrow: "全球布局",
+    export_h2: "产自瓦拉纳西，畅销全世界。",
+    export_lead: "我们的面料与成品纺织品远销四大洲55多个国家的进口商、采购公司与奢侈品牌。我们支持私人定制、OEM及ODM项目，提供打样、灵活起订量及目的地市场所需文件。",
+    mkt_europe: "欧洲",
+    mkt_europe_c: "法国、德国、西班牙、意大利、英国、葡萄牙",
+    mkt_americas: "美洲",
+    mkt_americas_c: "美国、巴西、阿根廷",
+    mkt_eastasia: "东亚",
+    mkt_eastasia_c: "中国、日本、韩国、香港、马来西亚",
+    mkt_other: "其他市场",
+    mkt_other_c: "摩洛哥及更多地区",
+    request_export_info: "索取出口信息",
+    globe_caption: "拖动旋转地球 · 悬停查看国家名称",
+    gallery_eyebrow: "图库",
+    gallery_h2: "工厂、纤维与成品面料。",
+    gal_1: "工厂车间",
+    gal_2: "织机前的工匠",
+    gal_3: "生丝纱线",
+    gal_4: "面料特写",
+    gal_5: "成品纺织品",
+    cta_eyebrow: "开启对话",
+    cta_h2: "让我们一起打造您的<em>下一个系列</em>。",
+    cta_lead: "请告诉我们您的品牌与需求，我们的团队将在两个工作日内回复每一条有效咨询。",
+    request_meeting: "预约会议",
+    footer_desc: "编织美丽，始于1924年。五代传承的明星出口企业，产自印度瓦拉纳西的天然纺织品，出口至55多个国家。为全球顶级品牌提供OEM、ODM及私人定制生产服务。",
+    foot_company: "公司",
+    foot_capabilities: "生产能力",
+    foot_resources: "资源",
+    foot_qa: "品质保证",
+    foot_export_info: "出口信息",
+    foot_addr1: "印度，6号，甘地纳加尔，西格拉",
+    foot_addr2: "邮政信箱62号，瓦拉纳西 – 221010，北方邦，印度",
+    foot_tel: "电话：",
+    foot_fax: "传真：",
+    foot_copyright: "© 2026 瓦拉纳西丝绸制造公司。保留所有权利。"
+  }
+};
+
+/* ---------------- Region → language map ---------------- */
+const I18N_COUNTRY_LANG = {
+  CN: "zh", HK: "zh", TW: "zh", MO: "zh", SG: "zh",
+  DE: "de", AT: "de", CH: "de",
+  FR: "fr", BE: "fr", LU: "fr", MC: "fr",
+  IT: "it", SM: "it", VA: "it",
+  ES: "es", MX: "es", AR: "es", CO: "es", CL: "es", PE: "es",
+  PT: "pt", BR: "pt"
+};
+
+const I18N_STORAGE_KEY = "bsm_lang";
+let currentLang = "en";
+
+function applyLanguage(lang) {
+  if (!I18N_TRANSLATIONS[lang]) lang = "en";
+  currentLang = lang;
+  const langAttrMap = { zh: "zh-CN", de: "de", fr: "fr", it: "it", es: "es", pt: "pt", en: "en" };
+  document.documentElement.setAttribute("lang", langAttrMap[lang] || "en");
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const text = I18N_TRANSLATIONS[lang][key];
+    if (text !== undefined) {
+      el.innerHTML = text;
+    }
+  });
+
+  document.querySelectorAll(".lang-switch select").forEach(sel => {
+    sel.value = lang;
+  });
+}
+
+function setLanguage(lang, remember = true) {
+  applyLanguage(lang);
+  if (remember) {
+    try { localStorage.setItem(I18N_STORAGE_KEY, lang); } catch (e) {}
+  }
+}
+
+async function detectRegionLanguage() {
+  // 1. Respect an explicit prior choice
+  try {
+    const saved = localStorage.getItem(I18N_STORAGE_KEY);
+    if (saved && I18N_TRANSLATIONS[saved]) return saved;
+  } catch (e) {}
+
+  // 2. Try IP-based geolocation (free, no key required)
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2500);
+    const res = await fetch("https://ipapi.co/json/", { signal: controller.signal });
+    clearTimeout(timeout);
+    if (res.ok) {
+      const data = await res.json();
+      const cc = (data.country_code || data.country || "").toUpperCase();
+      if (I18N_COUNTRY_LANG[cc]) return I18N_COUNTRY_LANG[cc];
+      return "en";
+    }
+  } catch (e) {
+    // network blocked, offline, or timed out — fall through to browser language
+  }
+
+  // 3. Fallback: browser language
+  const nav = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+  if (nav.startsWith("zh")) return "zh";
+  if (nav.startsWith("de")) return "de";
+  if (nav.startsWith("fr")) return "fr";
+  if (nav.startsWith("it")) return "it";
+  if (nav.startsWith("es")) return "es";
+  if (nav.startsWith("pt")) return "pt";
+  return "en";
+}
+
+(async function initI18n() {
+  const lang = await detectRegionLanguage();
+  applyLanguage(lang);
+})();
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
@@ -1038,7 +2542,10 @@
       let i = 0;
       const stack = [el];
       (function step(){
-        if(i >= ops.length) return;
+        if(i >= ops.length){
+          cursor.remove(); // typing finished — drop the blinking caret
+          return;
+        }
         const op = ops[i++];
         const top = stack[stack.length - 1];
         if(op.type === 'char'){
@@ -1176,6 +2683,64 @@
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   });
 
+  /* ---------- Category gallery modal: tapping a "What we manufacture" card opens a
+     20-image grid for that category. Images use a documented filename convention
+     (images/gallery/<category>/01.jpg ... 20.jpg) with a graceful placeholder shown
+     until the real photography is dropped into that folder. ---------- */
+  const GALLERIES = {
+    'running-fabrics':   { tag: '01 · Fabrics',     title: 'Running Fabrics',    sub: 'Hand-woven silk, cotton, linen, velvet, viscose and man-made fibre blends, available by the metre for export.' },
+    'home-furnishings':  { tag: '02 · Made-Ups',    title: 'Home Furnishings',   sub: 'Curtains, throws, cushion covers, table linen and more, finished to export-ready standard.' },
+    'apparel':           { tag: '03 · Readymade',   title: 'Apparel',            sub: 'Custom shirts, pyjamas, sarees, stoles and scarves, produced for private label and OEM/ODM programmes.' },
+    'accessories':       { tag: '04 · Accessories', title: 'Accessories',        sub: 'Fancy yarn, wooden and glass beads, laces, sequins and embellishments for fashion and home.' }
+  };
+  const galleryModal = document.getElementById('galleryModal');
+  const galleryGrid = document.getElementById('galleryModalGrid');
+  const galleryTag = document.getElementById('galleryModalTag');
+  const galleryTitle = document.getElementById('galleryModalTitle');
+  const gallerySub = document.getElementById('galleryModalSub');
+  let galleryLastFocused = null;
+
+  function openGallery(key){
+    const data = GALLERIES[key];
+    if(!data || !galleryModal) return;
+    galleryTag.textContent = data.tag;
+    galleryTitle.textContent = data.title;
+    gallerySub.textContent = data.sub;
+
+    galleryGrid.innerHTML = '';
+    for(let i = 1; i <= 20; i++){
+      const num = String(i).padStart(2, '0');
+      const cell = document.createElement('div');
+      cell.className = 'gallery-thumb';
+      cell.innerHTML = `<span>${data.title} ${num}</span><img src="images/gallery/${key}/${num}.jpg" alt="${data.title}, photo ${num}" loading="lazy" onerror="this.style.display='none'">`;
+      galleryGrid.appendChild(cell);
+    }
+
+    galleryLastFocused = document.activeElement;
+    galleryModal.classList.add('open');
+    galleryModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    galleryModal.querySelector('.gallery-modal-close').focus();
+  }
+  function closeGallery(){
+    if(!galleryModal) return;
+    galleryModal.classList.remove('open');
+    galleryModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if(galleryLastFocused) galleryLastFocused.focus();
+  }
+  document.querySelectorAll('.cat-card[data-gallery]').forEach(card => {
+    card.addEventListener('click', () => openGallery(card.dataset.gallery));
+  });
+  if(galleryModal){
+    galleryModal.querySelectorAll('[data-gallery-close]').forEach(el => {
+      el.addEventListener('click', (e) => { e.preventDefault(); closeGallery(); if(el.tagName === 'A') window.location.hash = '#contact'; });
+    });
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && galleryModal.classList.contains('open')) closeGallery();
+    });
+  }
+
   /* ---------- Process timeline: drag-to-scroll + progress ---------- */
   const processScroll = document.querySelector('.process-scroll');
   const processFill = document.getElementById('processFill');
@@ -1204,10 +2769,6 @@
     updateProcessFill();
   }
 
-  /* ---------- Cert badge subtle pulse on scroll into view ---------- */
-  document.querySelectorAll('.cert-badge').forEach((badge, i) => {
-    badge.style.transitionDelay = (i * 60) + 'ms';
-  });
   /* ---------- Interactive orthographic globe (real geography via D3 + Natural Earth) ---------- */
   (function(){
     const container = document.getElementById('exportMap');
@@ -1228,21 +2789,21 @@
     // e.g. Hong Kong, which is folded into China's outline), display name, the market
     // group it belongs to, and an approximate lat/lon used to place its own marker dot.
     const COUNTRIES = [
-      { id:'250', name:'France',        market:'europe',     lat:48.85, lon:2.35,   sub:'Export market · Active', aliases:['France'] },
-      { id:'276', name:'Germany',       market:'europe',     lat:52.52, lon:13.40,  sub:'Export market · Active', aliases:['Germany'] },
-      { id:'724', name:'Spain',         market:'europe',     lat:40.42, lon:-3.70,  sub:'Export market · Active', aliases:['Spain'] },
-      { id:'380', name:'Italy',         market:'europe',     lat:41.90, lon:12.50,  sub:'Export market · Active', aliases:['Italy'] },
-      { id:'826', name:'United Kingdom',market:'europe',     lat:51.51, lon:-0.13,  sub:'Export market · Active', aliases:['United Kingdom'] },
-      { id:'620', name:'Portugal',      market:'europe',     lat:38.72, lon:-9.14,  sub:'Export market · Active', aliases:['Portugal'] },
-      { id:'840', name:'U.S.A.',        market:'namerica',   lat:38.90, lon:-77.04, sub:'Export market · Active', aliases:['United States of America','United States'] },
-      { id:'76',  name:'Brazil',        market:'namerica',   lat:-15.79,lon:-47.88, sub:'Export market · Active', aliases:['Brazil'] },
-      { id:'32',  name:'Argentina',     market:'namerica',   lat:-34.60,lon:-58.38, sub:'Export market · Active', aliases:['Argentina'] },
-      { id:'156', name:'China',         market:'eastasia',   lat:39.90, lon:116.40, sub:'Export market · Active', aliases:['China'] },
-      { id:'392', name:'Japan',         market:'eastasia',   lat:35.68, lon:139.69, sub:'Export market · Active', aliases:['Japan'] },
-      { id:'410', name:'South Korea',   market:'eastasia',   lat:37.57, lon:127.00, sub:'Export market · Active', aliases:['South Korea','Republic of Korea','Korea, Republic of','Korea, Rep.'] },
-      { id:null,  name:'Hong Kong',     market:'eastasia',   lat:22.32, lon:114.17, sub:'Export market · Active', aliases:[] },
-      { id:'458', name:'Malaysia',      market:'eastasia',   lat:3.14,  lon:101.69, sub:'Export market · Active', aliases:['Malaysia'] },
-      { id:'504', name:'Morocco',       market:'middleeast', lat:34.02, lon:-6.83,  sub:'Export market · Active', aliases:['Morocco'] }
+      { id:'250', name:'France',        market:'europe',     lat:48.85, lon:2.35,   aliases:['France'] },
+      { id:'276', name:'Germany',       market:'europe',     lat:52.52, lon:13.40,  aliases:['Germany'] },
+      { id:'724', name:'Spain',         market:'europe',     lat:40.42, lon:-3.70,  aliases:['Spain'] },
+      { id:'380', name:'Italy',         market:'europe',     lat:41.90, lon:12.50,  aliases:['Italy'] },
+      { id:'826', name:'United Kingdom',market:'europe',     lat:51.51, lon:-0.13,  aliases:['United Kingdom'] },
+      { id:'620', name:'Portugal',      market:'europe',     lat:38.72, lon:-9.14,  aliases:['Portugal'] },
+      { id:'840', name:'U.S.A.',        market:'namerica',   lat:38.90, lon:-77.04, aliases:['United States of America','United States'] },
+      { id:'76',  name:'Brazil',        market:'namerica',   lat:-15.79,lon:-47.88, aliases:['Brazil'] },
+      { id:'32',  name:'Argentina',     market:'namerica',   lat:-34.60,lon:-58.38, aliases:['Argentina'] },
+      { id:'156', name:'China',         market:'eastasia',   lat:39.90, lon:116.40, aliases:['China'] },
+      { id:'392', name:'Japan',         market:'eastasia',   lat:35.68, lon:139.69, aliases:['Japan'] },
+      { id:'410', name:'South Korea',   market:'eastasia',   lat:37.57, lon:127.00, aliases:['South Korea','Republic of Korea','Korea, Republic of','Korea, Rep.'] },
+      { id:null,  name:'Hong Kong',     market:'eastasia',   lat:22.32, lon:114.17, aliases:[] },
+      { id:'458', name:'Malaysia',      market:'eastasia',   lat:3.14,  lon:101.69, aliases:['Malaysia'] },
+      { id:'504', name:'Morocco',       market:'middleeast', lat:34.02, lon:-6.83,  aliases:['Morocco'] }
     ];
     const INDIA_ALIASES = ['India'];
 
@@ -1317,9 +2878,7 @@
     const gOcean = svg.append('circle').attr('class', 'globe-ocean');
     const gGraticule = svg.append('path').attr('class', 'globe-graticule');
     const gCountries = svg.append('g').attr('class', 'globe-countries');
-    const gRoutes = svg.append('g').attr('class', 'globe-routes');
     const gOrigin = svg.append('g').attr('class', 'globe-origin');
-    const gMarkers = svg.append('g').attr('class', 'globe-markers');
     const gAtmosphere = svg.append('circle').attr('class', 'globe-atmosphere');
 
     // ---- Tooltip element (single reusable div, positioned absolutely over the container) ----
@@ -1361,18 +2920,7 @@
     }
 
     let countryFeatures = [];
-    let routeFeatures = {}; // market -> geojson LineString feature
     let markerScreenReady = false;
-
-    function buildRoutes(){
-      Object.keys(MARKET_CENTROIDS).forEach(k => {
-        const m = MARKET_CENTROIDS[k];
-        const interpolate = d3.geoInterpolate([ORIGIN.lon, ORIGIN.lat], [m.lon, m.lat]);
-        const coords = d3.range(0, 1.0001, 1/48).map(t => interpolate(t));
-        routeFeatures[k] = { type:'LineString', coordinates: coords };
-      });
-    }
-    buildRoutes();
 
     function resize(){
       width = container.clientWidth;
@@ -1396,12 +2944,7 @@
       if(!R) return;
       gGraticule.attr('d', path(graticule));
       gCountries.selectAll('path').attr('d', path);
-      Object.keys(routeFeatures).forEach(k => {
-        const el = document.getElementById('route-' + k);
-        if(el) el.setAttribute('d', path(routeFeatures[k]) || '');
-      });
       renderOrigin();
-      renderMarkers();
     }
 
     function renderOrigin(){
@@ -1413,41 +2956,18 @@
       gOrigin.select('.op-label').attr('x', p[0]).attr('y', p[1] + 17);
     }
 
-    function renderMarkers(){
-      COUNTRIES.forEach(c => {
-        const p = projection([c.lon, c.lat]);
-        const g = gMarkers.select(`[data-country="${c.name}"]`);
-        if(g.empty()) return;
-        // Hide markers rotated to the far side of the globe.
-        const rot = projection.rotate();
-        const visible = d3.geoDistance([c.lon, c.lat], [-rot[0], -rot[1]]) < Math.PI / 2;
-        if(!p || !visible){ g.style('display', 'none'); return; }
-        g.style('display', null);
-        g.select('circle').attr('cx', p[0]).attr('cy', p[1]);
-        g.select('text').attr('x', p[0]).attr('y', p[1] - 10);
-      });
-    }
-
-    // ---- Shared country highlight/label logic, usable from the marker dot OR any
-    // country's own landmass shape. Works for every country on the globe: export-market
-    // countries get the gold "active market" treatment plus their dot marker; every other
-    // country gets a neutral highlight and its plain name label.
+    // ---- Shared country highlight/label logic, triggered by hovering/tapping a
+    // country's own landmass shape. Every country on the globe gets this: export-market
+    // countries get the brighter gold glow, every other country gets a softer glow —
+    // both reveal the country name in the tooltip.
     function highlightCountry(name, sub, screenX, screenY){
       const isMarket = COUNTRIES.some(x => x.name === name);
-      gMarkers.selectAll('g').each(function(){
-        const g = d3.select(this);
-        const on = isMarket && g.attr('data-country') === name;
-        g.select('circle').classed('hovered', on).classed('active', on).attr('r', on ? 5.5 : 3.6);
-        g.select('text').classed('active', on);
-      });
       gCountries.selectAll('path')
         .classed('country-hovered', function(){ return isMarket && d3.select(this).attr('data-country') === name; })
         .classed('country-hovered-generic', function(){ return !isMarket && d3.select(this).attr('data-country') === name; });
       if(screenX != null && screenY != null) showTooltip(name, sub, screenX, screenY);
     }
     function clearCountryHighlight(){
-      gMarkers.selectAll('circle').classed('hovered', false).classed('active', false).attr('r', 3.6);
-      gMarkers.selectAll('text').classed('active', false);
       gCountries.selectAll('path').classed('country-hovered', false).classed('country-hovered-generic', false);
       hideTooltip();
     }
@@ -1527,49 +3047,8 @@
     gOrigin.html(`
       <circle class="globe-origin-pulse op-pulse" r="6"></circle>
       <circle class="globe-origin-dot op-dot" r="4"></circle>
-      <text class="globe-marker-label op-label" text-anchor="middle">VARANASI</text>
+      <text class="globe-origin-label op-label" text-anchor="middle">VARANASI</text>
     `);
-
-    // ---- Per-country marker markup ----
-    COUNTRIES.forEach(c => {
-      const g = gMarkers.append('g').attr('data-market', c.market).attr('data-country', c.name);
-      g.append('circle').attr('class', 'globe-marker-dot').attr('r', 3.6);
-      g.append('text').attr('class', 'globe-marker-label').attr('text-anchor', 'middle').text(c.name);
-
-      let lastTap = 0;
-      g.on('mouseenter', function(event){
-        if(dragging) return;
-        highlightCountry(c.name, c.sub, ...eventToContainerXY(event));
-      });
-      g.on('mousemove', function(event){
-        if(dragging) return;
-        highlightCountry(c.name, c.sub, ...eventToContainerXY(event));
-      });
-      g.on('mouseleave', function(){
-        clearCountryHighlight();
-      });
-      g.on('click', function(event){
-        if(performance.now() - lastTap < 500) return; // skip synthetic click after touchend
-        event.preventDefault();
-        highlightCountry(c.name, c.sub, ...eventToContainerXY(event));
-      });
-      g.on('touchend', function(event){
-        lastTap = performance.now();
-        event.preventDefault();
-        const t = event.changedTouches && event.changedTouches[0];
-        if(t){
-          const rect = container.getBoundingClientRect();
-          highlightCountry(c.name, c.sub, t.clientX - rect.left, t.clientY - rect.top);
-        } else {
-          highlightCountry(c.name, c.sub, ...eventToContainerXY(event));
-        }
-      });
-    });
-
-    // ---- Route path elements ----
-    Object.keys(MARKET_CENTROIDS).forEach(k => {
-      gRoutes.append('path').attr('id', 'route-' + k).attr('class', 'globe-route').attr('data-market', k);
-    });
 
     // ---- Rotation state ----
     let rotation = [-ORIGIN.lon, -ORIGIN.lat * 0.5, 0];
@@ -1624,22 +3103,10 @@
       gCountries.selectAll('path').classed('active-market', function(){
         return d3.select(this).attr('data-market') === market;
       });
-      gMarkers.selectAll('g').each(function(){
-        const g = d3.select(this);
-        const on = g.attr('data-market') === market;
-        g.select('circle').classed('active', on);
-        g.select('text').classed('active', on);
-        g.classed('active-group', on);
-      });
-      const routeEl = document.getElementById('route-' + market);
-      gRoutes.selectAll('path').classed('active', function(){ return this === routeEl; });
     }
     function clearActive(){
       listItems.forEach(li => li.classList.remove('active'));
       gCountries.selectAll('path').classed('active-market', false);
-      gMarkers.selectAll('circle').classed('active', false);
-      gMarkers.selectAll('text').classed('active', false);
-      gRoutes.selectAll('path').classed('active', false);
     }
     function hoverOn(market){
       setActive(market);
