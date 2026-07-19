@@ -345,6 +345,13 @@
   .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:40px;}
   .stat-num{font-family:var(--serif); font-size:clamp(34px,4vw,58px); color:var(--gold-soft); font-weight:400; line-height:1;}
   .stat-label{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,239,228,0.62); margin-top:12px; line-height:1.5;}
+
+  /* SCROLL-VELOCITY MARQUEE */
+  .velocity-marquee{background:var(--charcoal); color:var(--ivory); border-top:1px solid rgba(244,239,228,0.1); border-bottom:1px solid rgba(244,239,228,0.1); padding:22px 0; overflow:hidden;}
+  .velocity-row{width:100%; overflow:hidden; white-space:nowrap;}
+  .velocity-track{display:inline-flex; align-items:center; will-change:transform; transform:translate3d(0,0,0);}
+  .velocity-block{display:inline-flex; align-items:center; flex-shrink:0;}
+  .velocity-item{font-family:var(--serif); font-style:italic; font-weight:400; font-size:clamp(20px,2.4vw,30px); color:var(--ivory); padding:0 28px; white-space:nowrap; border-right:1px solid rgba(244,239,228,0.16);}
   @media (max-width:900px){ .stats-grid{grid-template-columns:repeat(2,1fr); row-gap:44px;} }
 
   /* ---------- Why Banaras ---------- */
@@ -818,6 +825,123 @@
     </div>
   </div>
 </section>
+
+<!-- SCROLL VELOCITY MARQUEE -->
+<section class="velocity-marquee" aria-hidden="true">
+  <div class="velocity-row" data-velocity-row data-base-velocity="0.8" data-direction="1">
+    <div class="velocity-track" data-velocity-track></div>
+  </div>
+</section>
+<script>
+/* Scroll-velocity marquee: content drifts steadily, then surges and can
+   reverse direction in response to scroll speed — vanilla JS port of a
+   Framer Motion scroll-velocity row. */
+(function(){
+  var ITEMS = ["Since 1924","Silk · Cotton · Linen","Handloom Woven","Star Export House","55+ Countries","Five Generations","Made in Varanasi","100% In-House"];
+
+  function buildBlock(){
+    var block = document.createElement('div');
+    block.className = 'velocity-block';
+    ITEMS.forEach(function(text, i){
+      var item = document.createElement('span');
+      item.className = 'velocity-item';
+      item.textContent = text;
+      block.appendChild(item);
+    });
+    return block;
+  }
+
+  function initRow(row){
+    var track = row.querySelector('[data-velocity-track]');
+    var baseVelocity = parseFloat(row.getAttribute('data-base-velocity')) || 3;
+    var direction = parseFloat(row.getAttribute('data-direction')) || 1;
+
+    // Lay down enough repeated blocks to cover the viewport width twice over.
+    var firstBlock = buildBlock();
+    track.appendChild(firstBlock);
+    var unitWidth = 0;
+
+    function ensureCoverage(){
+      unitWidth = firstBlock.getBoundingClientRect().width || 1;
+      var needed = Math.max(3, Math.ceil((row.clientWidth / unitWidth)) + 2);
+      while(track.children.length < needed){
+        track.appendChild(buildBlock());
+      }
+      while(track.children.length > needed){
+        track.removeChild(track.lastChild);
+      }
+    }
+    ensureCoverage();
+    window.addEventListener('resize', ensureCoverage, { passive:true });
+
+    var x = 0; // current translateX offset (px), unbounded, wrapped on paint
+    var currentDirection = direction >= 0 ? 1 : -1;
+    var lastTs = null;
+    var inView = true;
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var io = new IntersectionObserver(function(entries){
+      inView = entries[0].isIntersecting;
+    });
+    io.observe(row);
+
+    // Scroll-velocity tracking, smoothed with a simple critically-damped spring.
+    var lastScrollY = window.scrollY || window.pageYOffset;
+    var lastScrollTs = performance.now();
+    var rawVelocity = 0;
+    var smoothVelocity = 0;
+
+    window.addEventListener('scroll', function(){
+      var now = performance.now();
+      var y = window.scrollY || window.pageYOffset;
+      var dt = Math.max(1, now - lastScrollTs);
+      rawVelocity = ((y - lastScrollY) / dt) * 1000; // px/sec
+      lastScrollY = y;
+      lastScrollTs = now;
+    }, { passive:true });
+
+    function wrap(min, max, v){
+      var range = max - min;
+      return ((((v - min) % range) + range) % range) + min;
+    }
+
+    function frame(ts){
+      requestAnimationFrame(frame);
+      if(lastTs === null) lastTs = ts;
+      var dt = Math.min(0.05, (ts - lastTs) / 1000);
+      lastTs = ts;
+
+      // Spring-smooth the raw scroll velocity toward zero each frame.
+      smoothVelocity += (rawVelocity - smoothVelocity) * Math.min(1, dt * 8);
+      // Natural decay so it settles even while the user holds still.
+      rawVelocity *= 0.85;
+
+      if(!inView || document.visibilityState !== 'visible') return;
+
+      var sign = smoothVelocity < 0 ? -1 : 1;
+      var magnitude = Math.min(2.5, (Math.abs(smoothVelocity) / 1500) * 2.5);
+      var velocityFactor = sign * magnitude;
+      var absVf = Math.min(2.5, Math.abs(velocityFactor));
+      var speedMultiplier = reducedMotion ? 1 : 1 + absVf;
+
+      if(absVf > 0.1){
+        currentDirection = direction * (velocityFactor >= 0 ? 1 : -1);
+      }
+
+      if(unitWidth > 0){
+        var pxPerSecond = (unitWidth * baseVelocity) / 10;
+        x += currentDirection * pxPerSecond * speedMultiplier * dt;
+        track.style.transform = 'translate3d(' + (-wrap(0, unitWidth, x)) + 'px,0,0)';
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('[data-velocity-row]').forEach(initRow);
+  });
+})();
+</script>
 
 <!-- WHY BANARAS -->
 <section class="why">
