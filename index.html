@@ -1026,10 +1026,20 @@
       if(!img || !img.complete || !img.naturalWidth) return;
       var cw = canvas.width, ch = canvas.height;
       var iw = img.naturalWidth, ih = img.naturalHeight;
-      var scale = Math.max(cw / iw, ch / ih); // cover-fit
+      // The source frames are portrait (tall). On a portrait-ish canvas
+      // (mobile) cover-fit crops only a little, filling the screen edge to
+      // edge like a phone camera would. On a landscape canvas (desktop) the
+      // same cover-fit would zoom in drastically to fill the wide box,
+      // cutting off most of the frame — so switch to contain-fit there
+      // instead, showing the whole frame letterboxed.
+      var canvasIsWiderThanFrame = (cw / ch) > (iw / ih);
+      var scale = canvasIsWiderThanFrame
+        ? Math.min(cw / iw, ch / ih)  // contain-fit: show full frame
+        : Math.max(cw / iw, ch / ih); // cover-fit: fill the box
       var dw = iw * scale, dh = ih * scale;
       var dx = (cw - dw) / 2, dy = (ch - dh) / 2;
-      ctx.clearRect(0, 0, cw, ch);
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, cw, ch);
       ctx.drawImage(img, dx, dy, dw, dh);
     }
 
