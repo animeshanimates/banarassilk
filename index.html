@@ -358,7 +358,6 @@
   .scrub-dots .dot{width:6px; height:6px; border-radius:50%; background:rgba(244,239,228,0.28); transition:background 0.3s, transform 0.3s;}
   .scrub-dots .dot.active{background:var(--gold-soft); transform:scale(1.5);}
   .scrub-frame{position:relative; flex:0 0 auto; width:min(360px,34vw); aspect-ratio:480/854; border-radius:3px; overflow:hidden; background:#000; box-shadow:0 40px 90px rgba(0,0,0,0.55); border:1px solid rgba(244,239,228,0.14);}
-  .scrub-frame::before{content:''; position:absolute; inset:9px; border:1px solid var(--gold-soft); opacity:0.6; pointer-events:none; z-index:2;}
   .scrub-canvas{width:100%; height:100%; display:block;}
   .scrub-frame-vignette{position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.35) 100%);}
   .scrub-loader{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; background:var(--charcoal); color:rgba(244,239,228,0.7); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; z-index:5; transition:opacity 0.5s ease; }
