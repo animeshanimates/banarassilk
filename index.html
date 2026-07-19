@@ -32,7 +32,7 @@
     color:var(--charcoal);
     font-family:var(--sans);
     -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
+    overflow-x:clip;
   }
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
@@ -495,7 +495,7 @@
   @media (max-width:900px){ .fs-grid{grid-template-columns:1fr;} .fs-copy{padding:48px var(--pad);} }
 
   /* ---------- Journey: Cocoon to Catwalk ---------- */
-  .journey{background:var(--raw-silk); overflow:hidden;}
+  .journey{background:var(--raw-silk);}
   .journey-title{max-width:640px; margin:0 auto 64px; text-align:center;}
   .journey-title h2{font-size:clamp(28px,3.6vw,46px); font-weight:400; margin:14px 0 16px;}
   .journey-title p{font-size:15.5px; line-height:1.75; color:#3D5480;}
