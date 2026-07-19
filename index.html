@@ -388,6 +388,10 @@
   .why-head{display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:64px; flex-wrap:wrap;}
   .why-head h2{font-size:clamp(30px,3.6vw,50px); max-width:14ch; font-weight:400;}
   .why-head p{max-width:380px; font-size:15px; line-height:1.75; color:#3D5480;}
+  .why-frame{position:relative; flex:0 0 auto; width:min(200px,26vw); aspect-ratio:540/1024; border-radius:3px; overflow:hidden; background:var(--charcoal); box-shadow:0 24px 60px rgba(10,29,61,0.25); border:1px solid rgba(10,29,61,0.12);}
+  .why-frame video{width:100%; height:100%; object-fit:cover; display:block;}
+  .why-frame-line{position:absolute; inset:8px; border:1px solid var(--gold-soft); opacity:0.55; pointer-events:none;}
+  @media (max-width:640px){ .why-frame{display:none;} }
   .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);}
   .why-card{background:var(--raw-silk); padding:44px 36px; transition:background 0.4s ease;}
   .why-card:hover{background:#F4F5FB;}
@@ -1148,6 +1152,10 @@
         <h2 data-i18n="why_h2">Craftsmanship you can build a collection on.</h2>
       </div>
       <p data-i18n="why_lead">Sourcing from India means access to the deepest reservoir of natural-fibre weaving knowledge in the world. Sourcing from us means that knowledge is disciplined into export-grade, repeatable manufacturing.</p>
+      <div class="why-frame">
+        <video src="assets/why-indian-silk.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <div class="why-frame-line" aria-hidden="true"></div>
+      </div>
     </div>
     <div class="why-grid">
       <div class="why-card reveal"><span class="why-num">01</span><h3 data-i18n="why01_h">A Century of Heritage</h3><p data-i18n="why01_p">Over 100 years of experience and a five-generation legacy make us one of India's oldest and most established textile manufacturers, preserving the authentic art of Banarasi weaving.</p></div>
