@@ -32,7 +32,7 @@
     color:var(--charcoal);
     font-family:var(--sans);
     -webkit-font-smoothing:antialiased;
-    overflow-x:clip;
+    overflow-x:hidden;
   }
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
@@ -149,6 +149,7 @@
     align-items:center; justify-content:center;
     background:none; border:none; cursor:pointer;
     -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
   }
   .burger span{
     display:block; position:absolute; left:8px; right:8px; height:2px;
