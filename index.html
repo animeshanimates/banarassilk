@@ -81,15 +81,10 @@
     box-shadow:0 1px 0 var(--line);
   }
   .logo{
-    font-family:var(--serif);
-    font-size:19px;
-    letter-spacing:0.02em;
-    color:var(--ivory);
     display:flex; flex-direction:column; line-height:1.05;
-    transition:color 0.4s ease;
   }
-  header.site.scrolled .logo{color:var(--charcoal);}
-  .logo small{font-family:var(--sans); font-size:9.5px; letter-spacing:0.24em; color:var(--gold-soft); margin-top:5px; text-transform:uppercase; font-weight:600;}
+  .logo img{height:26px; width:auto; display:block; background:var(--ivory); padding:6px 10px; border-radius:7px; transition:filter 0.4s ease;}
+  .logo small{font-family:var(--sans); font-size:9.5px; letter-spacing:0.24em; color:var(--gold-soft); margin-top:6px; text-transform:uppercase; font-weight:600;}
   header.site.scrolled .logo small{color:var(--walnut);}
 
   nav.links{display:flex; gap:34px; font-size:13px; letter-spacing:0.03em;}
@@ -615,7 +610,7 @@
   /* ---------- Footer ---------- */
   footer{background:var(--charcoal); color:rgba(244,239,228,0.72); padding:80px var(--pad) 30px;}
   .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr 1fr; gap:40px; max-width:var(--max); margin:0 auto; padding-bottom:56px; border-bottom:1px solid rgba(244,239,228,0.12);}
-  .footer-brand h3{font-family:var(--serif); font-size:22px; color:var(--ivory); font-weight:500; margin-bottom:14px;}
+  .footer-logo{height:30px; width:auto; display:block; margin-bottom:16px; background:var(--ivory); padding:8px 14px; border-radius:8px;}
   .footer-brand p{font-size:13.5px; line-height:1.75; max-width:280px; color:rgba(244,239,228,0.55);}
   .foot-col h4{font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:20px; font-weight:600;}
   .foot-col a, .foot-col span{display:block; font-size:13.5px; margin-bottom:12px; color:rgba(244,239,228,0.7); transition:color 0.3s ease;}
@@ -770,7 +765,7 @@
 <div id="scrollProgress"></div>
 
 <header class="site" id="siteHeader">
-  <a href="#" class="logo"><span data-i18n="brand">Banaras Silk Mfg. Co.</span><small data-i18n="tagline">Weaving Beauty Since 1924</small></a>
+  <a href="#" class="logo"><img src="assets/banaras-silk-logo.png" alt="Banaras Silk Mfg. Co."><small data-i18n="tagline">Weaving Beauty Since 1924</small></a>
   <nav class="links">
     <a href="#about" data-i18n="nav_about">About</a>
     <a href="#process" data-i18n="nav_manufacturing">Manufacturing</a>
@@ -1423,7 +1418,7 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <h3 data-i18n="brand">Banaras Silk Mfg. Co.</h3>
+      <img src="assets/banaras-silk-logo.png" alt="Banaras Silk Mfg. Co." class="footer-logo">
       <p data-i18n="footer_desc">Weaving beauty since 1924. A five-generation, Star Export House manufacturing natural textiles from Varanasi, India, exporting to 55+ countries. OEM, ODM and private label production for the world's finest brands.</p>
       <p style="margin-top:14px; font-size:12.5px; letter-spacing:0.03em; color:rgba(244,239,228,0.55);">Sunil Kumar &middot; Ashutosh Kumar &middot; Arun K. Shukla</p>
     </div>
