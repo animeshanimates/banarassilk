@@ -26,6 +26,7 @@
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
+  section[id]{scroll-margin-top:90px;}
   body{
     margin:0;
     background:var(--ivory);
@@ -2742,8 +2743,18 @@ async function detectRegionLanguage() {
     setMenu(!document.body.classList.contains('menu-open'));
   });
   document.getElementById('mmCloseBtn').addEventListener('click', () => setMenu(false));
-  mobileMenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => setMenu(false));
+  mobileMenu.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const targetId = a.getAttribute('href');
+      const target = document.querySelector(targetId);
+      e.preventDefault();
+      setMenu(false);
+      if(target){
+        setTimeout(() => {
+          target.scrollIntoView({behavior:'smooth', block:'start'});
+        }, 350);
+      }
+    });
   });
 
   const io = new IntersectionObserver((entries) => {
