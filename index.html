@@ -603,6 +603,14 @@
   .enquire h2 em{font-style:italic; color:var(--gold-soft);}
   .enquire p{font-size:16px; color:rgba(244,239,228,0.68); max-width:480px; margin:26px auto 40px; line-height:1.75;}
   .enquire .btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .social-row{display:flex; gap:16px; justify-content:center; margin-top:32px;}
+  .social-icon{
+    width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+    border:1px solid rgba(244,239,228,0.35); border-radius:50%;
+    color:var(--ivory); transition:all 0.3s ease;
+  }
+  .social-icon svg{width:19px; height:19px;}
+  .social-icon:hover{background:var(--gold-soft); border-color:var(--gold-soft); color:var(--charcoal);}
 
   /* ---------- Footer ---------- */
   footer{background:var(--charcoal); color:rgba(244,239,228,0.72); padding:80px var(--pad) 30px;}
@@ -1400,6 +1408,14 @@
     <div class="btn-row">
       <a href="#contact" class="btn btn-gold" data-i18n="enquire_now">Enquire Now</a>
       <a href="#contact" class="btn btn-ghost" data-i18n="request_meeting">Request a Meeting</a>
+    </div>
+    <div class="social-row">
+      <a href="https://www.instagram.com/banarassilk.in/" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.5"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor"/></svg>
+      </a>
+      <a href="https://www.facebook.com/banarassilk.in/" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.5 8.5h2V5.2c-.35-.05-1.55-.15-2.95-.15-2.92 0-4.92 1.79-4.92 5.08V13H6.4v3.6h2.83V22h3.6v-5.4h2.72l.43-3.6h-3.15v-2.5c0-1.04.28-1.75 1.67-1.75Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      </a>
     </div>
   </div>
 </section>
