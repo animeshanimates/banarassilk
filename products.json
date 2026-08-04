@@ -8,35 +8,27 @@
   "apparel": [
     {
       "num": "01",
-      "title": "Ivory Tweed Jacket, Pearl Trim",
-      "lead": "A tailored western jacket cut from handwoven ivory silk-cotton tweed, finished with pearl button detailing and gold chain trim along the edges.",
-      "fabric": "Handwoven silk-cotton tweed",
-      "moq": "300 pcs",
-      "lead_time": "45-60 days"
+      "title": "Tailored Jacket, Ivory & Gold",
+      "lead": "A tailored western jacket brought to life through handwoven Indian textile craft, combining considered detailing with a fabric quality built to last.",
+      "fabric": "Handwoven natural fibre blend"
     },
     {
       "num": "02",
-      "title": "Amber Check Tailored Blazer",
-      "lead": "A single-breasted blazer in a multicolour amber and burgundy check, woven from a silk-wool tweed blend for structure and warmth.",
-      "fabric": "Handwoven silk-wool tweed",
-      "moq": "300 pcs",
-      "lead_time": "45-60 days"
+      "title": "Tailored Blazer, Amber Check",
+      "lead": "A structured blazer that pairs a timeless silhouette with the depth and character only handwoven fabric can offer.",
+      "fabric": "Handwoven natural fibre blend"
     },
     {
       "num": "03",
-      "title": "Olive Tweed Mini Dress",
-      "lead": "A shawl-collar mini dress in an olive and gold multicolour tweed, finished with brass buttons and fringed pocket trim.",
-      "fabric": "Handwoven silk-cotton tweed",
-      "moq": "300 pcs",
-      "lead_time": "45-60 days"
+      "title": "Tailored Mini Dress, Olive",
+      "lead": "A versatile mini dress finished with thoughtful detailing, designed around a fabric that carries the mark of traditional handloom weaving.",
+      "fabric": "Handwoven natural fibre blend"
     },
     {
       "num": "04",
-      "title": "Indigo Ombre Halter Dress",
-      "lead": "A halter-neck midi dress in an indigo-to-teal ombre weave, with a draped waist tie and front slit, woven on traditional Banarasi looms.",
-      "fabric": "Handwoven silk shot-weave",
-      "moq": "300 pcs",
-      "lead_time": "45-60 days"
+      "title": "Halter Dress, Indigo Ombre",
+      "lead": "An elegant halter-neck dress that showcases a rich, tonal weave, blending contemporary shape with heritage textile craftsmanship.",
+      "fabric": "Handwoven natural fibre blend"
     }
   ],
 
