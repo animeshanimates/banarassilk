@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manufacturing Process | Banaras Silk Mfg. Co.</title>
+<meta name="description" content="Watch the Banaras Silk Mfg. Co. manufacturing process in motion, from yarn to finished export-ready textile, filmed inside our Varanasi facility.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#FFFFFF;
+    --raw-silk:#EEF0F8;
+    --charcoal:#0A1D3D;
+    --indigo:#142850;
+    --walnut:#2D4B8C;
+    --gold:#4664B4;
+    --gold-soft:#8CA5DC;
+    --stone:#7A8AA8;
+    --card-blue:#0F2346;
+    --line: rgba(10,29,61,0.14);
+    --max: 1360px;
+    --pad: clamp(20px, 5vw, 72px);
+    --serif: 'Fraunces', serif;
+    --sans: 'Manrope', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--ivory); color:var(--charcoal); font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  .section-inner{max-width:var(--max); margin:0 auto; padding:0 var(--pad);}
+  .eyebrow{font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:14px; display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:26px; height:1px; background:var(--gold);}
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky; top:0; z-index:1000; display:flex; align-items:center; gap:28px;
+    padding:16px var(--pad); background:rgba(255,255,255,0.92); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  header.site .logo img{height:34px; display:block;}
+  nav.links{display:flex; gap:26px; margin-left:auto; font-size:14px; font-weight:500;}
+  nav.links a{opacity:0.75; transition:opacity 0.2s ease;}
+  nav.links a:hover, nav.links a.active{opacity:1; color:var(--gold);}
+  .nav-cta{border:1px solid var(--charcoal); padding:9px 18px; font-size:13px; font-weight:600; letter-spacing:0.02em; border-radius:2px; transition:background 0.2s ease, color 0.2s ease;}
+  .nav-cta:hover{background:var(--charcoal); color:var(--ivory);}
+  .burger{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px;}
+  .burger span{width:22px; height:2px; background:var(--charcoal);}
+  @media (max-width:960px){
+    nav.links, .nav-cta{display:none;}
+    .burger{display:flex;}
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:14px 26px; font-size:13.5px; font-weight:600; letter-spacing:0.02em; border-radius:2px; transition:transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease;}
+  .btn-gold{background:var(--gold); color:var(--ivory);}
+  .btn-gold:hover{background:var(--walnut); transform:translateY(-2px);}
+  .btn-dark{background:var(--charcoal); color:var(--ivory);}
+  .btn-dark:hover{background:var(--indigo); transform:translateY(-2px);}
+  .btn-ghost{border:1px solid rgba(10,29,61,0.3);}
+  .btn-ghost:hover{border-color:var(--charcoal); transform:translateY(-2px);}
+
+  /* ---------- Page hero ---------- */
+  .mfg-hero{background:var(--charcoal); color:var(--ivory); padding:120px var(--pad) 70px;}
+  .mfg-hero-inner{max-width:var(--max); margin:0 auto;}
+  .mfg-hero h1{font-family:var(--serif); font-weight:400; font-size:clamp(38px,5.2vw,68px); line-height:1.08; margin:0 0 22px;}
+  .mfg-hero p{max-width:620px; font-size:16px; line-height:1.75; color:rgba(255,255,255,0.65); margin:0 0 30px;}
+  .mfg-stats{display:flex; gap:48px; margin-top:46px; flex-wrap:wrap;}
+  .mfg-stats div{border-top:1px solid rgba(255,255,255,0.18); padding-top:14px; min-width:110px;}
+  .mfg-stats .num{font-family:var(--serif); font-size:30px;}
+  .mfg-stats .lbl{font-size:12px; letter-spacing:0.05em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-top:4px;}
+
+  /* ---------- Video grid ---------- */
+  .mfg-grid-section{padding:64px var(--pad) 100px; background:var(--ivory);}
+  .mfg-grid{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .mfg-grid .vid-card:nth-child(3n+1){margin-top:-28px;}
+  .mfg-grid .vid-card:nth-child(3n){margin-top:28px;}
+  .vid-card{position:relative; border-radius:4px; overflow:hidden; background:var(--card-blue); cursor:pointer; aspect-ratio:3/4;}
+  .vid-card video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease;}
+  .vid-card:hover video{transform:scale(1.05);}
+  .vid-card .play{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;}
+  .vid-card .play::before{
+    content:""; width:56px; height:56px; border-radius:50%; background:rgba(255,255,255,0.16); backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,0.5); transition:transform 0.25s ease, background 0.25s ease;
+  }
+  .vid-card .play::after{
+    content:""; position:absolute; width:0; height:0; border-left:16px solid var(--ivory); border-top:10px solid transparent; border-bottom:10px solid transparent; margin-left:4px;
+  }
+  .vid-card:hover .play::before{transform:scale(1.1); background:rgba(255,255,255,0.28);}
+
+  @media (max-width:960px){ .mfg-grid{grid-template-columns:repeat(2,1fr);} .mfg-grid .vid-card:nth-child(3n+1), .mfg-grid .vid-card:nth-child(3n){margin-top:0;} }
+  @media (max-width:600px){ .mfg-grid{grid-template-columns:1fr;} .mfg-filters{top:60px;} }
+
+  /* ---------- Lightbox ---------- */
+  .lb-overlay{position:fixed; inset:0; background:rgba(6,14,30,0.94); z-index:5000; display:none; align-items:center; justify-content:center; padding:5vw;}
+  .lb-overlay.open{display:flex;}
+  .lb-box{position:relative; max-width:900px; width:100%;}
+  .lb-box video{width:100%; max-height:80vh; border-radius:4px; background:#000;}
+  .lb-close{position:absolute; top:-46px; right:0; background:none; border:none; color:var(--ivory); font-size:15px; letter-spacing:0.05em; cursor:pointer; display:flex; align-items:center; gap:8px;}
+  .lb-cap{color:rgba(255,255,255,0.7); font-size:13px; margin-top:14px;}
+  .lb-nav{position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); color:var(--ivory); width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:18px;}
+  .lb-prev{left:-60px;} .lb-next{right:-60px;}
+  @media (max-width:900px){ .lb-prev{left:6px;} .lb-next{right:6px;} }
+
+  /* ---------- Footer (trimmed) ---------- */
+  footer{background:var(--charcoal); color:rgba(255,255,255,0.55); padding:60px var(--pad) 26px; font-size:13px;}
+  .foot-bottom{max-width:var(--max); margin:40px auto 0; padding-top:20px; border-top:1px solid rgba(255,255,255,0.12); text-align:center; font-size:12px;}
+  footer a{opacity:0.85;}
+  footer a:hover{opacity:1; color:var(--gold-soft);}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header class="site" id="siteHeader">
+  <a href="index.html" class="logo"><img src="assets/banaras-silk-logo.png" alt="Banaras Silk Mfg. Co."></a>
+  <nav class="links">
+    <a href="index.html#about">About</a>
+    <a href="manufacturing.html" class="active">Manufacturing</a>
+    <a href="index.html#categories">Categories</a>
+    <a href="index.html#quality">Quality</a>
+    <a href="index.html#certifications">Our Craft</a>
+    <a href="index.html#export">Export</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+  <a href="index.html#contact" class="nav-cta">Enquire Now</a>
+  <button class="burger" id="burgerBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</header>
+
+<!-- HERO -->
+<section class="mfg-hero">
+  <div class="mfg-hero-inner">
+    <div class="eyebrow">Manufacturing</div>
+    <h1>Our process, in motion.</h1>
+    <p>Raw footage from inside our Varanasi facility — yarn, loom, dye vat and finishing floor. Ten stages, refined over a century, carried out entirely under one roof.</p>
+    <a href="#gallery" class="btn btn-gold">Watch the Process ↓</a>
+    <div class="mfg-stats">
+      <div><div class="num">10</div><div class="lbl">Process Stages</div></div>
+      <div><div class="num">100%</div><div class="lbl">In-House</div></div>
+      <div><div class="num">1924</div><div class="lbl">Est.</div></div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- VIDEO GRID -->
+<section class="mfg-grid-section" id="gallery">
+  <div class="mfg-grid" id="mfgGrid"></div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lbOverlay">
+  <div class="lb-box">
+    <button class="lb-close" id="lbClose">Close ✕</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+    <video id="lbVideo" controls playsinline></video>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+    <div class="lb-cap" id="lbCap"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="section-inner" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;">
+    <span>Banaras Silk Mfg. Co. &middot; Weaving Beauty Since 1924</span>
+    <span>6, Gandhi Nagar, Sigra, Varanasi &ndash; 221010, U.P., India</span>
+  </div>
+  <div class="foot-bottom">© 2026 Banaras Silk Mfg. Co. All rights reserved.</div>
+</footer>
+
+<script>
+/* Put your files in: assets/manufacturing/ — add/remove filenames as needed */
+const VIDEOS = [
+  "VID-20190401-WA0008.webm",
+  "VID-20190402-WA0000.webm",
+  "VID-20190510-WA0001.webm",
+  "VID-20190510-WA0002.webm",
+  "VID-20190818-WA0000.webm",
+  "VID-20190826-WA0005.webm",
+  "VID-20190829-WA0002.webm",
+  "VID-20190829-WA0004.webm",
+  "VID-20190829-WA0007.webm",
+  "VID-20190830-WA0005.webm",
+  "VID-20191019-WA0010.webm",
+  "VID-20191121-WA0030.webm",
+  "VID-20191121-WA0033.webm",
+  "VID-20191128-WA0010.webm",
+  "VID-20191128-WA0011.webm",
+  "VID-20191128-WA0012.webm",
+  "VID-20191128-WA0013.webm",
+  "VID-20191128-WA0014.webm"
+];
+
+const BASE = "assets/manufacturing/";
+const grid = document.getElementById('mfgGrid');
+
+function renderGrid(){
+  grid.innerHTML = "";
+  VIDEOS.forEach((file, i) => {
+    const card = document.createElement('div');
+    card.className = 'vid-card reveal';
+    card.dataset.index = i;
+    card.innerHTML = `
+      <video src="${BASE}${file}" muted loop playsinline preload="metadata"></video>
+      <div class="play"></div>
+    `;
+    const vid = card.querySelector('video');
+    card.addEventListener('mouseenter', () => vid.play().catch(()=>{}));
+    card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+    card.addEventListener('click', () => openLightbox(i));
+    grid.appendChild(card);
+    requestAnimationFrame(() => card.classList.add('in'));
+  });
+}
+
+renderGrid();
+
+/* Lightbox */
+const lbOverlay = document.getElementById('lbOverlay');
+const lbVideo = document.getElementById('lbVideo');
+const lbCap = document.getElementById('lbCap');
+let lbIndex = 0;
+
+function openLightbox(i){
+  lbIndex = i;
+  showLightbox();
+  lbOverlay.classList.add('open');
+}
+
+function showLightbox(){
+  const file = VIDEOS[lbIndex];
+  lbVideo.src = BASE + file;
+  lbVideo.play().catch(()=>{});
+  lbCap.textContent = file;
+}
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+lbOverlay.addEventListener('click', (e) => { if(e.target === lbOverlay) closeLightbox(); });
+function closeLightbox(){
+  lbOverlay.classList.remove('open');
+  lbVideo.pause();
+  lbVideo.src = "";
+}
+document.getElementById('lbPrev').addEventListener('click', () => {
+  lbIndex = (lbIndex - 1 + VIDEOS.length) % VIDEOS.length;
+  showLightbox();
+});
+document.getElementById('lbNext').addEventListener('click', () => {
+  lbIndex = (lbIndex + 1) % VIDEOS.length;
+  showLightbox();
+});
+document.addEventListener('keydown', (e) => {
+  if(!lbOverlay.classList.contains('open')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
+  if(e.key === 'ArrowRight') document.getElementById('lbNext').click();
+});
+
+/* Burger -> just link back to index for mobile menu, keep simple */
+document.getElementById('burgerBtn').addEventListener('click', () => {
+  window.location.href = 'index.html#contact';
+});
+</script>
+
+</body>
+</html>
