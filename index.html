@@ -405,15 +405,14 @@
   .process-head{display:flex; justify-content:space-between; align-items:flex-end; gap:30px; flex-wrap:wrap; margin-bottom:60px;}
   .process-head h2{font-size:clamp(30px,3.6vw,50px); font-weight:400; max-width:16ch;}
   .process-scroll{
-    display:flex; gap:1px; overflow-x:auto; scroll-snap-type:x proximity;
+    display:grid; grid-template-columns:repeat(5,1fr); gap:1px;
     background:rgba(244,239,228,0.14); border-radius:2px;
-    padding-bottom:6px;
   }
-  .process-scroll::-webkit-scrollbar{height:5px;}
-  .process-scroll::-webkit-scrollbar-thumb{background:var(--gold); }
+  @media (max-width:900px){ .process-scroll{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .process-scroll{grid-template-columns:1fr;} }
   .process-step{
-    min-width:230px; scroll-snap-align:start; background:var(--indigo);
-    padding:32px 26px; flex-shrink:0; border-top:2px solid rgba(244,239,228,0.15);
+    background:var(--indigo);
+    padding:32px 26px; border-top:2px solid rgba(244,239,228,0.15);
     transition:border-color 0.4s ease;
   }
   .process-step:hover{border-top-color:var(--gold);}
@@ -708,12 +707,6 @@
   .cat-card{transform-style:preserve-3d; transition:transform 0.18s ease-out;}
   .cat-card .overlay-inner, .cat-card .ph{transition:transform 0.4s cubic-bezier(.2,.9,.3,1), opacity 0.4s ease;}
 
-  .process-scroll{cursor:grab; scroll-snap-type:x proximity;}
-  .process-scroll.dragging{cursor:grabbing; scroll-snap-type:none; user-select:none;}
-  .process-step{scroll-snap-align:start; transition:border-top-color 0.3s ease, transform 0.35s ease, box-shadow 0.35s ease;}
-  .process-step:hover{transform:translateY(-6px);}
-  .process-progress{position:relative; height:2px; background:rgba(244,239,228,0.15); margin-top:18px; border-radius:2px; overflow:hidden;}
-  .process-progress-fill{position:absolute; left:0; top:0; height:100%; width:0%; background:var(--gold); transition:width 0.1s linear;}
 
   .gal-item{cursor:pointer;}
   .gal-item .ph{transition:transform 0.5s cubic-bezier(.2,.9,.3,1), color 0.4s ease;}
@@ -1149,6 +1142,7 @@
       </div>
       <p style="max-width:380px; font-size:14.5px; line-height:1.75; color:rgba(244,239,228,0.62);" data-i18n="process_lead">Ten stages, refined over a century, carried out entirely within our own facilities in Varanasi.</p>
     </div>
+    <a href="manufacturing.html" class="btn btn-gold reveal" style="margin-bottom:34px;" data-i18n="watch_process">Watch the Process ↗</a>
     <div class="process-scroll reveal">
       <div class="process-step"><span class="pnum">01</span><h4 data-i18n="proc01_h">Yarn Procurement</h4><p data-i18n="proc01_p">Natural fibres and yarns (mulberry silk, cotton, linen) are sourced and graded for consistency before entering production.</p></div>
       <div class="process-step"><span class="pnum">02</span><h4 data-i18n="proc02_h">Dyeing</h4><p data-i18n="proc02_p">Yarn is cleaned, treated and dyed to match international colour standards and tested for fastness.</p></div>
@@ -1161,7 +1155,6 @@
       <div class="process-step"><span class="pnum">09</span><h4 data-i18n="proc09_h">Quality Control</h4><p data-i18n="proc09_p">Every piece passes through multi-point quality inspection for weave, colour consistency, defects and measurements against buyer-specific AQL standards.</p></div>
       <div class="process-step"><span class="pnum">10</span><h4 data-i18n="proc10_h">Packaging</h4><p data-i18n="proc10_p">Goods are measured, folded or rolled, labelled and packed to destination-market specification for dispatch worldwide.</p></div>
     </div>
-    <div class="process-progress"><div class="process-progress-fill" id="processFill"></div></div>
   </div>
 </section>
 
@@ -1435,6 +1428,7 @@ const I18N_TRANSLATIONS = {
     intro_p1: "Established in 1924, Banaras Silk Mfg. Co. is one of India's oldest and most respected textile manufacturers, carrying forward a five-generation family legacy in the art of handwoven and handloom fabrics. Founded originally as the Banaras Brocade Museum, the company quickly became synonymous with the finest handwoven silk brocades from the historic city of Varanasi, and once operated a network of 22 retail stores across India's hill stations, weaving with real gold and silver zari for royal and aristocratic households.",
     intro_p2: "An invitation to showcase our work in Great Britain marked the beginning of our export journey. Today, that journey spans more than 55 countries, with the company continuing to blend traditional weaving heritage with contemporary textile innovation across Silk, Cotton, Linen and blended fabrics, under one roof in Varanasi, so our partners can build collections with confidence.",
     explore_manufacturing: "Explore Our Manufacturing",
+    watch_process: "Watch the Process ↗",
     stat_1: "Year Established",
     stat_2: "Generation Family-Run",
     stat_3: "Export Markets Served",
@@ -2903,34 +2897,6 @@ async function detectRegionLanguage() {
     });
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   });
-
-  /* ---------- Process timeline: drag-to-scroll + progress ---------- */
-  const processScroll = document.querySelector('.process-scroll');
-  const processFill = document.getElementById('processFill');
-  if(processScroll){
-    let isDown = false, startX = 0, scrollStart = 0;
-    processScroll.addEventListener('pointerdown', (e) => {
-      isDown = true;
-      processScroll.classList.add('dragging');
-      startX = e.clientX;
-      scrollStart = processScroll.scrollLeft;
-      processScroll.setPointerCapture(e.pointerId);
-    });
-    processScroll.addEventListener('pointermove', (e) => {
-      if(!isDown) return;
-      processScroll.scrollLeft = scrollStart - (e.clientX - startX);
-    });
-    ['pointerup','pointercancel','pointerleave'].forEach(evt => {
-      processScroll.addEventListener(evt, () => { isDown = false; processScroll.classList.remove('dragging'); });
-    });
-    function updateProcessFill(){
-      const max = processScroll.scrollWidth - processScroll.clientWidth;
-      const pct = max > 0 ? (processScroll.scrollLeft / max) * 100 : 0;
-      processFill.style.width = pct + '%';
-    }
-    processScroll.addEventListener('scroll', updateProcessFill, {passive:true});
-    updateProcessFill();
-  }
 
   /* ---------- Interactive orthographic globe (real geography via D3 + Natural Earth) ---------- */
   (function(){
