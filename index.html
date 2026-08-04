@@ -2985,7 +2985,7 @@ async function detectRegionLanguage() {
       const num = String(i).padStart(2, '0');
       const cell = document.createElement('div');
       cell.className = 'gallery-thumb';
-      cell.innerHTML = `<span>${data.title} ${num}</span><img src="images/gallery/${key}/${num}.webp" alt="${data.title}, photo ${num}" loading="lazy" onerror="this.style.display='none'">`;
+      cell.innerHTML = `<span>${data.title} ${num}</span><img src="assets/${key}/${num}.webp" alt="${data.title}, photo ${num}" loading="lazy" onerror="this.style.display='none'">`;
       galleryGrid.appendChild(cell);
     }
 
