@@ -227,10 +227,10 @@
         <dd id="specFabric">Handwoven silk / cotton / linen blend</dd>
         <dt>Customization</dt>
         <dd id="specCustom">Available for private label, OEM &amp; ODM</dd>
-        <dt>Minimum Order</dt>
-        <dd id="specMoq">Available on request</dd>
-        <dt>Lead Time</dt>
-        <dd id="specLead">Available on request</dd>
+        <dt>Origin</dt>
+        <dd id="specOrigin">India</dd>
+        <dt>Craft</dt>
+        <dd id="specCraft">Five generations of handloom weaving</dd>
       </dl>
     </div>
 
@@ -313,8 +313,8 @@
     img.alt = title;
 
     document.getElementById('specFabric').textContent = item?.fabric || 'Handwoven silk / cotton / linen blend';
-    document.getElementById('specMoq').textContent = item?.moq || 'Available on request';
-    document.getElementById('specLead').textContent = item?.lead_time || 'Available on request';
+    document.getElementById('specOrigin').textContent = item?.origin || 'India';
+    document.getElementById('specCraft').textContent = item?.craft || 'Five generations of handloom weaving';
   }
 
   fetch('products.json')
