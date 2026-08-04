@@ -1,0 +1,45 @@
+{
+  "running-fabrics": [
+  ],
+
+  "home-furnishings": [
+  ],
+
+  "apparel": [
+    {
+      "num": "01",
+      "title": "Ivory Tweed Jacket, Pearl Trim",
+      "lead": "A tailored western jacket cut from handwoven ivory silk-cotton tweed, finished with pearl button detailing and gold chain trim along the edges.",
+      "fabric": "Handwoven silk-cotton tweed",
+      "moq": "300 pcs",
+      "lead_time": "45-60 days"
+    },
+    {
+      "num": "02",
+      "title": "Amber Check Tailored Blazer",
+      "lead": "A single-breasted blazer in a multicolour amber and burgundy check, woven from a silk-wool tweed blend for structure and warmth.",
+      "fabric": "Handwoven silk-wool tweed",
+      "moq": "300 pcs",
+      "lead_time": "45-60 days"
+    },
+    {
+      "num": "03",
+      "title": "Olive Tweed Mini Dress",
+      "lead": "A shawl-collar mini dress in an olive and gold multicolour tweed, finished with brass buttons and fringed pocket trim.",
+      "fabric": "Handwoven silk-cotton tweed",
+      "moq": "300 pcs",
+      "lead_time": "45-60 days"
+    },
+    {
+      "num": "04",
+      "title": "Indigo Ombre Halter Dress",
+      "lead": "A halter-neck midi dress in an indigo-to-teal ombre weave, with a draped waist tie and front slit, woven on traditional Banarasi looms.",
+      "fabric": "Handwoven silk shot-weave",
+      "moq": "300 pcs",
+      "lead_time": "45-60 days"
+    }
+  ],
+
+  "accessories": [
+  ]
+}
